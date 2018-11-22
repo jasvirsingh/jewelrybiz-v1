@@ -13,12 +13,12 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     @RenderSection("scripts", required: false)
     @*@{
-        if (System.Web.HttpContext.Current.User != null)
-        {
-            ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
-        }
+            if (System.Web.HttpContext.Current.User != null)
+            {
+                ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
+            }
 
-    }*@
+        }*@
 </head>
 <body>
     <div class="navbar navbar-theme navbar-fixed-top">
@@ -36,8 +36,11 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Reports", "Index", "Reports")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Sign out", "Logout", "Account")</li>
+                </ul>
             </div>
         </div>
     </div>

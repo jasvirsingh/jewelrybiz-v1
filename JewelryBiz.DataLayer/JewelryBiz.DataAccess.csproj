@@ -51,6 +51,8 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubscriptionDAL.cs" />
+    <Compile Include="UserDAL.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

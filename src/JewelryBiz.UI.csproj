@@ -220,6 +220,7 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -231,6 +232,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ApplicationPrinciple.cs" />
+    <Compile Include="Helpers\ApplicationUser.cs" />
+    <Compile Include="Helpers\UserSecurityManager.cs" />
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -360,6 +364,8 @@
     <Content Include="Views\Checkout\PurchasedSuccess.cshtml" />
     <Content Include="Views\Account\EmailsSignup.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminLayour.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />

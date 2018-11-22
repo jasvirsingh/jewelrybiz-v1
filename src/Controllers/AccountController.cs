@@ -13,6 +13,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using JewelryBiz.BusinessLayer;
 using JewelryBiz.UI.Validators;
+using System.Security;
+using JewelryBiz.UI.Helpers;
 
 namespace JewelryBiz.UI.Controllers
 {
@@ -92,11 +94,15 @@ namespace JewelryBiz.UI.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = SignInStatus.Success;
+            var userService = new UserService();
+            var user = userService.VerifyUser(model.UserName, model.Password);
+            var result = user != null ? SignInStatus.Success : SignInStatus.Failure;
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToAction("Index", "Product", new { area = "Admin" });
+                    var sm = new UserSecurityManager();
+                    sm.AuthorizeUser(user);
+                    return RedirectToAction("Index", "Admin");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
@@ -134,10 +140,20 @@ namespace JewelryBiz.UI.Controllers
                 Email = model.Email,
                 IsActive = true
             };
+            var subscriptionService = new SubscriptionService();
+            subscriptionService.Subscribe(model.Email);
             //_ctx.Subscriptions.Add(subscription);
-           // _ctx.SaveChanges();
+            // _ctx.SaveChanges();
             ViewBag.Message = "You have subscriber successfully.";
             return View("EmailsSignup");
+        }
+
+        // GET: /Account/Signup
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -152,23 +168,19 @@ namespace JewelryBiz.UI.Controllers
             {
                 var u = new JewelryBiz.DataAccess.Models.User
                 {
-                    FName = model.FirstName,
-                    LName = model.LastName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     Email = model.Email,
-                    Phone = model.Phone,
-                    Address1 = model.Address1,
-                    Address2 = model.Address2,
-                    Postcode = model.Postcode,
-                    State = model.State,
+                    UserName = model.UserName,
                     Password = model.Password,
                 };
 
-                var customerService = new CustomerService();
-                customerService.Create(u);
+                var userService = new UserService();
+                userService.Create(u);
                 //_ctx.Users.Add(u);
                 //_ctx.SaveChanges();
                 ViewBag.Message = "User created successfully.";
-                return RedirectToAction("Register", "Account");
+                return RedirectToAction("Register");
                 /*var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -298,13 +310,6 @@ namespace JewelryBiz.UI.Controllers
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
-        }
-
-        [AllowAnonymous]
-        public ActionResult Logout()
-        {
-            AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Product");
         }
 
         protected override void Dispose(bool disposing)

@@ -17,64 +17,65 @@ namespace JewelryBiz.DataAccess
 
         public int Create(User user)
         {
-            var parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@FirstName",
-                DbType = DbType.String,
-                Value = user.FName
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@LastName",
-                DbType = DbType.String,
-                Value = user.LName
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@Phone",
-                DbType = DbType.String,
-                Value = user.Phone
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@Addresss1",
-                DbType = DbType.String,
-                Value = user.Address1
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@Addresss2",
-                DbType = DbType.String,
-                Value = user.Address2
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@PostCode",
-                DbType = DbType.String,
-                Value = user.Postcode
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@State",
-                DbType = DbType.String,
-                Value = user.State
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@Email",
-                DbType = DbType.String,
-                Value = user.Email
-            });
-            parameters.Add(new SqlParameter
-                {
-                    ParameterName = "@Password",
-                    DbType = DbType.String,
-                    Value = user.Password
-                });
-            var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteStoredProcedure("procCreateAccount", parameters.ToArray());
-            return result;
+            return 0;
+            //var parameters = new List<SqlParameter>();
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@FirstName",
+            //    DbType = DbType.String,
+            //    Value = user.FName
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@LastName",
+            //    DbType = DbType.String,
+            //    Value = user.LName
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@Phone",
+            //    DbType = DbType.String,
+            //    Value = user.Phone
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@Addresss1",
+            //    DbType = DbType.String,
+            //    Value = user.Address1
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@Addresss2",
+            //    DbType = DbType.String,
+            //    Value = user.Address2
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@PostCode",
+            //    DbType = DbType.String,
+            //    Value = user.Postcode
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@State",
+            //    DbType = DbType.String,
+            //    Value = user.State
+            //});
+            //parameters.Add(new SqlParameter
+            //{
+            //    ParameterName = "@Email",
+            //    DbType = DbType.String,
+            //    Value = user.Email
+            //});
+            //parameters.Add(new SqlParameter
+            //    {
+            //        ParameterName = "@Password",
+            //        DbType = DbType.String,
+            //        Value = user.Password
+            //    });
+            //var sqlDataAccess = new SqlDataAccess();
+            //var result = sqlDataAccess.ExecuteStoredProcedure("procCreateAccount", parameters.ToArray());
+            //return result;
         }
     }
 }

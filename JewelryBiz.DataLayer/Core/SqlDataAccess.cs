@@ -141,6 +141,34 @@ namespace JewelryBiz.DataAccess.Core
             return result;
         }
 
+        private SqlConnection GetConnection(string connectionName)
+        {
+            string cnstr = ConfigurationManager.ConnectionStrings[connectionName].ConnectionString;
+            SqlConnection cn = new SqlConnection(cnstr);
+            cn.Open();
+            return cn;
+        }
+
+        public DataSet ExecuteQuery(string storedProcName, SqlParameter[] sqlParameters)
+        {
+            DataSet ds = new DataSet();
+            using (SqlConnection cn = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand cmd = cn.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = storedProcName;
+                    // assign parameters passed in to the command
+                    cmd.Parameters.AddRange(sqlParameters);
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(ds);
+                    }
+                }
+            }
+            return ds;
+        }
+
         /// <summary>
         /// 
         /// </summary>

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using JewelryBiz.DataAccess;
 
 namespace JewelryBiz.BusinessLayer
 {
-    class SubscriptionService
+    public class SubscriptionService
     {
+        public int Subscribe(string email)
+        {
+            var subscriptionDAL = new SubscriptionDAL();
+            return subscriptionDAL.Subscribe(email);
+        }
     }
 }
