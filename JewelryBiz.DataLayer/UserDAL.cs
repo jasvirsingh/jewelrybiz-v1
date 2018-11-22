@@ -35,7 +35,8 @@ namespace JewelryBiz.DataAccess
                     LastName = row["LName"].ToString(),
                     UserName = userName,
                     Password = password,
-                    Email = row["Email"].ToString()
+                    Email = row["Email"].ToString(),
+                    IsAdmin = row["IsAdmin"].ToString() == "True" ? true : false
                 };
             }
 

@@ -15,6 +15,7 @@ using JewelryBiz.BusinessLayer;
 using JewelryBiz.UI.Validators;
 using System.Security;
 using JewelryBiz.UI.Helpers;
+using ApplicationUser = JewelryBiz.UI.Models.ApplicationUser;
 
 namespace JewelryBiz.UI.Controllers
 {
@@ -102,6 +103,12 @@ namespace JewelryBiz.UI.Controllers
                 case SignInStatus.Success:
                     var sm = new UserSecurityManager();
                     sm.AuthorizeUser(user);
+                    Response.Cookies["User"]["UserName"] = user.UserName;
+                    Response.Cookies["User"]["FirstName"] = user.FirstName;
+                    Response.Cookies["User"]["LastName"] = user.LastName;
+                    Response.Cookies["User"]["IsAdmin"] = user.IsAdmin ? "1":"0";
+                    Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
+
                     return RedirectToAction("Index", "Admin");
                 case SignInStatus.Failure:
                 default:
@@ -149,11 +156,12 @@ namespace JewelryBiz.UI.Controllers
         }
 
         // GET: /Account/Signup
-        [HttpPost]
+
         [AllowAnonymous]
         public ActionResult Logout()
         {
-            return RedirectToAction("Index", "Home");
+            Response.Cookies["User"].Expires = DateTime.Now.AddDays(-1);
+            return View("Logout");
         }
 
         //
@@ -181,34 +189,35 @@ namespace JewelryBiz.UI.Controllers
                 //_ctx.SaveChanges();
                 ViewBag.Message = "User created successfully.";
                 return RedirectToAction("Register");
-                /*var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                //    var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //    var result = await UserManager.CreateAsync(user, model.Password);
 
-                if (result.Succeeded)
-                {
-                    var role = RoleManager.FindByName(roleAdmin);
-                    if (role == null)
-                    {
-                        role = new IdentityRole();
-                        var roleresult = RoleManager.Create(role);
-                    }
+                //    if (result.Succeeded)
+                //    {
+                //        var role = RoleManager.FindByName(roleAdmin);
+                //        if (role == null)
+                //        {
+                //            role = new IdentityRole();
+                //            var roleresult = RoleManager.Create(role);
+                //        }
 
-                    var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);
-                    if (!roleResult.Succeeded)
-                    {
-                        ModelState.AddModelError("", result.Errors.First());
-                        return View();
-                    } else
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToAction("Index", "Product", new { area = "Admin" });
-                    }
-                }
-                AddErrors(result);
-            }*/
+                //        var roleResult = await UserManager.AddToRoleAsync(user.Id, roleAdmin);
+                //        if (!roleResult.Succeeded)
+                //        {
+                //            ModelState.AddModelError("", result.Errors.First());
+                //            return View();
+                //        } else
+                //        {
+                //            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                //            return RedirectToAction("Index", "Product", new { area = "Admin" });
+                //        }
+                //    }
+                //    AddErrors(result);
+                //}
+                // SetStates();
+                // If we got this far, something failed, redisplay form
+                //return View(model);
             }
-            SetStates();
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 

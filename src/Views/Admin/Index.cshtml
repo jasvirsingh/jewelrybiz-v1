@@ -4,5 +4,5 @@
     Layout = "~/Views/Shared/_AdminLayour.cshtml";
 }
 
-<h2>Admin</h2>
+<h2>Hello @Request.Cookies["User"]["FirstName"], @Request.Cookies["User"]["LastName"]</h2>
 

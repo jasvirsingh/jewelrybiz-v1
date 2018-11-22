@@ -9,5 +9,10 @@ namespace JewelryBiz.UI.Controllers
         {
             return View();
         }
+
+        public ActionResult Report()
+        {
+            return View("Report");
+        }
     }
 }
