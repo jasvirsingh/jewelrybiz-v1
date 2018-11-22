@@ -1,0 +1,593 @@
+﻿
+/*===================Auto Complete CSS======================*/
+.ac_results {
+	padding: 0px;
+	border: 1px solid black;
+	background-color: white;
+	overflow: hidden;
+	z-index: 99999;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.ac_results li {
+	margin: 0px;
+	padding: 2px 5px;
+	cursor: default;
+	display: block;
+	/* 
+	if width will be 100% horizontal scrollbar will apear 
+	when scroll mode will be used
+	*/
+	/*width: 100%;*/
+	font: menu;
+	font-size: 12px;
+	/* 
+	it is very important, if line-height not setted or setted 
+	in relative units scroll will be broken in firefox
+	*/
+	line-height: 16px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: white url('indicator.gif') right center no-repeat;
+}
+
+.ac_odd {
+	background-color: #eee;
+}
+
+.ac_over {
+	background-color: #0A246A;
+	color: white;
+}
+/*===================Auto Complete CSS END======================*/
+
+/*===================Table Scrolling CSS======================*/
+div.ScrollingOuter 
+{
+    border-left:1px solid gray;
+    border-top: 1px solid gray;
+    border-right:1px solid gray;
+    border-bottom:1px solid gray;
+    padding-right:2px;
+}
+
+.tablescroll
+{ font: 12px normal Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif; background-color:#fff; }
+
+.tablescroll td, 
+.tablescroll_wrapper,
+.tablescroll_head,
+.tablescroll_foot
+{ border:1px solid #ccc; }
+
+.tablescroll td
+{ padding:3px 5px; }
+
+.tablescroll_wrapper
+{ border-left:0; }
+
+/*
+Overridden below.
+.tablescroll_head
+{ font-size:11px; font-weight:bold; background-color:#eee; border-left:0; border-top:0; margin-bottom:3px; }
+*/
+.tablescroll thead td
+{ border-right:0; border-bottom:0; }
+
+.tablescroll tbody td
+{ border-right:0; border-bottom:0; }
+
+.tablescroll tbody tr.first td
+{ border-top:0; }
+
+.tablescroll_foot
+{ font-weight:bold; background-color:#eee; border-left:0; border-top:0; margin-top:3px; }
+
+.tablescroll tfoot td
+{ border-right:0; border-bottom:0; }
+
+.tablescroll_head
+{
+    border:1px solid grey;
+    padding:6px;
+    font: 11px tahoma,verdana,arial,sans-serif;
+    background-color:#D6E5F3;
+    font-weight:600; 
+    background-image: url('Images/GridHeader.png'); 
+    height:15px; 
+    vertical-align:bottom;
+    width:478px;
+}
+
+
+/*===================Table Scrolling CSS END======================*/
+
+/*===================Sodexo Grid ======================*/
+.SodexoGrid
+{
+    background-color:White;
+    border-collapse: collapse;
+    width:95%;
+    border: 1px solid gray;
+}
+
+
+
+.SodexoGrid  tr:hover td 
+{
+   background: none repeat scroll 0 0 #FFD966;
+}
+
+
+.SodexoGrid td
+{
+	margin:0px;
+	padding: 3px 3px 3px 3px;
+	font-family:Verdana;
+	font-size:8pt;
+	font-weight:normal;
+	border: 1px solid gray;
+}
+
+.oddrow {background-color:#E5E5E5;}
+.evenrow {background-color: White;}
+
+.SodexoGrid tr{
+    background: white;
+}
+.Selected 
+{
+    background-color: #FFB300 !important;
+}
+
+
+.GridInput
+{
+    width:90%;
+}
+
+.SodexoBlue
+{
+	background-color: #ECF4FB;
+}
+
+.SodexoButtonDiv
+{
+	background-color: #ECF4FB;
+	width: 100%; 
+	padding-top: 5px; 
+	padding-bottom: 5px;
+	text-align:center;
+}
+.Button
+{
+	 width: 90px;
+     
+}
+.LongButton
+{
+	 width: 180px;
+}
+.SodexoContentDiv
+{
+	background-color: #ECF4FB;
+	padding-top: 5px; 
+	padding-bottom: 5px;
+}
+
+.Ascending
+{
+    background-image: url('Images/ascending.gif') !important; 
+    background-position:left top !important;
+    background-repeat:no-repeat;
+}
+
+.Descending
+{
+    background-image: url('Images/descending.gif') !important; 
+    background-position:left top !important;
+    background-repeat:no-repeat;
+}
+
+.SodexoGrid th
+{
+    padding:6px;
+    margin:3px;
+    font-family: Verdana;
+    font-size: 8pt;
+    font-weight: 600;
+    background-color:#D6E5F3;
+    font-weight:600; 
+    background-image: url('Images/GridHeader.png'); 
+    background-position: bottom; 
+    height:15px; 
+    vertical-align:bottom;
+}
+
+.Sortable th
+{
+    cursor: hand;
+}
+
+#HistorySpan
+{
+    padding-left:50px;   
+}
+
+.GridBoarder
+{
+    margin:5px;
+    padding:0px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: gray;
+	background-color: white;
+	border-collapse: collapse;
+}
+
+
+.GridBoarder td 
+{
+    margin:0px;
+    padding:6px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: gray;
+	background-color: white;
+}
+
+
+/*===================Sodexo Grid END======================*/
+
+/*===================Popup ===============================*/
+.ReportModalContainer {
+     width:500px;
+     margin: 50px auto;
+     padding:15px;
+     background-color: #fff;
+     border:3px solid #000;
+     text-align:Left;
+}
+
+.ModalContainer {
+     width:800px;
+     margin: 200px auto;
+     padding:20px;
+     background-color: #fff;
+     border:3px solid #000;
+     padding:15px;
+     text-align:center;
+}
+
+#overlay {
+     visibility: hidden;
+     
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+     background-image:url('Images/overlay.png');
+}
+
+.overlay {
+     visibility: hidden;
+     
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+     background-image:url('Images/overlay.png');
+}
+
+.hide
+{
+    /*visibility:hidden;may need to put this back in */
+    display: none;   
+}
+
+.modalPopup
+{
+    width:60%;
+    position:absolute; 
+    border:3px black; 
+    padding:3px; 
+    top:10%; 
+    left:10%; 
+    text-align:left; 
+    border-width:2px;
+    border-color:Black;
+    border-style:outset;
+    background-image: url("Images/GridHeader.png") no-repeat scroll left top transparent;
+}
+
+#loading 
+{
+    background-image: url("Images/animation.gif");
+    z-index:3200;
+    position:absolute;
+    right:44.5%;
+    top:25%;
+    width: 100px;
+    margin: 10px auto;
+    padding: 20px 30px 30px;
+    background: #fff;
+    text-align: center;
+    font: 10px Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    border: 3px solid #d3d3d3;
+    -webkit-border-radius: 5px;
+	-khtml-border-radius: 5px;	
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 0 0 5px #ddd;
+	-khtml-box-shadow: 0 0 5px #ddd;
+	-moz-box-shadow: 0 0 5px #ddd;
+	box-shadow: 0 0 5px #ddd;
+}
+
+.ErrorDiv
+{
+    background-color:#E5F8F8;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:15px;
+}
+
+/*===================Popup END======================*/
+
+
+/*===================Autocomplete END======================*/
+.AutoCompleteContentDiv
+{
+    background-color: #E5F8F8;
+    padding-left:15px;
+    padding-right:15px;
+    padding-top:15px;
+}
+
+.AutoCompleteSearch
+{
+    width:18px;
+    margin-bottom:-4px;
+}
+
+.AutoCompleteSearchDisabled
+{
+    width:18px;
+    margin-bottom:-4px;
+}
+
+/*===================Autocomplete END======================*/
+
+[disabled] 
+{
+    color:Black;
+    background-color: #CCCCCC;
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.input-validation-error2
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+    display: none;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+/* Styles for validation helpers END
+-----------------------------------------------------------*/
+
+/*=================== Message Popup ===============================*/
+
+.error
+{
+    color:black;
+}
+
+.informational
+{
+    color:black;
+}
+
+.warning
+{
+    color:black;
+}
+
+
+#Message-Box {
+background:url("images/bg-box-bottom.png") no-repeat scroll left bottom transparent !important;
+padding-bottom:24px;
+display: block; 
+z-index: 65557;
+position: absolute; 
+top: 10%; 
+left: 250px; 
+width: 500px;
+}
+
+#Message-InBox {
+background:url("images/bg-box-top.png") no-repeat scroll left top transparent !important;
+padding-top:15px;
+}
+
+#Message-BoxContent {
+background:url("images/bg-box-body.png") repeat-y scroll left top transparent !important;
+padding:0 20px;
+padding-right: 40px;
+}
+
+#Message-BoxContenedor {
+color:#000000;
+font-family:Verdana;
+font-size:12px;
+padding:0 0 5px 55px;
+text-align:left;
+}
+
+#Message-BoxContenedor h1, #Message-BoxContenedor h2, #Message-BoxContenedor h3, #Message-BoxContenedor b, #Message-BoxContenedor strong {
+color:#000000;
+font-family:Verdana;
+font-size:12px;
+font-weight:bold;
+margin:0;
+padding:0;
+text-align:left;
+}
+
+#Message-Buttons {
+text-align:right;
+}
+
+#Message-Buttons input {
+margin:5px;
+}
+
+#Message-BoxContenedor #BoxPromptInput {
+margin-top:5px;
+}
+
+#Message-Box .Alert {
+background:url("images/dialog-warning.png") no-repeat scroll left top transparent;
+}
+
+#Message-Box .Confirm {
+background:url("images/dialog-help.png") no-repeat scroll left top transparent;
+}
+
+#Message-Box .Prompt {
+/*background:url("images/dialog-help.png") no-repeat scroll left top transparent;*/
+background:url("images/dialog_help_circle.png") no-repeat scroll left top transparent;
+}
+
+#Message-Box .Info {
+background:url("images/success.png") no-repeat scroll left top transparent;
+}
+
+#Message-Box .Error {
+background:url("images/error.png") no-repeat scroll left top transparent;
+}
+
+#MessageOverlay {
+     visibility: hidden;
+     
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+     background-image:url('Images/overlay.png');
+}
+
+
+/*=================== Message Popup End ===============================*/
+
+.readonly
+{
+    background-color:#CCCCCC;
+}
+
+
+INPUT[readonly]
+{
+    background-color:#CCCCCC;
+}
+
+
+/*=================== Scrolling Start ===============================*/
+
+.ScrollingOuter {
+position:relative;padding-top:27px;
+}
+.ScrollingInner {
+overflow-y:auto;
+overflow-x:hidden;
+}
+.ScrollingOuter thead tr {
+position:absolute;
+top:0em;
+height:1.5em;
+left:0;border: 1px,solid,black;
+}
+.innerb {height:10em; overflow:auto;}
+/*=================== Scrolling End ===============================*/
+
+
+.FloatingButtonDiv { 
+    position: fixed; 
+    bottom: 0;
+    width:100%;
+    background-color: rgb(236,244,251);
+} 
+
+.NoFormat
+{
+    margin:0px;
+    padding:0px;
+	border-color: white;
+}
+
+.NoFormat td
+{
+    margin:0px;
+    padding:2px;
+	border-color: white;
+}
+
+#UnitDetail
+{
+    padding:5px;
+    text-align:center;
+}
+
+.menuBorder {
+            border-right: 1px solid rgb(255, 255, 255);
+            border-style:solid;
+            border-left: 0px solid rgb(255, 255, 255);
+            border-width: 0px 0px 0px 1px;
+            border-color: rgb(255, 255, 255);
+        }
