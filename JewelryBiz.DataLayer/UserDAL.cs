@@ -1,5 +1,6 @@
 ﻿using JewelryBiz.DataAccess.Core;
 using JewelryBiz.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -36,14 +37,14 @@ namespace JewelryBiz.DataAccess
                     UserName = userName,
                     Password = password,
                     Email = row["Email"].ToString(),
-                    IsAdmin = row["IsAdmin"].ToString() == "True" ? true : false
+                    RoleId = Convert.ToInt32(row["RoleId"])
                 };
             }
 
             return null;
         }
 
-            public int Create(User user)
+        public int Create(User user)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -9,13 +6,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JewelryBiz.UI.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using JewelryBiz.BusinessLayer;
-using JewelryBiz.UI.Validators;
-using System.Security;
 using JewelryBiz.UI.Helpers;
-using ApplicationUser = JewelryBiz.UI.Models.ApplicationUser;
+using System.Web.Security;
 
 namespace JewelryBiz.UI.Controllers
 {
@@ -101,13 +95,32 @@ namespace JewelryBiz.UI.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var sm = new UserSecurityManager();
-                    sm.AuthorizeUser(user);
                     Response.Cookies["User"]["UserName"] = user.UserName;
                     Response.Cookies["User"]["FirstName"] = user.FirstName;
                     Response.Cookies["User"]["LastName"] = user.LastName;
-                    Response.Cookies["User"]["IsAdmin"] = user.IsAdmin ? "1":"0";
+                    Response.Cookies["User"]["Role"] = user.RoleId == 1 ?"Admin" : "Customer";
                     Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
+
+                    FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                        1,
+                        user.UserName,
+                        DateTime.Now,
+                        DateTime.Now.AddMinutes(2880),
+                        true,
+                        user.RoleId.ToString(),
+                        FormsAuthentication.FormsCookiePath);
+                    string hash = FormsAuthentication.Encrypt(ticket);
+                    HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);
+
+                    if (ticket.IsPersistent)
+                    {
+                        cookie.Expires = ticket.Expiration;
+                    }
+                    Response.Cookies.Add(cookie);
+                    var sm = new UserSecurityManager();
+                    sm.AuthorizeUser(user);
+                    FormsAuthentication.SetAuthCookie(model.UserName, true);
+                    Session["MyMenu"] = null;
 
                     return RedirectToAction("Index", "Admin");
                 case SignInStatus.Failure:
@@ -161,6 +174,8 @@ namespace JewelryBiz.UI.Controllers
         public ActionResult Logout()
         {
             Response.Cookies["User"].Expires = DateTime.Now.AddDays(-1);
+            FormsAuthentication.SignOut();
+            Session["MyMenu"] = null;
             return View("Logout");
         }
 

@@ -2,7 +2,7 @@
 
 namespace JewelryBiz.UI.Controllers
 {
-    public class AdminController : Controller
+    public class AdminController : BaseController
     {
         // GET: Admin
         public ActionResult Index()
@@ -12,7 +12,7 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult Report()
         {
-            return View("Report");
+            return View();
         }
     }
 }

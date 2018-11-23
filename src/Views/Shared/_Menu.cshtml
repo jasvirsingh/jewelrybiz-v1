@@ -1,0 +1,64 @@
+﻿@using JewelryBiz.UI.Helpers
+@{
+    /**/
+
+    var menus = new[]
+                {
+new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="All"  },
+new { LinkText="About", ActionName="About",ControllerName="Home",Roles="Anonymous"  },
+new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="Anonymous"  },
+new { LinkText="Dashboard", ActionName="Index",ControllerName="Admin",Roles="Admin"  },
+new { LinkText="Report", ActionName="Index",ControllerName="Report",Roles="Admin"  },
+new { LinkText="My Profile", ActionName="MyProfile",ControllerName="Customer",Roles="Customer"  },
+new { LinkText="Search", ActionName="SearchProducts",ControllerName="Product",Roles="Customer,Anonymous"  },
+new { LinkText="Purchase History", ActionName="PurchaseHistory",ControllerName="Customer",Roles="Customer"  },
+
+};
+}
+
+<div class="navbar navbar-theme navbar-fixed-top">
+    <div class="container">
+        @*<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>*@
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                {
+                    if (System.Web.HttpContext.Current.User != null)
+                    {
+                        //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
+                        string role = Request.Cookies["User"]["Role"];
+                        String roles = role;
+                        var links = from item in menus
+                                    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Any(x => roles.Contains(x) || x == "All")
+                                    select item;
+                        foreach (var link in links)
+                        {
+                            @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        }
+                    }
+                }
+                else
+                {
+                    var links = from item in menus
+                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .Any(x => new String[] { "All", "Anonymous" }.Contains(x))
+                                select item;
+                    foreach (var link in links)
+                    {
+                        @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                    }
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>

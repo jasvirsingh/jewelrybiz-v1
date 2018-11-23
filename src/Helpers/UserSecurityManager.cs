@@ -8,7 +8,7 @@
             applicationUser.Name = user.UserName;
             applicationUser.Password = user.Password;
             //Update IPrincipleusing UFSUser.
-            ApplicationPrinciple userPriniciple = new ApplicationPrinciple(applicationUser, "RolesGoHere");
+            ApplicationPrinciple userPriniciple = new ApplicationPrinciple(applicationUser, user.RoleId.ToString());
             System.Web.HttpContext.Current.User = userPriniciple;
         }
     }

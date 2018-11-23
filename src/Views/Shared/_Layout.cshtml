@@ -21,7 +21,13 @@
     }*@
 </head>
 <body>
-    <div class="navbar navbar-theme navbar-fixed-top">
+
+        @if (Session["MyMenu"] == null)
+        {
+            Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
+        }
+        @Session["MyMenu"]
+    @*<div class="navbar navbar-theme navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,7 +46,7 @@
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="container body-content">
         @if (ViewBag.Cart != null)
         {

@@ -5,20 +5,20 @@ namespace JewelryBiz.DataAccess.Models
 {
     public class User
     {
-        [Required]
+        [Required(ErrorMessage ="First name is required.")]
         [Display(Name = "FirstName")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required.")]
         [Display(Name = "LastName")]
         public string LastName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email is required.")]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "User name is required.")]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
@@ -33,6 +33,6 @@ namespace JewelryBiz.DataAccess.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public bool IsAdmin { get; set; }
+        public int RoleId { get; set; }
     }
 }

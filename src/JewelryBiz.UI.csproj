@@ -225,6 +225,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -362,16 +363,15 @@
     <Content Include="Views\Checkout\Purchase.cshtml" />
     <Content Include="Views\Checkout\PurchasedSuccess.cshtml" />
     <Content Include="Views\Account\EmailsSignup.cshtml" />
-    <Content Include="Views\Admin\Report.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayour.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Account\Logout.cshtml" />
-    <Content Include="Views\Admin\Report1.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Report\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
