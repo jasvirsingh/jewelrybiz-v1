@@ -9,14 +9,14 @@ namespace JewelryBiz.DataAccess
 {
     public class UserDAL
     {
-        public User VerifyUser(string userName, string password)
+        public User VerifyUser(string email, string password)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@UserName",
+                ParameterName = "@Email",
                 DbType = DbType.String,
-                Value = userName
+                Value = email
             });
             parameters.Add(new SqlParameter
             {
@@ -34,9 +34,8 @@ namespace JewelryBiz.DataAccess
                 {
                     FirstName = row["FName"].ToString(),
                     LastName = row["LName"].ToString(),
-                    UserName = userName,
                     Password = password,
-                    Email = row["Email"].ToString(),
+                    Email = email,
                     RoleId = Convert.ToInt32(row["RoleId"])
                 };
             }
@@ -64,12 +63,6 @@ namespace JewelryBiz.DataAccess
                 ParameterName = "@Email",
                 DbType = DbType.String,
                 Value = user.Email
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@UserName",
-                DbType = DbType.String,
-                Value = user.UserName
             });
             parameters.Add(new SqlParameter
             {

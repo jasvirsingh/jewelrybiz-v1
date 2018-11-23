@@ -5,7 +5,7 @@
         public void AuthorizeUser(JewelryBiz.DataAccess.Models.User user)
         {
             ApplicationUser applicationUser = new ApplicationUser();
-            applicationUser.Name = user.UserName;
+            applicationUser.Name = user.Email;
             applicationUser.Password = user.Password;
             //Update IPrincipleusing UFSUser.
             ApplicationPrinciple userPriniciple = new ApplicationPrinciple(applicationUser, user.RoleId.ToString());

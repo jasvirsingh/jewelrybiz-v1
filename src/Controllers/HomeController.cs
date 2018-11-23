@@ -15,23 +15,23 @@ namespace JewelryBiz.UI.Controllers
             ViewBag.Products = _ctx.Products.ToList<Product>();
             //ViewBag.Categories = _ctx.Categories.ToList<Category>();
             var model = new ProductCategoryModel();
-            List<SelectListItem> categories = _ctx.Categories.ToList<Category>()
-                    .OrderBy(n => n.CategoryId)
-                        .Select(n =>
-                        new SelectListItem
-                        {
-                            Value = n.CategoryId.ToString(),
-                            Text = n.CategoryName
-                        }).ToList();
+            //List<SelectListItem> categories = _ctx.Categories.ToList<Category>()
+            //        .OrderBy(n => n.CategoryId)
+            //            .Select(n =>
+            //            new SelectListItem
+            //            {
+            //                Value = n.CategoryId.ToString(),
+            //                Text = n.CategoryName
+            //            }).ToList();
 
-            var defaultCategory = new SelectListItem()
-            {
-                Value = null,
-                Text = "--- Select ---"
-            };
-            categories.Insert(0, defaultCategory);
-            ViewBag.Categories = categories;
-            return View(_ctx.Categories.ToList<Category>());
+            //var defaultCategory = new SelectListItem()
+            //{
+            //    Value = null,
+            //    Text = "--- Select ---"
+            //};
+            //categories.Insert(0, defaultCategory);
+            //ViewBag.Categories = categories;
+            return View();
         }
 
         public JsonResult GetCategories()

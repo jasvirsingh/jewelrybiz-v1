@@ -5,10 +5,10 @@ namespace JewelryBiz.BusinessLayer
 {
     public class UserService
     {
-        public User VerifyUser(string userName, string password)
+        public User VerifyUser(string email, string password)
         {
             var userDAL = new UserDAL();
-            return userDAL.VerifyUser(userName, password);
+            return userDAL.VerifyUser(email, password);
         }
         public int Create(User user)
         {

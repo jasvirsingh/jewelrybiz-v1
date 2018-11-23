@@ -95,7 +95,7 @@ namespace JewelryBiz.UI.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Response.Cookies["User"]["UserName"] = user.UserName;
+                    Response.Cookies["User"]["Email"] = user.Email;
                     Response.Cookies["User"]["FirstName"] = user.FirstName;
                     Response.Cookies["User"]["LastName"] = user.LastName;
                     Response.Cookies["User"]["Role"] = user.RoleId == 1 ?"Admin" : "Customer";
@@ -103,7 +103,7 @@ namespace JewelryBiz.UI.Controllers
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                         1,
-                        user.UserName,
+                        user.Email,
                         DateTime.Now,
                         DateTime.Now.AddMinutes(2880),
                         true,
@@ -194,7 +194,6 @@ namespace JewelryBiz.UI.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
-                    UserName = model.UserName,
                     Password = model.Password,
                 };
 
