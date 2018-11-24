@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace JewelryBiz.DataAccess
 {
@@ -38,6 +39,36 @@ namespace JewelryBiz.DataAccess
                     Quantity = Convert.ToInt32(item["Quantity"])
                 };
             }
+            return null;
+        }
+
+        public IList<CartItem> GetCurrentUserCartItems(string userSessionId)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@UserSessionId",
+                DbType = DbType.String,
+                Value = userSessionId
+            });
+
+            var sqlDataAccess = new SqlDataAccess();
+            var result = sqlDataAccess.ExecuteQuery("procGetCartItems", parameters.ToArray());
+            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                IEnumerable<DataRow> items = from item in result.Tables[0].AsEnumerable()
+                                            select item;
+                var cartItems = items.Select(item => new CartItem
+                {
+                    ProductId = Convert.ToInt32(item["ProductId"]),
+                    PName = item["PName"].ToString(),
+                    UnitPrice = Convert.ToDecimal(item["UnitPrice"]),
+                    Quantity = Convert.ToInt32(item["Quantity"])
+                });
+
+                return cartItems.ToList();
+            }
+
             return null;
         }
 
@@ -97,5 +128,18 @@ namespace JewelryBiz.DataAccess
 
             new SqlDataAccess().ExecuteStoredProcedure("procIncreaseQuantity", parameters.ToArray());
         }
+
+        public void Clear(string userSessionId)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@UserSessionId",
+                DbType = DbType.String,
+                Value = userSessionId
+            });
+
+            new SqlDataAccess().ExecuteStoredProcedure("procClearCart", parameters.ToArray());
         }
+    }
 }

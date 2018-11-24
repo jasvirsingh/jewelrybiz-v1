@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JewelryBiz.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,24 +13,12 @@ namespace JewelryBiz.UI.Controllers
 
         public BaseController()
         {
-            ViewBag.CartTotalPrice = CartTotalPrice;
-            ViewBag.Cart = Cart;
-            ViewBag.CartUnits = Cart.Count;
-        }
-
-        private List<ShoppingCartData> Cart
-        {
-            get
+            if (Session != null)
             {
-                return _ctx.ShoppingCartDatas.ToList();
-            }
-        }
-
-        private decimal CartTotalPrice
-        {
-            get
-            {
-                return Cart.Sum(c => c.Quantity * c.UnitPrice);
+                var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
+                ViewBag.CartTotalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
+                ViewBag.Cart = currentUserCartItems;
+                ViewBag.CartUnits = currentUserCartItems.Count();
             }
         }
     }

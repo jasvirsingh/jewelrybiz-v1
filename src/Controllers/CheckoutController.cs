@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JewelryBiz.UI.Controllers
@@ -75,11 +74,12 @@ new { SID = "WY", SName = "Wyoming" }
         // GET: Checkout
         public ActionResult Index()
         {
-            ViewBag.Cart = _ctx.ShoppingCartDatas.ToList<ShoppingCartData>();
+            var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
+            ViewBag.Cart = currentUserCartItems;
             decimal total = 0;
-            if(_ctx.ShoppingCartDatas.Any())
+            if(currentUserCartItems != null && currentUserCartItems.Any())
             {
-                total = _ctx.ShoppingCartDatas.Select(p => p.UnitPrice * p.Quantity).Sum();
+                total = currentUserCartItems.Select(p => p.UnitPrice * p.Quantity).Sum();
             }
             ViewBag.CartTotalPrice = total;
             return View();
@@ -150,13 +150,7 @@ new { SID = "WY", SName = "Wyoming" }
         {
             try
             {
-                List<ShoppingCartData> carts = _ctx.ShoppingCartDatas.ToList();
-                carts.ForEach(a => {
-                    Product product = _ctx.Products.FirstOrDefault(p => p.ProductId == a.ProductId);
-                    product.UnitsInStock += a.Quantity;
-                });
-                _ctx.ShoppingCartDatas.RemoveRange(carts);
-                _ctx.SaveChanges();
+                new ShoppingCartDataService().Clear(Session.SessionID);
             }
             catch (Exception) { }
             return RedirectToAction("Index", "Home", null);
@@ -218,30 +212,7 @@ new { SID = "WY", SName = "Wyoming" }
 
                     var customerService = new CustomerService();
                     customerService.CreateCustomerOrder(c, Session.SessionID);
-                    //Order o = new Order
-                    //{
-                    //    OrderDate = DateTime.Now,
-                    //    DeliveryDate = DateTime.Now.AddDays(5),
-                    //    CID = c.CustomerId
-                    //};
-
-                    //_ctx.Customers.Add(c);
-                    //_ctx.Orders.Add(o);
-
-                    //foreach (var i in _ctx.ShoppingCartDatas.ToList<ShoppingCartData>())
-                    //{
-                    //    _ctx.Order_Products.Add(new Order_Products
-                    //    {
-                    //        OrderID = o.OrderID,
-                    //        PID = i.PID,
-                    //        Qty = i.Quantity,
-                    //        TotalSale = i.Quantity * i.UnitPrice
-                    //    });
-                    //    _ctx.ShoppingCartDatas.Remove(i);
-                    //}
-
-                    //_ctx.SaveChanges();
-
+                 
                     return RedirectToAction("PurchasedSuccess");
 
                 }

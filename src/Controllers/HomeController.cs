@@ -1,10 +1,8 @@
 ﻿using JewelryBiz.BusinessLayer;
 using JewelryBiz.DataAccess.Models;
 using JewelryBiz.UI.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace JewelryBiz.UI.Controllers
@@ -14,25 +12,9 @@ namespace JewelryBiz.UI.Controllers
         
         public ActionResult Index()
         {
-            ViewBag.Products = _ctx.Products.ToList<Product>();
-            //ViewBag.Categories = _ctx.Categories.ToList<Category>();
-            var model = new ProductCategoryModel();
-            //List<SelectListItem> categories = _ctx.Categories.ToList<Category>()
-            //        .OrderBy(n => n.CategoryId)
-            //            .Select(n =>
-            //            new SelectListItem
-            //            {
-            //                Value = n.CategoryId.ToString(),
-            //                Text = n.CategoryName
-            //            }).ToList();
+            ShoppingBag();
 
-            //var defaultCategory = new SelectListItem()
-            //{
-            //    Value = null,
-            //    Text = "--- Select ---"
-            //};
-            //categories.Insert(0, defaultCategory);
-            //ViewBag.Categories = categories;
+            ViewBag.Products = _ctx.Products.ToList<Product>();
             return View();
         }
 
@@ -128,6 +110,7 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult About()
         {
+            ShoppingBag();
             ViewBag.Message = "";
 
             return View();
@@ -135,7 +118,22 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult Contact()
         {
+            ShoppingBag();
             return View();
+        }
+
+        private void ShoppingBag()
+        {
+            if (Session != null)
+            {
+                var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
+                if (currentUserCartItems != null)
+                {
+                    ViewBag.CartTotalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
+                    ViewBag.Cart = currentUserCartItems;
+                    ViewBag.CartUnits = currentUserCartItems.Count();
+                }
+            }
         }
     }
 }

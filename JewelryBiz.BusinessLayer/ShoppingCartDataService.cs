@@ -1,5 +1,6 @@
 ﻿using JewelryBiz.DataAccess;
 using JewelryBiz.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace JewelryBiz.BusinessLayer
 {
@@ -18,6 +19,16 @@ namespace JewelryBiz.BusinessLayer
         public void IncreaseCartItemQuantity(string userSessionId, int productId)
         {
             new ShoppingCartDataDAL().IncreaseCartItemQuantity(userSessionId, productId);
+        }
+
+        public void Clear(string userSessionId)
+        {
+            new ShoppingCartDataDAL().Clear(userSessionId);
+        }
+
+        public IList<CartItem> GetCurrentUserCartItems(string userSessionId)
+        {
+           return new ShoppingCartDataDAL().GetCurrentUserCartItems(userSessionId);
         }
     }
 }

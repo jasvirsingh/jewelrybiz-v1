@@ -27,31 +27,12 @@
             Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
         }
         @Session["MyMenu"]
-    @*<div class="navbar navbar-theme navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
 
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>*@
     <div class="container body-content">
         @if (ViewBag.Cart != null)
         {
             <a class="basket">
-                <span>SHOPPING BAG: </span>
+                <span>SHOPPING BAG: (@ViewBag.Cart.Count)</span>
                 <table>
                     @foreach (var c in ViewBag.Cart)
                     {
@@ -64,19 +45,25 @@
                 </table>
             </a>
         }
-        @RenderBody()
-        <hr />
-        <br />
+        else
+        {
+            <a class="basket">
+                <span>SHOPPING BAG: (0) </span>
+            </a>
+         }
+                    @RenderBody()
+                    <hr />
+                    <br />
 
-        <div class="navbar navbar-theme navbar-fixed-bottom">
-            <table width="100%">
-                <tr>
-                    <td width="100%" align="center"> <p> @Html.ActionLink("Sign Up For Emails", "EmailsSignup", "Account")</p></td>
-                </tr>
-            </table>
+                    <div class="navbar navbar-theme navbar-fixed-bottom">
+                        <table width="100%">
+                            <tr>
+                                <td width="100%" align="center"> <p> @Html.ActionLink("Sign Up For Emails", "EmailsSignup", "Account")</p></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <script src="~/Scripts/jewelrybix.ui.js"></script>
         </div>
-        <script src="~/Scripts/jewelrybix.ui.js"></script>
-    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 </body>
