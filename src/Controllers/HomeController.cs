@@ -103,8 +103,6 @@ namespace JewelryBiz.UI.Controllers
                     new ShoppingCartDataService().AddCartItem(cartItem);
                 }
                 product.UnitsInStock--;
-                new ProductService().DecreaseUnitInStockByOne(pId);
-               // _ctx.SaveChanges();
             }
         }
 

@@ -30,5 +30,10 @@ namespace JewelryBiz.BusinessLayer
         {
            return new ShoppingCartDataDAL().GetCurrentUserCartItems(userSessionId);
         }
+
+        public void ExecuteChangeInQuantity(string userSessionId, int productId, string action)
+        {
+            new ShoppingCartDataDAL().ExecuteChangeInQuantity(userSessionId, productId, action);
+        }
     }
 }

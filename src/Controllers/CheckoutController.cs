@@ -89,13 +89,13 @@ new { SID = "WY", SName = "Wyoming" }
         {
             JewelryBizEntities context = new JewelryBizEntities();
 
-            ShoppingCartData product = context.ShoppingCartDatas.FirstOrDefault(p => p.ProductId == pId);
+            var product = new ShoppingCartDataService().GetByProductId(Session.SessionID, pId);
             if (product == null)
             {
                 return Json(new { d = "0" });
             }
 
-            Product actualProduct = context.Products.FirstOrDefault(p => p.ProductId == pId);
+            var actualProduct = new ProductService().GetById(pId);
             int quantity;
             // if type 0, decrease quantity
             // if type 1, increase quanity
@@ -104,14 +104,17 @@ new { SID = "WY", SName = "Wyoming" }
                 case 0:
                     product.Quantity--;
                     actualProduct.UnitsInStock++;
+                    new ShoppingCartDataService().ExecuteChangeInQuantity(Session.SessionID, pId, "-");
                     break;
                 case 1:
                     product.Quantity++;
                     actualProduct.UnitsInStock--;
+                    new ShoppingCartDataService().ExecuteChangeInQuantity(Session.SessionID, pId, "+");
                     break;
                 case -1:
                     actualProduct.UnitsInStock += product.Quantity;
                     product.Quantity = 0;
+                    new ShoppingCartDataService().ExecuteChangeInQuantity(Session.SessionID, pId, "x");
                     break;
                 default:
                     return Json(new { d = "0" });
@@ -119,7 +122,6 @@ new { SID = "WY", SName = "Wyoming" }
 
             if (product.Quantity == 0)
             {
-                context.ShoppingCartDatas.Remove(product);
                 quantity = 0;
             }
             else
@@ -127,7 +129,6 @@ new { SID = "WY", SName = "Wyoming" }
                 quantity = product.Quantity;
             }
 
-            context.SaveChanges();
             return Json(new { d = quantity });
         }
         
