@@ -4,24 +4,30 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="JewelryBizStore" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'JewelryBiz.dbo.Category' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Category">
+      <Schema Namespace="JewelryBizModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="CategoryName" />
-            <PropertyRef Name="IsActive" />
           </Key>
+          <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="CategoryConfiguration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="CategoryName" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="ConfigurationName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Customers">
           <Key>
-            <PropertyRef Name="CID" />
+            <PropertyRef Name="CustomerId" />
           </Key>
-          <Property Name="CID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
@@ -29,7 +35,7 @@ warning 6002: The table/view 'JewelryBiz.dbo.Category' does not have a primary k
           <Property Name="Address2" Type="varchar" MaxLength="50" />
           <Property Name="Postcode" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Ctype" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CardType" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CardNo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ExpDate" Type="datetime" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
@@ -37,10 +43,10 @@ warning 6002: The table/view 'JewelryBiz.dbo.Category' does not have a primary k
         <EntityType Name="Order_Products">
           <Key>
             <PropertyRef Name="OrderID" />
-            <PropertyRef Name="PID" />
+            <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="Qty" Type="int" Nullable="false" />
           <Property Name="TotalSale" Type="money" Nullable="false" />
         </EntityType>
@@ -51,13 +57,13 @@ warning 6002: The table/view 'JewelryBiz.dbo.Category' does not have a primary k
           <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" Nullable="false" />
           <Property Name="DeliveryDate" Type="datetime" Nullable="false" />
-          <Property Name="CID" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="PID" />
+            <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="PID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Brand" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitPrice" Type="money" Nullable="false" />
@@ -66,12 +72,31 @@ warning 6002: The table/view 'JewelryBiz.dbo.Category' does not have a primary k
           <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ROL" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductStock">
+          <Key>
+            <PropertyRef Name="ProductNumber" />
+          </Key>
+          <Property Name="ProductNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="money" Nullable="false" />
+          <Property Name="UnitsInStock" Type="int" Nullable="false" />
+          <Property Name="Brand" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="ShoppingCartData">
           <Key>
             <PropertyRef Name="TempOrderID" />
           </Key>
           <Property Name="TempOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PID" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
           <Property Name="PName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="UnitPrice" Type="money" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
@@ -92,14 +117,10 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Phone" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address1" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Address2" Type="varchar" MaxLength="50" />
-          <Property Name="Postcode" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="State" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IsAdmin" Type="bit" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK_Order_Products_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1">
@@ -120,10 +141,10 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
-              <PropertyRef Name="PID" />
+              <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="Order_Products">
-              <PropertyRef Name="PID" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -134,27 +155,55 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
-              <PropertyRef Name="CID" />
+              <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="CID" />
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="JewelryBizStoreContainer">
+        <Function Name="procAddCustomer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Phone" Type="varchar" Mode="In" />
+          <Parameter Name="Addresss1" Type="varchar" Mode="In" />
+          <Parameter Name="Addresss2" Type="varchar" Mode="In" />
+          <Parameter Name="PostCode" Type="char" Mode="In" />
+          <Parameter Name="State" Type="char" Mode="In" />
+          <Parameter Name="CardType" Type="varchar" Mode="In" />
+          <Parameter Name="CardNumber" Type="varchar" Mode="In" />
+          <Parameter Name="ExpDate" Type="datetime" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="procCheckUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="procCreateAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FirstName" Type="varchar" Mode="In" />
+          <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="procCreateOrder" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SessionId" Type="varchar" Mode="In" />
+          <Parameter Name="CustomerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="procGetCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="procSubscribe" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="JewelryBizModelStoreContainer">
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoryConfiguration" EntityType="Self.CategoryConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Products" EntityType="Self.Order_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCartData" EntityType="Self.ShoppingCartData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Category" EntityType="Self.Category" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Category].[CategoryId] AS [CategoryId], 
-    [Category].[CategoryName] AS [CategoryName], 
-    [Category].[IsActive] AS [IsActive]
-    FROM [dbo].[Category] AS [Category]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="Subscription" EntityType="Self.Subscription" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Subscription].[Email] AS [Email], 
@@ -174,15 +223,34 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="JewelryBiz.UI" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="JewelryBizModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ParentCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CategoryConfiguration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ConfigurationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
-            <PropertyRef Name="CID" />
+            <PropertyRef Name="CustomerId" />
           </Key>
-          <Property Name="CID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -190,7 +258,7 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Postcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Ctype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CardType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CardNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ExpDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
@@ -199,10 +267,10 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
         <EntityType Name="Order_Products">
           <Key>
             <PropertyRef Name="OrderID" />
-            <PropertyRef Name="PID" />
+            <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="Qty" Type="Int32" Nullable="false" />
           <Property Name="TotalSale" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Products_Orders" FromRole="Order_Products" ToRole="Orders" />
@@ -215,15 +283,15 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="Order_Products" Relationship="Self.FK_Order_Products_Orders" FromRole="Orders" ToRole="Order_Products" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="PID" />
+            <PropertyRef Name="ProductId" />
           </Key>
-          <Property Name="PID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -233,15 +301,53 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <Property Name="ROL" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Order_Products" Relationship="Self.FK_Order_Products_Products" FromRole="Products" ToRole="Order_Products" />
         </EntityType>
+        <EntityType Name="ProductStock">
+          <Key>
+            <PropertyRef Name="ProductNumber" />
+          </Key>
+          <Property Name="ProductNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="UnitsInStock" Type="Int32" Nullable="false" />
+          <Property Name="Brand" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
         <EntityType Name="ShoppingCartData">
           <Key>
             <PropertyRef Name="TempOrderID" />
           </Key>
           <Property Name="TempOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
           <Property Name="PName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Subscription">
+          <Key>
+            <PropertyRef Name="Email" />
+          </Key>
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
         </EntityType>
         <Association Name="FK_Orders_Customers">
           <End Role="Customers" Type="Self.Customer" Multiplicity="1">
@@ -250,10 +356,10 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <End Role="Orders" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
-              <PropertyRef Name="CID" />
+              <PropertyRef Name="CustomerId" />
             </Principal>
             <Dependent Role="Orders">
-              <PropertyRef Name="CID" />
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -276,19 +382,25 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
           <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
-              <PropertyRef Name="PID" />
+              <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="Order_Products">
-              <PropertyRef Name="PID" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="JewelryBizEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="JewelryBizEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="CategoryConfigurations" EntityType="Self.CategoryConfiguration" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Order_Products" EntityType="Self.Order_Products" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
           <EntitySet Name="ShoppingCartDatas" EntityType="Self.ShoppingCartData" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Subscriptions" EntityType="Self.Subscription" />
           <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
@@ -301,53 +413,83 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
             <End Role="Products" EntitySet="Products" />
             <End Role="Order_Products" EntitySet="Order_Products" />
           </AssociationSet>
-          <EntitySet Name="Categories" EntityType="JewelryBiz.UI.Category" />
-          <EntitySet Name="Subscriptions" EntityType="JewelryBiz.UI.Subscription" />
-          <EntitySet Name="Users" EntityType="JewelryBiz.UI.User" />
+          <FunctionImport Name="procAddCustomer" ReturnType="Collection(Decimal)">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Phone" Mode="In" Type="String" />
+            <Parameter Name="Addresss1" Mode="In" Type="String" />
+            <Parameter Name="Addresss2" Mode="In" Type="String" />
+            <Parameter Name="PostCode" Mode="In" Type="String" />
+            <Parameter Name="State" Mode="In" Type="String" />
+            <Parameter Name="CardType" Mode="In" Type="String" />
+            <Parameter Name="CardNumber" Mode="In" Type="String" />
+            <Parameter Name="ExpDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="procCheckUser" ReturnType="Collection(JewelryBizModel.procCheckUser_Result)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="procCreateAccount">
+            <Parameter Name="FirstName" Mode="In" Type="String" />
+            <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="procCreateOrder">
+            <Parameter Name="SessionId" Mode="In" Type="String" />
+            <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="procGetCategories" ReturnType="Collection(JewelryBizModel.procGetCategories_Result)" />
+          <FunctionImport Name="procSubscribe">
+            <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="Category">
-          <Key>
-            <PropertyRef Name="CategoryId" />
-            <PropertyRef Name="CategoryName" />
-            <PropertyRef Name="IsActive" />
-          </Key>
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Subscription">
-          <Key>
-            <PropertyRef Name="Email" />
-          </Key>
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Postcode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="IsAdmin" Type="Boolean" />
-        </EntityType>
+        <ComplexType Name="procCheckUser_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RoleId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="procGetCategories_Result">
+          <Property Type="Int32" Name="CategoryId" Nullable="false" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ParentCategoryId" Nullable="false" />
+          <Property Type="Boolean" Name="IsActive" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="JewelryBizStoreContainer" CdmEntityContainer="JewelryBizEntities">
+        <EntityContainerMapping StorageEntityContainer="JewelryBizModelStoreContainer" CdmEntityContainer="JewelryBizEntities1">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="JewelryBizModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CategoryConfigurations">
+            <EntityTypeMapping TypeName="JewelryBizModel.CategoryConfiguration">
+              <MappingFragment StoreEntitySet="CategoryConfiguration">
+                <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="ConfigurationName" ColumnName="ConfigurationName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Customer">
+            <EntityTypeMapping TypeName="JewelryBizModel.Customer">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="FName" ColumnName="FName" />
                 <ScalarProperty Name="LName" ColumnName="LName" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
@@ -355,7 +497,7 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
                 <ScalarProperty Name="Address2" ColumnName="Address2" />
                 <ScalarProperty Name="Postcode" ColumnName="Postcode" />
                 <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Ctype" ColumnName="Ctype" />
+                <ScalarProperty Name="CardType" ColumnName="CardType" />
                 <ScalarProperty Name="CardNo" ColumnName="CardNo" />
                 <ScalarProperty Name="ExpDate" ColumnName="ExpDate" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -363,29 +505,29 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Products">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Order_Products">
+            <EntityTypeMapping TypeName="JewelryBizModel.Order_Products">
               <MappingFragment StoreEntitySet="Order_Products">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="Qty" ColumnName="Qty" />
                 <ScalarProperty Name="TotalSale" ColumnName="TotalSale" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Order">
+            <EntityTypeMapping TypeName="JewelryBizModel.Order">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="CID" ColumnName="CID" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Product">
+            <EntityTypeMapping TypeName="JewelryBizModel.Product">
               <MappingFragment StoreEntitySet="Products">
-                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="PName" ColumnName="PName" />
                 <ScalarProperty Name="Brand" ColumnName="Brand" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
@@ -396,51 +538,86 @@ warning 6002: The table/view 'JewelryBiz.dbo.Subscription' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductStocks">
+            <EntityTypeMapping TypeName="JewelryBizModel.ProductStock">
+              <MappingFragment StoreEntitySet="ProductStock">
+                <ScalarProperty Name="ProductNumber" ColumnName="ProductNumber" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="UnitsInStock" ColumnName="UnitsInStock" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="JewelryBizModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ShoppingCartDatas">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.ShoppingCartData">
+            <EntityTypeMapping TypeName="JewelryBizModel.ShoppingCartData">
               <MappingFragment StoreEntitySet="ShoppingCartData">
                 <ScalarProperty Name="TempOrderID" ColumnName="TempOrderID" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="PName" ColumnName="PName" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Category">
-              <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="JewelryBizModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Subscriptions">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.Subscription">
+            <EntityTypeMapping TypeName="JewelryBizModel.Subscription">
               <MappingFragment StoreEntitySet="Subscription">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="JewelryBiz.UI.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="LName" ColumnName="LName" />
-                <ScalarProperty Name="FName" ColumnName="FName" />
+          <FunctionImportMapping FunctionImportName="procAddCustomer" FunctionName="JewelryBizModel.Store.procAddCustomer" />
+          <FunctionImportMapping FunctionImportName="procCheckUser" FunctionName="JewelryBizModel.Store.procCheckUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JewelryBizModel.procCheckUser_Result">
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+                <ScalarProperty Name="FName" ColumnName="FName" />
+                <ScalarProperty Name="LName" ColumnName="LName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="procCreateAccount" FunctionName="JewelryBizModel.Store.procCreateAccount" />
+          <FunctionImportMapping FunctionImportName="procCreateOrder" FunctionName="JewelryBizModel.Store.procCreateOrder" />
+          <FunctionImportMapping FunctionImportName="procGetCategories" FunctionName="JewelryBizModel.Store.procGetCategories">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="JewelryBizModel.procGetCategories_Result">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="ParentCategoryId" ColumnName="ParentCategoryId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="procSubscribe" FunctionName="JewelryBizModel.Store.procSubscribe" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

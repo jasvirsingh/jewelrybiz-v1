@@ -10,16 +10,15 @@
 namespace JewelryBiz.UI
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Order_Products
+    public partial class procCheckUser_Result
     {
-        public int OrderID { get; set; }
-        public int ProductId { get; set; }
-        public int Qty { get; set; }
-        public decimal TotalSale { get; set; }
-    
-        public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public int UserID { get; set; }
+        public string FName { get; set; }
+        public string LName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public int RoleId { get; set; }
+        public System.DateTime CreateDate { get; set; }
     }
 }

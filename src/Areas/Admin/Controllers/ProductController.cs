@@ -26,7 +26,7 @@ namespace JewelryBiz.UI.Areas.Admin.Controllers
 
         private Models.Product _getProduct(int id)
         {
-            var product = _ctx.Products.FirstOrDefault(p => p.PID == id);
+            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == id);
             var model = Mapper.Map<Product, Models.Product>(product);
             return model;
         }
@@ -84,7 +84,7 @@ namespace JewelryBiz.UI.Areas.Admin.Controllers
             try
             {
                 // TODO: Add update logic here
-                Product p = _ctx.Products.FirstOrDefault(pr => pr.PID == model.PID);
+                Product p = _ctx.Products.FirstOrDefault(pr => pr.ProductId == model.ProductId);
 
                 p.UnitPrice = model.UnitPrice;
                 p.UnitsInStock = model.UnitsInStock;
@@ -105,7 +105,7 @@ namespace JewelryBiz.UI.Areas.Admin.Controllers
         // GET: Admin/Product/Delete/5
         public ActionResult Delete(int id)
         {
-            var product = _ctx.Products.FirstOrDefault(p => p.PID == id);
+            var product = _ctx.Products.FirstOrDefault(p => p.ProductId == id);
             return RedirectToAction("Index");
         }
     }

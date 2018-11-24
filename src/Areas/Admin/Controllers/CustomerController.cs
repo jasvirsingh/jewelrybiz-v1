@@ -26,7 +26,7 @@ namespace JewelryBiz.UI.Areas.Admin.Controllers
         // GET: Admin/Customer/Details/5
         public ActionResult Details(int id)
         {
-            var customer = _ctx.Customers.FirstOrDefault(c => c.CID == id);
+            var customer = _ctx.Customers.FirstOrDefault(c => c.CustomerId == id);
             var model = Mapper.Map<Customer, JewelryBiz.UI.Models.Customer>(customer);
             return View(model);
         }
@@ -34,7 +34,7 @@ namespace JewelryBiz.UI.Areas.Admin.Controllers
         // GET: Admin/Customer/Delete/5
         public ActionResult Delete(int id)
         {
-            var customer = _ctx.Customers.FirstOrDefault(c => c.CID == id);
+            var customer = _ctx.Customers.FirstOrDefault(c => c.CustomerId == id);
             _ctx.Customers.Remove(customer);
             _ctx.SaveChanges();
 

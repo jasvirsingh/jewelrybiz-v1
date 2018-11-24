@@ -43,14 +43,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesDAL.cs" />
     <Compile Include="Core\SqlDataAccess.cs" />
     <Compile Include="CustomerDAL.cs" />
     <Compile Include="Entities\Categories.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Models\CartItem.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="OrderDAL.cs" />
+    <Compile Include="ProductDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShoppingCartDataDAL.cs" />
     <Compile Include="SubscriptionDAL.cs" />
     <Compile Include="UserDAL.cs" />
   </ItemGroup>

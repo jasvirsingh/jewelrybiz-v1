@@ -159,7 +159,10 @@ namespace JewelryBiz.DataAccess.Core
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandText = storedProcName;
                     // assign parameters passed in to the command
-                    cmd.Parameters.AddRange(sqlParameters);
+                    if (sqlParameters != null)
+                    {
+                        cmd.Parameters.AddRange(sqlParameters);
+                    }
                     using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
                         da.Fill(ds);

@@ -1,4 +1,6 @@
-﻿using JewelryBiz.UI.Models;
+﻿using JewelryBiz.BusinessLayer;
+using JewelryBiz.DataAccess.Models;
+using JewelryBiz.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +41,9 @@ namespace JewelryBiz.UI.Controllers
             ViewBag.Products = _ctx.Products.ToList<Product>();
             //ViewBag.Categories = _ctx.Categories.ToList<Category>();
             var model = new ProductCategoryModel();
-            List<SelectListItem> categories = _ctx.Categories.ToList<Category>()
-                    .OrderBy(n => n.CategoryId)
+            var categoryService = new CategoryService();
+            List<SelectListItem> categories = categoryService.Get()
+                .Where(c => c.ParentCategoryId == 0)
                         .Select(n =>
                         new SelectListItem
                         {
@@ -94,30 +97,32 @@ namespace JewelryBiz.UI.Controllers
         private void addToCart(int pId)
         {
             // check if product is valid
-            Product product = _ctx.Products.FirstOrDefault(p => p.PID == pId);
+           JewelryBiz.DataAccess.Models.Product product = new ProductService().GetById(pId);
             if (product != null && product.UnitsInStock > 0)
             {
                 // check if product already existed
-                ShoppingCartData cart = _ctx.ShoppingCartDatas.FirstOrDefault(c => c.PID == pId);
+                CartItem cart = new ShoppingCartDataService().GetByProductId(Session.SessionID, pId);
                 if (cart != null)
                 {
                     cart.Quantity++;
+                    new ShoppingCartDataService().IncreaseCartItemQuantity(Session.SessionID, product.ProductId);
                 }
                 else
                 {
 
-                    cart = new ShoppingCartData
+                   var cartItem = new CartItem
                     {
                         PName = product.PName,
-                        PID = product.PID,
+                        ProductId = product.ProductId,
                         UnitPrice = product.UnitPrice,
-                        Quantity = 1
+                        Quantity = 1,
+                        UserSessionId = Session.SessionID
                     };
-
-                    _ctx.ShoppingCartDatas.Add(cart);
+                    new ShoppingCartDataService().AddCartItem(cartItem);
                 }
                 product.UnitsInStock--;
-                _ctx.SaveChanges();
+                new ProductService().DecreaseUnitInStockByOne(pId);
+               // _ctx.SaveChanges();
             }
         }
 

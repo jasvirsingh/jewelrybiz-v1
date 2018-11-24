@@ -15,67 +15,80 @@ namespace JewelryBiz.DataAccess
             return 0;
         }
 
-        public int Create(User user)
+        public void CreateCustomerOrder(Customer customer, string userSessionId)
         {
-            return 0;
-            //var parameters = new List<SqlParameter>();
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@FirstName",
-            //    DbType = DbType.String,
-            //    Value = user.FName
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@LastName",
-            //    DbType = DbType.String,
-            //    Value = user.LName
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@Phone",
-            //    DbType = DbType.String,
-            //    Value = user.Phone
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@Addresss1",
-            //    DbType = DbType.String,
-            //    Value = user.Address1
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@Addresss2",
-            //    DbType = DbType.String,
-            //    Value = user.Address2
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@PostCode",
-            //    DbType = DbType.String,
-            //    Value = user.Postcode
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@State",
-            //    DbType = DbType.String,
-            //    Value = user.State
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@Email",
-            //    DbType = DbType.String,
-            //    Value = user.Email
-            //});
-            //parameters.Add(new SqlParameter
-            //    {
-            //        ParameterName = "@Password",
-            //        DbType = DbType.String,
-            //        Value = user.Password
-            //    });
-            //var sqlDataAccess = new SqlDataAccess();
-            //var result = sqlDataAccess.ExecuteStoredProcedure("procCreateAccount", parameters.ToArray());
-            //return result;
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@FirstName",
+                DbType = DbType.String,
+                Value = customer.FName
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@LastName",
+                DbType = DbType.String,
+                Value = customer.LName
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Phone",
+                DbType = DbType.String,
+                Value = customer.Phone
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Addresss1",
+                DbType = DbType.String,
+                Value = customer.Address1
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Addresss2",
+                DbType = DbType.String,
+                Value = customer.Address2
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@PostCode",
+                DbType = DbType.String,
+                Value = customer.Postcode
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@State",
+                DbType = DbType.String,
+                Value = customer.State
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@CardType",
+                DbType = DbType.String,
+                Value = customer.CardType
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@CardNumber",
+                DbType = DbType.String,
+                Value = customer.CardNo
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@ExpDate",
+                DbType = DbType.String,
+                Value = customer.ExpDate
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Email",
+                DbType = DbType.String,
+                Value = customer.Email
+            });
+            var sqlDataAccess = new SqlDataAccess();
+            sqlDataAccess.ExecuteStoredProcedure("procAddCustomer", parameters.ToArray());
+
+            var orderDAL = new OrderDAL();
+            orderDAL.CreateOrder(userSessionId, customer.Email);
         }
     }
 }

@@ -67,10 +67,10 @@ else
                 <td><span class="p-name">@item.PName</span> </td>
                 <td><span class="p-name">@String.Format("{0:c}", item.UnitPrice)</span> </td>
                 <td>
-                    <a class="quantity" onclick="Change(this, 1, @item.PID)">+</a>
+                    <a class="quantity" onclick="Change(this, 1, @item.ProductId)">+</a>
                     <span class="p-name">@item.Quantity</span>
-                    <a class="quantity" onclick="Change(this, 0,  @item.PID)">-</a>
-                    <a class="remove" onclick="Change(this, -1,  @item.PID)">Remove</a>
+                    <a class="quantity" onclick="Change(this, 0,  @item.ProductId)">-</a>
+                    <a class="remove" onclick="Change(this, -1,  @item.ProductId)">Remove</a>
                 </td>
             </tr>
         }

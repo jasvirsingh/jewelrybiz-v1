@@ -20,7 +20,7 @@ namespace JewelryBiz.UI
             this.Orders = new HashSet<Order>();
         }
     
-        public int CID { get; set; }
+        public int CustomerId { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public string Phone { get; set; }
@@ -28,7 +28,7 @@ namespace JewelryBiz.UI
         public string Address2 { get; set; }
         public string Postcode { get; set; }
         public string State { get; set; }
-        public string Ctype { get; set; }
+        public string CardType { get; set; }
         public string CardNo { get; set; }
         public System.DateTime ExpDate { get; set; }
         public string Email { get; set; }

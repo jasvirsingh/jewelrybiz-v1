@@ -12,11 +12,10 @@ namespace JewelryBiz.BusinessLayer
             return 0;
         }
 
-        public int Create(User user)
+        public void CreateCustomerOrder(Customer customer, string userSessionId)
         {
             var customerDAL = new CustomerDAL();
-            var result = customerDAL.Create(user);
-            return result;
+            customerDAL.CreateCustomerOrder(customer, userSessionId);
         }
     }
 }

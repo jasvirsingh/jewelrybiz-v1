@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JewelryBiz.BusinessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -88,13 +89,13 @@ new { SID = "WY", SName = "Wyoming" }
         {
             JewelryBizEntities context = new JewelryBizEntities();
 
-            ShoppingCartData product = context.ShoppingCartDatas.FirstOrDefault(p => p.PID == pId);
+            ShoppingCartData product = context.ShoppingCartDatas.FirstOrDefault(p => p.ProductId == pId);
             if (product == null)
             {
                 return Json(new { d = "0" });
             }
 
-            Product actualProduct = context.Products.FirstOrDefault(p => p.PID == pId);
+            Product actualProduct = context.Products.FirstOrDefault(p => p.ProductId == pId);
             int quantity;
             // if type 0, decrease quantity
             // if type 1, increase quanity
@@ -151,7 +152,7 @@ new { SID = "WY", SName = "Wyoming" }
             {
                 List<ShoppingCartData> carts = _ctx.ShoppingCartDatas.ToList();
                 carts.ForEach(a => {
-                    Product product = _ctx.Products.FirstOrDefault(p => p.PID == a.PID);
+                    Product product = _ctx.Products.FirstOrDefault(p => p.ProductId == a.ProductId);
                     product.UnitsInStock += a.Quantity;
                 });
                 _ctx.ShoppingCartDatas.RemoveRange(carts);
@@ -200,7 +201,7 @@ new { SID = "WY", SName = "Wyoming" }
 
                 if (ModelState.IsValid)
                 {
-                    Customer c = new Customer
+                    var c = new JewelryBiz.DataAccess.Models.Customer
                     {
                         FName = customer.FName,
                         LName = customer.LName,
@@ -210,34 +211,36 @@ new { SID = "WY", SName = "Wyoming" }
                         Address2 = customer.Address2,
                         Postcode = customer.Postcode,
                         State = customer.State,
-                        Ctype = customer.Ctype,
+                        CardType = customer.Ctype,
                         CardNo = customer.CardNo,
                         ExpDate = customer.ExpDate
                     };
 
-                    Order o = new Order
-                    {
-                        OrderDate = DateTime.Now,
-                        DeliveryDate = DateTime.Now.AddDays(5),
-                        CID = c.CID
-                    };
+                    var customerService = new CustomerService();
+                    customerService.CreateCustomerOrder(c, Session.SessionID);
+                    //Order o = new Order
+                    //{
+                    //    OrderDate = DateTime.Now,
+                    //    DeliveryDate = DateTime.Now.AddDays(5),
+                    //    CID = c.CustomerId
+                    //};
 
-                    _ctx.Customers.Add(c);
-                    _ctx.Orders.Add(o);
+                    //_ctx.Customers.Add(c);
+                    //_ctx.Orders.Add(o);
 
-                    foreach (var i in _ctx.ShoppingCartDatas.ToList<ShoppingCartData>())
-                    {
-                        _ctx.Order_Products.Add(new Order_Products
-                        {
-                            OrderID = o.OrderID,
-                            PID = i.PID,
-                            Qty = i.Quantity,
-                            TotalSale = i.Quantity * i.UnitPrice
-                        });
-                        _ctx.ShoppingCartDatas.Remove(i);
-                    }
+                    //foreach (var i in _ctx.ShoppingCartDatas.ToList<ShoppingCartData>())
+                    //{
+                    //    _ctx.Order_Products.Add(new Order_Products
+                    //    {
+                    //        OrderID = o.OrderID,
+                    //        PID = i.PID,
+                    //        Qty = i.Quantity,
+                    //        TotalSale = i.Quantity * i.UnitPrice
+                    //    });
+                    //    _ctx.ShoppingCartDatas.Remove(i);
+                    //}
 
-                    _ctx.SaveChanges();
+                    //_ctx.SaveChanges();
 
                     return RedirectToAction("PurchasedSuccess");
 

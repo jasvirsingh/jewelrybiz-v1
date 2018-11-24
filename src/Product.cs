@@ -20,7 +20,7 @@ namespace JewelryBiz.UI
             this.Order_Products = new HashSet<Order_Products>();
         }
     
-        public int PID { get; set; }
+        public int ProductId { get; set; }
         public string PName { get; set; }
         public string Brand { get; set; }
         public decimal UnitPrice { get; set; }

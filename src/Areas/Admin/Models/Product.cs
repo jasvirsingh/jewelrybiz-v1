@@ -8,7 +8,7 @@ namespace JewelryBiz.UI.Areas.Admin.Models
 {
     public class Product : Base
     {
-        public int PID { get; set; }
+        public int ProductId { get; set; }
 
         [Required(ErrorMessage = "Product name is required")]
         [Display(Name = "Product Name")]

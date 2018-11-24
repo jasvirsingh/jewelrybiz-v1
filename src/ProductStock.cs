@@ -12,14 +12,14 @@ namespace JewelryBiz.UI
     using System;
     using System.Collections.Generic;
     
-    public partial class Order_Products
+    public partial class ProductStock
     {
-        public int OrderID { get; set; }
-        public int ProductId { get; set; }
-        public int Qty { get; set; }
-        public decimal TotalSale { get; set; }
-    
-        public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public string ProductNumber { get; set; }
+        public string ProductName { get; set; }
+        public string Description { get; set; }
+        public int CategoryId { get; set; }
+        public decimal UnitPrice { get; set; }
+        public int UnitsInStock { get; set; }
+        public string Brand { get; set; }
     }
 }

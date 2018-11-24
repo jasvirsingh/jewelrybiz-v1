@@ -6,7 +6,7 @@ namespace JewelryBiz.DataAccess.Models
 {
     public class Customer
     {
-        public int CID { get; set; }
+        public int CustomerId { get; set; }
 
         [Required(ErrorMessage = "FirstName is required")]
         [Display(Name = "First Name")]
@@ -37,7 +37,7 @@ namespace JewelryBiz.DataAccess.Models
 
         [Required(ErrorMessage = "Card type is required")]
         [Display(Name = "Card Type")]
-        public string Ctype { get; set; }
+        public string CardType { get; set; }
 
         [Required(ErrorMessage = "Card number is required")]
         [Display(Name = "Card Number")]

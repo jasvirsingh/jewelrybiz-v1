@@ -15,7 +15,7 @@ namespace JewelryBiz.UI.Models
         [Display(Name = "First Name")]
         public string FName { get; set; }
 
-        [Required(ErrorMessage = "LastNme is required")]
+        [Required(ErrorMessage = "LastName is required")]
         [Display(Name = "Last Name")]
         public string LName { get; set; }
 
@@ -32,7 +32,7 @@ namespace JewelryBiz.UI.Models
         public string Address2 { get; set; }
 
         [Required(ErrorMessage = "Postcode is required")]
-        [StringLength(4, MinimumLength = 4, ErrorMessage = "Invalid postcode")]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "Invalid postcode")]
         public string Postcode { get; set; }
 
         [Required(ErrorMessage = "State is required")]

@@ -3,18 +3,18 @@
 });
 
 function FillCategories() {
-    //$.ajax({
-    //    type: "GET",
-    //    url: "/Home/GetCategories",
-    //    dataType: "json",
-    //    contentType: "application/json",
-    //    success: function (res) {
-    //        $.each(res, function (data, value) {
-    //            $("#categories").append($("<option></option>").val(value.Value).html(value.Text));
-    //        })
-    //    }
+    $.ajax({
+        type: "GET",
+        url: "/Home/GetCategories",
+        dataType: "json",
+        contentType: "application/json",
+        success: function (res) {
+            $.each(res, function (data, value) {
+                $("#categories").append($("<option></option>").val(value.Value).html(value.Text));
+            })
+        }
 
-    //});
+    });
 }
 
 $("#categories").change(function () {
