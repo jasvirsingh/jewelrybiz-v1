@@ -1,0 +1,33 @@
+﻿@model JewelryBiz.DataAccess.Models.PurchasedItem
+@{
+    ViewBag.Title = "PurchaseHistory";
+}
+
+<h2>PurchaseHistory</h2>
+<div class="form-horizontal">
+    <hr />
+
+    <table width="100%" border="1">
+        <tr style="background-color:darkred; font-size:medium; color:white; font-weight:bold;">
+            <td>Product Name</td>
+            <td>Quantity</td>
+            <td>Total Price</td>
+            <td>Ordered On</td>
+            <td>Delivered On</td>
+            <td></td>
+        </tr>
+        @if (ViewBag.PurchasedItems != null)
+            { 
+                    foreach (var item in ViewBag.PurchasedItems)
+                    {
+                    <tr style="height:60px;">
+                        <td><span class="p-name">@item.ProductName </span></td>
+                        <td><span class="p-unit">@item.OrderQuantity</span></td>
+                        <td><span class="p-price">@String.Format("{0:c}", item.TotalAmount)</span></td>
+                        <td><span class="p-name">@item.OrderDate </span></td>
+                        <td><span class="p-name">@item.DeliveryDate </span></td>
+                    </tr>
+                    }
+            }
+    </table>
+</div>

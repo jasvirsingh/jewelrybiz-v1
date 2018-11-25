@@ -24,7 +24,7 @@ namespace JewelryBiz.DataAccess
             });
 
             var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteStoredProcedure("procCreateOrder", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteNonQuery("procCreateOrder", parameters.ToArray());
             return result;
         }
     }

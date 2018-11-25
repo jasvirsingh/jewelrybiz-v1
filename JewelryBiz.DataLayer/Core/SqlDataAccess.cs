@@ -127,7 +127,7 @@ namespace JewelryBiz.DataAccess.Core
         /// </summary>
         /// <param name="spName"></param>
         /// <returns></returns>
-        public int ExecuteStoredProcedure(string spName, SqlParameter[] sqlParameters)
+        public int ExecuteNonQuery(string spName, SqlParameter[] sqlParameters)
         {
             SqlCommand cmd = GetCommand(spName);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -149,7 +149,7 @@ namespace JewelryBiz.DataAccess.Core
             return cn;
         }
 
-        public DataSet ExecuteQuery(string storedProcName, SqlParameter[] sqlParameters)
+        public DataSet ExecuteStoredProcedure(string storedProcName, SqlParameter[] sqlParameters)
         {
             DataSet ds = new DataSet();
             using (SqlConnection cn = new SqlConnection(ConnectionString))

@@ -1,21 +1,25 @@
 ﻿using JewelryBiz.DataAccess;
 using JewelryBiz.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace JewelryBiz.BusinessLayer
 {
     public class CustomerService
     {
-        public int Get(Customer customer)
+        public Customer GetByEmail(string email)
         {
-            var customerDAL = new CustomerDAL();
-            var result = customerDAL.Get(customer);
-            return 0;
+            return new CustomerDAL().GetByEmail(email);
         }
 
         public void CreateCustomerOrder(Customer customer, string userSessionId)
         {
-            var customerDAL = new CustomerDAL();
-            customerDAL.CreateCustomerOrder(customer, userSessionId);
+            new CustomerDAL().CreateCustomerOrder(customer, userSessionId);
         }
+
+        public IList<PurchasedItem> GetPurchaseHistory(string email)
+        {
+            return new CustomerDAL().GetPurchaseHistory(email);
+        }
+
     }
 }

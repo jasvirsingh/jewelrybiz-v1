@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace JewelryBiz.UI.Areas.Admin.Controllers
 {
-    public class CustomerController : BaseController
+    public class Customer1Controller : BaseController
     {
-        public CustomerController(){
+        public Customer1Controller(){
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<Customer, UI.Models.Customer>();
             });

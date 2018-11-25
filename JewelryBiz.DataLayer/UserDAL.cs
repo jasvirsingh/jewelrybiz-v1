@@ -26,7 +26,7 @@ namespace JewelryBiz.DataAccess
             });
             var sqlDataAccess = new SqlDataAccess();
 
-            var result = sqlDataAccess.ExecuteQuery("procCheckUser", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteStoredProcedure("procCheckUser", parameters.ToArray());
             if(result!=null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 var row = result.Tables[0].Rows[0];
@@ -71,7 +71,7 @@ namespace JewelryBiz.DataAccess
                 Value = user.Password
             });
             var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteStoredProcedure("procCreateAccount", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteNonQuery("procCreateAccount", parameters.ToArray());
             return result;
         }
     }

@@ -27,7 +27,7 @@ namespace JewelryBiz.DataAccess
             });
 
             var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteQuery("procGetCartItem", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteStoredProcedure("procGetCartItem", parameters.ToArray());
             if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 var item = result.Tables[0].Rows[0];
@@ -53,7 +53,7 @@ namespace JewelryBiz.DataAccess
             });
 
             var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteQuery("procGetCartItems", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteStoredProcedure("procGetCartItems", parameters.ToArray());
             if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
             {
                 IEnumerable<DataRow> items = from item in result.Tables[0].AsEnumerable()

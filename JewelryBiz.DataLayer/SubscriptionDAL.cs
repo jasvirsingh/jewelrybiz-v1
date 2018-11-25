@@ -17,7 +17,7 @@ namespace JewelryBiz.DataAccess
                 Value = email
             });
             var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.ExecuteStoredProcedure("procSubscribe", parameters.ToArray());
+            var result = sqlDataAccess.ExecuteNonQuery("procSubscribe", parameters.ToArray());
             return result;
         }
     }

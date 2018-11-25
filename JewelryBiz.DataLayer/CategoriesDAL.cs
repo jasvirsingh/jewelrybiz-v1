@@ -12,7 +12,7 @@ namespace JewelryBiz.DataAccess
         public IEnumerable<Category> Get()
         {
             var sqlDAL = new SqlDataAccess();
-            var result = sqlDAL.ExecuteQuery("procGetCategories", null);
+            var result = sqlDAL.ExecuteStoredProcedure("procGetCategories", null);
             if(result != null)
             {
                 IEnumerable<DataRow> rows = from category in result.Tables[0].AsEnumerable()
