@@ -6,8 +6,7 @@ namespace JewelryBiz.BusinessLayer
     {
         public int Subscribe(string email)
         {
-            var subscriptionDAL = new SubscriptionDAL();
-            return subscriptionDAL.Subscribe(email);
+            return new SubscriptionDAL().Subscribe(email);
         }
     }
 }

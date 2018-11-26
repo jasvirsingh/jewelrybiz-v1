@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace JewelryBiz.DataAccess
 {
@@ -24,6 +25,29 @@ namespace JewelryBiz.DataAccess
                     UnitsInStock = Convert.ToInt32(result.Rows[0]["UnitsInStock"]),
                     Description = result.Rows[0]["Description"].ToString()
                 };
+            }
+            return null;
+        }
+
+        public IList<Product> GetAll()
+        {
+            var sqlDataAccess = new SqlDataAccess();
+            var result = sqlDataAccess.ExecuteStoredProcedure("procGetAllProducts");
+            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                IEnumerable<DataRow> products = from p in result.Tables[0].AsEnumerable()
+                                             select p;
+                var items = products.Select(p => new Product
+                {
+                    ProductId = Convert.ToInt32(p["ProductId"]),
+                    PName = p["PName"].ToString(),
+                    Description = p["Description"].ToString(),
+                    UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
+                    UnitsInStock = Convert.ToInt32(p["UnitsInStock"]),
+                    Category = p["Category"].ToString()
+                });
+
+                return items.ToList();
             }
             return null;
         }

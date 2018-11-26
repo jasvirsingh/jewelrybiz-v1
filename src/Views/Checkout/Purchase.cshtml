@@ -1,4 +1,4 @@
-﻿@model JewelryBiz.UI.Models.Customer
+﻿@model JewelryBiz.DataAccess.Models.Customer
 
 @{
     ViewBag.Title = "Purchase";
@@ -28,6 +28,8 @@
             @Html.ValidationMessageFor(model => model.LName, "", new { @class = "text-danger" })
         </div>
     </div>
+    @if (HttpContext.Current.User == null && string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+    {
     <div class="form-group">
         @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -35,6 +37,7 @@
             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
         </div>
     </div>
+    }
 
     <div class="form-group">
         @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -46,14 +49,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Address1, new { htmlAttributes = new { @class = "form-control" ,placeholder = "Steet Address, PO Box" } })
             @Html.ValidationMessageFor(model => model.Address1, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "form-control", placeholder = "Apartment, suit, unit, building etc" } })
             @Html.ValidationMessageFor(model => model.Address2, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -75,10 +78,10 @@
 
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Ctype, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CardType, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Ctype, new SelectList(ViewBag.Cards, "Type", "Type"), new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Ctype, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.CardType, new SelectList(ViewBag.Cards, "Type", "Type"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CardType, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
@@ -97,7 +100,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-info" />
+            <input type="submit" value="Purchase" class="btn btn-info" />
         </div>
     </div>
 </div>

@@ -7,14 +7,11 @@ namespace JewelryBiz.BusinessLayer
     {
         public User VerifyUser(string email, string password)
         {
-            var userDAL = new UserDAL();
-            return userDAL.VerifyUser(email, password);
+            return new UserDAL().VerifyUser(email, password);
         }
         public int Create(User user)
         {
-            var userDAL = new UserDAL();
-            var result = userDAL.Create(user);
-            return result;
+            return new UserDAL().Create(user);
         }
     }
 }

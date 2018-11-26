@@ -1,5 +1,6 @@
 ﻿using JewelryBiz.DataAccess;
 using JewelryBiz.DataAccess.Models;
+using System.Collections.Generic;
 
 namespace JewelryBiz.BusinessLayer
 {
@@ -8,6 +9,11 @@ namespace JewelryBiz.BusinessLayer
         public Product GetById(int productId)
         {
             return new ProductDAL().GetById(productId);
+        }
+
+        public IList<Product> GetAll()
+        {
+            return new ProductDAL().GetAll();
         }
 
         public void DecreaseUnitInStockByOne(int productId)

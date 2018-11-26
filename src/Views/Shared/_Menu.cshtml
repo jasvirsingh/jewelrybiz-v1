@@ -29,21 +29,20 @@ new { LinkText="Purchase History", ActionName="PurchaseHistory",ControllerName="
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                @if (HttpContext.Current.User.Identity.IsAuthenticated)
+                @if (Request.Cookies["User"] != null && Request.Cookies["User"]["Role"]!=null)
                 {
-                    if (System.Web.HttpContext.Current.User != null)
+                    //if (System.Web.HttpContext.Current.User != null)
+                    //{
+                    //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
+                    string role = Request.Cookies["User"]["Role"];
+                    String roles = role;
+                    var links = from item in menus
+                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                .Any(x => roles.Contains(x) || x == "All")
+                                select item;
+                    foreach (var link in links)
                     {
-                        //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
-                        string role = Request.Cookies["User"]["Role"];
-                        String roles = role;
-                        var links = from item in menus
-                                    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                    .Any(x => roles.Contains(x) || x == "All")
-                                    select item;
-                        foreach (var link in links)
-                        {
                             @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
-                        }
                     }
                 }
                 else

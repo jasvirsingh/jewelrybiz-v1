@@ -48,18 +48,6 @@ namespace JewelryBiz.DataAccess
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@FirstName",
-                DbType = DbType.String,
-                Value = user.FirstName
-            });
-            parameters.Add(new SqlParameter
-            {
-                ParameterName = "@LastName",
-                DbType = DbType.String,
-                Value = user.LastName
-            });
-            parameters.Add(new SqlParameter
-            {
                 ParameterName = "@Email",
                 DbType = DbType.String,
                 Value = user.Email

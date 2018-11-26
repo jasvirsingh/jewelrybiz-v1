@@ -29,7 +29,7 @@ namespace JewelryBiz.DataAccess.Models
         public string Address2 { get; set; }
 
         [Required(ErrorMessage = "Postcode is required")]
-        [StringLength(4, MinimumLength = 4, ErrorMessage = "Invalid postcode")]
+        [StringLength(5, MinimumLength = 5, ErrorMessage = "Invalid postcode")]
         public string Postcode { get; set; }
 
         [Required(ErrorMessage = "State is required")]

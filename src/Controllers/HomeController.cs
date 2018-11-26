@@ -14,13 +14,13 @@ namespace JewelryBiz.UI.Controllers
         {
             ShoppingBag();
 
-            ViewBag.Products = _ctx.Products.ToList<Product>();
+            ViewBag.Products = new ProductService().GetAll();
             return View();
         }
 
         public JsonResult GetCategories()
         {
-            ViewBag.Products = _ctx.Products.ToList<Product>();
+            ViewBag.Products = new ProductService().GetAll();
             //ViewBag.Categories = _ctx.Categories.ToList<Category>();
             var model = new ProductCategoryModel();
             var categoryService = new CategoryService();
@@ -44,12 +44,12 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult Category(string catName)
         {
-            List<Product> products;
+            IList<Product> products;
             if (catName == "")
             {
-                products = _ctx.Products.ToList<Product>();
+                products = new ProductService().GetAll();
             } else { 
-                products = _ctx.Products.Where(p => p.Category == catName).ToList<Product>();
+                products = new ProductService().GetAll().Where(p => p.Category == catName).ToList<Product>();
             }
             ViewBag.Products = products;
             return View("Index");
@@ -57,14 +57,14 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult GetProducts(string catName)
         {
-            List<Product> products;
+            IList<Product> products;
             if (catName == "")
             {
-                products = _ctx.Products.ToList<Product>();
+                products = new ProductService().GetAll();
             }
             else
             {
-                products = _ctx.Products.Where(p => p.Category == catName).ToList<Product>();
+                products = new ProductService().GetAll().Where(p => p.Category == catName).ToList<Product>();
             }
             ViewBag.Products = products;
             return View("Index");
@@ -91,7 +91,6 @@ namespace JewelryBiz.UI.Controllers
                 }
                 else
                 {
-
                    var cartItem = new CartItem
                     {
                         PName = product.PName,

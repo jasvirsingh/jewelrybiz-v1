@@ -104,23 +104,6 @@ namespace JewelryBiz.DataAccess.Core
             return result;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="spName"></param>
-        /// <returns></returns>
-        public int ExecuteStoredProcedure(string spName)
-        {
-            SqlCommand cmd = GetCommand(spName);
-            cmd.CommandType = CommandType.StoredProcedure;
-            if (cmd.Connection.State == ConnectionState.Closed)
-            {
-                cmd.Connection.Open();
-            }
-            int result = cmd.ExecuteNonQuery();
-            cmd.Connection.Close();
-            return result;
-        }
 
         /// <summary>
         /// 
@@ -149,7 +132,7 @@ namespace JewelryBiz.DataAccess.Core
             return cn;
         }
 
-        public DataSet ExecuteStoredProcedure(string storedProcName, SqlParameter[] sqlParameters)
+        public DataSet ExecuteStoredProcedure(string storedProcName, SqlParameter[] sqlParameters = null)
         {
             DataSet ds = new DataSet();
             using (SqlConnection cn = new SqlConnection(ConnectionString))

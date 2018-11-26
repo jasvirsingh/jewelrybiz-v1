@@ -6,10 +6,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using JewelryBiz.UI.Models;
-using System.Collections.Generic;
 using JewelryBiz.BusinessLayer;
 using JewelryBiz.UI.Helpers;
 using System.Web.Security;
+using JewelryBiz.DataAccess.Models;
 
 namespace JewelryBiz.UI.Controllers
 {
@@ -99,13 +99,13 @@ namespace JewelryBiz.UI.Controllers
                     Response.Cookies["User"]["FirstName"] = user.FirstName;
                     Response.Cookies["User"]["LastName"] = user.LastName;
                     Response.Cookies["User"]["Role"] = user.RoleId == 1 ?"Admin" : "Customer";
-                    Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
+                    //Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                         1,
                         user.Email,
                         DateTime.Now,
-                        DateTime.Now.AddMinutes(2880),
+                        DateTime.Now.AddMinutes(60),
                         true,
                         user.RoleId.ToString(),
                         FormsAuthentication.FormsCookiePath);
@@ -121,7 +121,13 @@ namespace JewelryBiz.UI.Controllers
                     sm.AuthorizeUser(user);
                     FormsAuthentication.SetAuthCookie(model.UserName, true);
                     Session["MyMenu"] = null;
-
+                    if(Session["Checkout"]!=null)
+                    {
+                        if(Session["Checkout"].ToString() == "FromCheckout")
+                        {
+                            return RedirectToAction("Purchase", "Checkout");
+                        }
+                    }
                     return RedirectToAction("Index", "Admin");
                 case SignInStatus.Failure:
                 default:
@@ -187,10 +193,8 @@ namespace JewelryBiz.UI.Controllers
             const string roleAdmin = "Admin";
             if (ModelState.IsValid)
             {
-                var u = new JewelryBiz.DataAccess.Models.User
+                var u = new User
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
                     Email = model.Email,
                     Password = model.Password,
                 };
@@ -246,55 +250,7 @@ namespace JewelryBiz.UI.Controllers
         
         private void SetStates()
         {
-            ViewBag.States = new List<object> {
-new { SID = "AL", SName = "Alabama" },
-new { SID = "AK", SName ="Alaska" },
-new { SID = "AZ", SName = "Arizona" },
-new { SID = "AR", SName = "Arkansas" },
-new { SID = "CA", SName = "California" },
-new { SID = "CO", SName = "Colorado" },
-new { SID = "CT", SName = "Connecticut" },
-new { SID = "DE", SName = "Delaware" },
-new { SID = "FL", SName = "Florida" },
-new { SID = "GA", SName = "Georgia" },
-new { SID = "HI", SName = "Hawaii" },
-new { SID = "ID", SName = "Idaho" },
-new { SID = "IL", SName = "Illinois Indiana" },
-new { SID = "IA", SName = "Iowa" },
-new { SID = "KS", SName = "Kansas" },
-new { SID = "KY", SName = "Kentucky" },
-new { SID = "LA", SName = "Louisiana" },
-new { SID = "ME", SName = "Maine" },
-new { SID = "MD", SName = "Maryland" },
-new { SID = "MA", SName = "Massachusetts" },
-new { SID = "MI", SName = "Michigan" },
-new { SID = "MN", SName = "Minnesota" },
-new { SID = "MS", SName = "Mississippi" },
-new { SID = "MO", SName = "Missouri" },
-new { SID = "MT", SName = "Montana Nebraska" },
-new { SID = "NV", SName = "Nevada" },
-new { SID = "NH", SName = "New Hampshire" },
-new { SID = "NJ", SName = "New Jersey" },
-new { SID = "NM", SName = "New Mexico" },
-new { SID = "NY", SName = "New York" },
-new { SID = "NC", SName = "North Carolina" },
-new { SID = "ND", SName = "North Dakota" },
-new { SID = "OH", SName = "Ohio" },
-new { SID = "OK", SName = "Oklahoma" },
-new { SID = "OR", SName = "Oregon" },
-new { SID = "PRI", SName = "Pennsylvania Rhode Island" },
-new { SID = "SC", SName = "South Carolina" },
-new { SID = "SD", SName = "South Dakota" },
-new { SID = "TN", SName = "Tennessee" },
-new { SID = "TX", SName = "Texas" },
-new { SID = "UT", SName = "Utah" },
-new { SID = "VT", SName = "Vermont" },
-new { SID = "VA", SName = "Virginia" },
-new { SID = "WA", SName = "Washington" },
-new { SID = "WV", SName = "West Virginia" },
-new { SID = "WI", SName = "Wisconsin" },
-new { SID = "WY", SName = "Wyoming" }
-            };
+            ViewBag.States = StatesService.GetStates();
         }
         #region Helpers
         // Used for XSRF protection when adding external logins

@@ -7,23 +7,23 @@ namespace JewelryBiz.UI.Models
 {
     public class ProductCategoryModel
     {
-        private JewelryBizEntities _ctx = new JewelryBizEntities();
-        public List<Product> AllProducts
-        {
-            get
-            {
-                return _ctx.Products.ToList<Product>();
+        //private JewelryBizEntities _ctx = new JewelryBizEntities();
+        //public List<Product> AllProducts
+        //{
+        //    get
+        //    {
+        //        return _ctx.Products.ToList<Product>();
 
-            }
-        }
+        //    }
+        //}
 
-        public List<Category> AllCategories
-        {
-            get
-            {
-                return _ctx.Categories.ToList<Category>();
+        //public List<Category> AllCategories
+        //{
+        //    get
+        //    {
+        //        return _ctx.Categories.ToList<Category>();
 
-            }
-        }
+        //    }
+        //}
     }
 }

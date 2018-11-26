@@ -49,12 +49,14 @@
     <Compile Include="Entities\Categories.cs" />
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Helpers.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\PurchasedItem.cs" />
+    <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="OrderDAL.cs" />
     <Compile Include="ProductDAL.cs" />
