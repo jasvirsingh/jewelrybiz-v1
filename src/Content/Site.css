@@ -24,7 +24,7 @@ textarea {
 }
 
 .navbar-theme {
-    background: #800000;
+    background: #5DADE2;
     font-weight: bold;
 }
 .navbar-theme a {
@@ -42,13 +42,13 @@ textarea {
     float: right;
     padding: 20px;
     background: none;
-    border: 1px solid #800000;
-    color: #800000;
+    border: 1px solid #5DADE2;
+    color: #5DADE2;
     letter-spacing: normal;
     position: relative;
 }
     .basket:hover {
-        background: #800000
+        background: #5DADE2
     }
 .basket span {
     margin-right: 5px;
@@ -61,9 +61,9 @@ textarea {
         margin-top: 20px;
         right: -1px;
         display: none;
-        border: 1px solid #800000;
+        border: 1px solid #5DADE2;
         background: #fff;
-        color: #800000;
+        color: #5DADE2;
         z-index: 3;
         letter-spacing: normal;
         text-transform: none;
@@ -77,7 +77,7 @@ textarea {
     .basket table tr:last-child a {
         padding: 10px 20px;
         float: right;
-        color: #800000;
+        color: #5DADE2;
         opacity: .7;
         transition: .3s;
         font-weight: bold;
@@ -86,7 +86,7 @@ textarea {
     }
         .basket table tr:last-child a:hover {
             opacity: 1;
-            background: #800000;
+            background: #5DADE2;
             color: #fff
         }
 .basket table td {
@@ -105,7 +105,7 @@ textarea {
     transition: .3s;
     -webkit-transition: .3s;
     padding: 20px;
-    border: 1px solid #800000;
+    border: 1px solid #5DADE2;
 }
 .list-item:hover {
     opacity: 1
@@ -118,15 +118,15 @@ textarea {
 }
 
     .list-item .p-cat {
-        color: #800000;
+        color: #5DADE2;
         display: inline-block;
         padding: 9px 0;
         font-size: .8em;
         font-weight: bold;
     }
     .list-item .p-brand {
-        color: #800000;
-        border: 1px solid #800000;
+        color: #5DADE2;
+        border: 1px solid #5DADE2;
         font-size: .8em;
         font-weight: bold;
         padding: 7px;
@@ -137,12 +137,12 @@ textarea {
     font-weight: bold;
     margin: 5px 0;
 }
-.list-item .p-description {
-    /*font-size: 0.9em;*/
-    color: #808080;
-    margin-bottom: 10px;
-    display: block;
-}
+    .list-item .p-description {
+        /*font-size: 0.9em;*/
+        color: #5DADE2;
+        margin-bottom: 10px;
+        display: block;
+    }
 .list-item .add-to-cart {
     display: inline-block;
     vertical-align: bottom;
@@ -151,7 +151,7 @@ textarea {
 
 
     .list-item .add-to-cart a {
-        border: 1px solid #800000;
+        border: 1px solid #5DADE2;
         padding: 10px;
         font-weight: bold;
         font-size: .8em;
@@ -159,11 +159,11 @@ textarea {
         cursor: pointer;
         text-decoration: none;
         text-transform: uppercase;
-        color: #800000;
+        color: #5DADE2;
     }
         .list-item .add-to-cart a:hover {
             color: #fff;
-            background: #800000;
+            background: #5DADE2;
         }
     .list-item .p-price {
         color: #fff;
@@ -192,14 +192,14 @@ textarea {
     width: 100%;
     margin: 20px 0;
     font-weight: bold;
-    color: #800000;
+    color: #5DADE2;
 }
 .cart-page th { transition: .3s; -webkit-transition: .3s }
 .cart-page th:hover {
     background: rgba(45, 187, 155, 0.5);
 }
     .cart-page, .cart-page th, .cart-page td {
-        border: 1px solid #800000;
+        border: 1px solid #5DADE2;
         border-collapse: collapse;
         text-align: center;
         padding: 10px;
@@ -275,7 +275,7 @@ textarea {
 
 /* Style the footer */
 footer {
-    background-color: #800000;
+    background-color: #5DADE2;
     padding: 50px;
     text-align: center;
     color: white;
@@ -327,7 +327,7 @@ footer {
     margin-top: 10px;
 }
     .add-to-cart a {
-        border: 1px solid #800000;
+        border: 1px solid #5DADE2;
         padding: 10px;
         font-weight: bold;
         font-size: .8em;
@@ -335,10 +335,10 @@ footer {
         cursor: pointer;
         text-decoration: none;
         text-transform: uppercase;
-        color: #800000;
+        color: #5DADE2;
     }
 
         .add-to-cart a:hover {
             color: #fff;
-            background: #800000;
+            background: #5DADE2;
         }

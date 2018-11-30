@@ -49,16 +49,16 @@
     </div>
     <br />
     <form action="/Home/Category" method="get" id="category" class="option">
-        <span>Category</span>
+        @*<span>Category</span>*@
 
         @*@Html.DropDownListFor(m => m.CategoryId, Model.Categories, "---Select Employee---", new { Class = "ddlStyle", onchange = "SelectedIndexChanged()" })*@
-        <select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
+        @*<select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
             <option>-- Select --</option>
             <option value="">All</option>
             <option value="Washing Machines">Washing Machines</option>
             <option value="Kettles">Kettles</option>
             <option value="Microwaves">Microwaves</option>
-        </select>
+        </select>*@
         @*<select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
                 <!--onchange="$('#category').submit()"-->
                 <option>-- Select --</option>
@@ -107,7 +107,7 @@
     else
     {
         <table width="100%" border="1">
-            <tr style="background-color:darkred; font-size:medium; color:white; font-weight:bold;">
+            <tr style="background-color:#5DADE2; font-size:medium; color:white; font-weight:bold;">
                 <td>Product Name</td>
                 <td>Category</td>
                 <td>Description</td>
