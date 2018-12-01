@@ -10,6 +10,8 @@ using JewelryBiz.BusinessLayer;
 using JewelryBiz.UI.Helpers;
 using System.Web.Security;
 using JewelryBiz.DataAccess.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JewelryBiz.UI.Controllers
 {
@@ -71,6 +73,7 @@ namespace JewelryBiz.UI.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            ShoppingBag();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -96,8 +99,8 @@ namespace JewelryBiz.UI.Controllers
             {
                 case SignInStatus.Success:
                     Response.Cookies["User"]["Email"] = user.Email;
-                    Response.Cookies["User"]["FirstName"] = user.FirstName;
-                    Response.Cookies["User"]["LastName"] = user.LastName;
+                    //Response.Cookies["User"]["FirstName"] = user.FirstName;
+                    //Response.Cookies["User"]["LastName"] = user.LastName;
                     Response.Cookies["User"]["Role"] = user.RoleId == 1 ?"Admin" : "Customer";
                     //Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
 
@@ -149,6 +152,7 @@ namespace JewelryBiz.UI.Controllers
         [AllowAnonymous]
         public ActionResult EmailsSignup()
         {
+            ShoppingBag();
             return View();
         }
 
@@ -188,9 +192,8 @@ namespace JewelryBiz.UI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(User model)
         {
-            const string roleAdmin = "Admin";
             if (ModelState.IsValid)
             {
                 var u = new User
@@ -202,9 +205,62 @@ namespace JewelryBiz.UI.Controllers
                 var userService = new UserService();
                 userService.Create(u);
                 ViewBag.Message = "User created successfully.";
-                return RedirectToAction("Register");
+                SetStates();
+                var customer = new Customer
+                {
+                    Email = model.Email
+                };
+
+                return View("PersonalInfo", customer);
             }
             return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SavePersonalInfo(Customer customer)
+        {
+            customer.CardType = "X";
+            customer.CardNo = "X";
+            customer.ExpDate = DateTime.Now.AddMonths(12);
+            SetStates();
+            if (ModelState.IsValid)
+            {
+                  var c = new Customer
+                    {
+                        FName = customer.FName,
+                        LName = customer.LName,
+                        Email = Request.Cookies["User"] == null ? customer.Email : Request.Cookies["User"]["Email"],
+                        Phone = customer.Phone,
+                        Address1 = customer.Address1,
+                        Address2 = customer.Address2,
+                        Postcode = customer.Postcode,
+                        State = customer.State
+                        //CardType = customer.CardType,
+                        //CardNo = customer.CardNo,
+                        //ExpDate = customer.ExpDate
+                    };
+
+                    var customerService = new CustomerService();
+                    customerService.SavePersonalInfo(c, Session.SessionID);
+
+                    return View("AccountConfirmation");
+            }
+            else
+            {
+                ViewBag.States = StatesService.GetStates();
+            }
+            List<ModelError> errors = new List<ModelError>();
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    errors.Add(error);
+                }
+            }
+
+            return View("PersonalInfo", customer);
         }
 
         //
@@ -310,5 +366,20 @@ namespace JewelryBiz.UI.Controllers
             }
         }
         #endregion
+
+
+        private void ShoppingBag()
+        {
+            if (Session != null)
+            {
+                var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
+                if (currentUserCartItems != null)
+                {
+                    ViewBag.CartTotalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
+                    ViewBag.Cart = currentUserCartItems;
+                    ViewBag.CartUnits = currentUserCartItems.Count();
+                }
+            }
+        }
     }
 }

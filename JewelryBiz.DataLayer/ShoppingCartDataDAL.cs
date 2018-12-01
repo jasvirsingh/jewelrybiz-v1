@@ -34,7 +34,7 @@ namespace JewelryBiz.DataAccess
                 return new CartItem
                 {
                     ProductId = productId,
-                    PName = item["PName"].ToString(),
+                    PName = item["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(item["UnitPrice"]),
                     Quantity = Convert.ToInt32(item["Quantity"])
                 };
@@ -61,7 +61,7 @@ namespace JewelryBiz.DataAccess
                 var cartItems = items.Select(item => new CartItem
                 {
                     ProductId = Convert.ToInt32(item["ProductId"]),
-                    PName = item["PName"].ToString(),
+                    PName = item["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(item["UnitPrice"]),
                     Quantity = Convert.ToInt32(item["Quantity"])
                 });

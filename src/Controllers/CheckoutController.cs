@@ -27,6 +27,7 @@ namespace JewelryBiz.UI.Controllers
         // GET: Checkout
         public ActionResult Index()
         {
+            ShoppingBag();
             var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
             ViewBag.Cart = currentUserCartItems;
             decimal total = 0;
@@ -109,7 +110,8 @@ namespace JewelryBiz.UI.Controllers
 
         public ActionResult Purchase()
         {
-            if(Request.Cookies["User"] ==null)
+            ShoppingBag();
+            if (Request.Cookies["User"] ==null)
             {
                 Session["Checkout"] = "FromCheckout";
                return RedirectToAction("Login", "Account");
@@ -153,7 +155,7 @@ namespace JewelryBiz.UI.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var c = new JewelryBiz.DataAccess.Models.Customer
+                    var c = new Customer
                     {
                         FName = customer.FName,
                         LName = customer.LName,
@@ -190,6 +192,20 @@ namespace JewelryBiz.UI.Controllers
         public ActionResult PurchasedSuccess()
         {
             return View();
+        }
+
+        private void ShoppingBag()
+        {
+            if (Session != null)
+            {
+                var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
+                if (currentUserCartItems != null)
+                {
+                    ViewBag.CartTotalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
+                    ViewBag.Cart = currentUserCartItems;
+                    ViewBag.CartUnits = currentUserCartItems.Count();
+                }
+            }
         }
     }
 }

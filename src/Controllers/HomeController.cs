@@ -42,14 +42,14 @@ namespace JewelryBiz.UI.Controllers
            return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Category(string catName)
+        public ActionResult Category(int pCategory)
         {
             IList<Product> products;
-            if (catName == "")
+            if (pCategory == 0)
             {
                 products = new ProductService().GetAll();
             } else { 
-                products = new ProductService().GetAll().Where(p => p.Category == catName).ToList<Product>();
+                products = new ProductService().GetAll().Where(p => p.CategoryId == pCategory).ToList<Product>();
             }
             ViewBag.Products = products;
             return View("Index");

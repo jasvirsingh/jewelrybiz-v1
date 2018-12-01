@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "AccountConfirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Account Confirmation</h2>
+
+<div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+        Your account is created successfully. You can @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" }) to your account now.
+    </div>
+</div>

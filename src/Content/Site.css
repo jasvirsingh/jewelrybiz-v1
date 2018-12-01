@@ -104,6 +104,7 @@ textarea {
     opacity: .8;
     transition: .3s;
     -webkit-transition: .3s;
+    background-color: #F4ECF7;
     padding: 20px;
     border: 1px solid #5DADE2;
 }
@@ -138,7 +139,7 @@ textarea {
     margin: 5px 0;
 }
     .list-item .p-description {
-        /*font-size: 0.9em;*/
+        font-size: 0.9em;
         color: #5DADE2;
         margin-bottom: 10px;
         display: block;
@@ -167,7 +168,7 @@ textarea {
         }
     .list-item .p-price {
         color: #fff;
-        background: #800000;
+        background: #F5B7B1;
         font-weight: bold;
         font-size: .9em;
         padding: 10px;

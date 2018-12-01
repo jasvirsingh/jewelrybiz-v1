@@ -8,9 +8,8 @@
 <div>
     @*<div style="float:left; width:70%;">*@
 
-    <select id="categories" class="form-control" name="categories" onchange="getdetails(this);"></select>
-    <br />
-    <div id="mother" name="mother" style="display:none;">
+
+    @*<div id="mother" name="mother" style="display:none;">
         How Many Strands: <select id="strands" class="form-control">
             <option value="1">
                 1 Strand Bracelet
@@ -46,11 +45,12 @@
         2nd Strand Name: <input type="text" /><br />
         3rd Strand Name: <input type="text" /><br />
         4th Strand Name: <input type="text" />
-    </div>
+    </div>*@
     <br />
     <form action="/Home/Category" method="get" id="category" class="option">
         @*<span>Category</span>*@
-
+        <select id="pCategory" class="form-control" name="pCategory" onchange="$('#category').submit()"></select>
+        <br />
         @*@Html.DropDownListFor(m => m.CategoryId, Model.Categories, "---Select Employee---", new { Class = "ddlStyle", onchange = "SelectedIndexChanged()" })*@
         @*<select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
             <option>-- Select --</option>
@@ -60,34 +60,34 @@
             <option value="Microwaves">Microwaves</option>
         </select>*@
         @*<select id="catName" class="form-control" name="catName" onchange="$('#category').submit()">
-                <!--onchange="$('#category').submit()"-->
-                <option>-- Select --</option>
-                <option value="">All</option>
-                <option value="mother">
-                    Mother's bracelets
-                </option>
-                <option value="baby">
-                    Baby/Christening bracelets
-                </option>
-                <option value="grandmother">
-                    Grandmother's bracelets
-                </option>
-                <option value="wedding">
-                    Wedding bracelets
-                </option>
-                <option value="popular">
-                    Most popular
-                </option>
-                <option value="earnings">
-                    Earrings
-                </option>
-                <option value="nacklaces">
-                    Necklaces
-                </option>
-                <option value="sets">
-                    Sets
-                </option>
-            </select>*@
+            <!--onchange="$('#category').submit()"-->
+            <option>-- Select --</option>
+            <option value="">All</option>
+            <option value="mother">
+                Mother's bracelets
+            </option>
+            <option value="baby">
+                Baby/Christening bracelets
+            </option>
+            <option value="grandmother">
+                Grandmother's bracelets
+            </option>
+            <option value="wedding">
+                Wedding bracelets
+            </option>
+            <option value="popular">
+                Most popular
+            </option>
+            <option value="earnings">
+                Earrings
+            </option>
+            <option value="nacklaces">
+                Necklaces
+            </option>
+            <option value="sets">
+                Sets
+            </option>
+        </select>*@
 
 
     </form>
@@ -97,7 +97,7 @@
     @*<div style="float:right; width:30%;">*@
     <br />
     <br />
-    @if (ViewBag.Products.Count == 0)
+    @if (ViewBag.Products == null || ViewBag.Products.Count == 0)
     {
         <br />
         <div id="EmptyDataMsg" class="alert alert-info">
@@ -106,7 +106,7 @@
     }
     else
     {
-        <table width="100%" border="1">
+        @*<table width="100%" border="1">
             <tr style="background-color:#5DADE2; font-size:medium; color:white; font-weight:bold;">
                 <td>Product Name</td>
                 <td>Category</td>
@@ -133,18 +133,18 @@
                     </tr>
                 }
             }
-        </table>
-        @*<div class="list-view">
+        </table>*@
+        <div>
                 @foreach (var item in ViewBag.Products)
                 {
                     if (item.UnitsInStock > 1)
                     {
                         <div class="list-item">
-                            <span class="p-cart">@item.Category</span>
+                            @*<span class="p-cart">@item.Category</span>*@
                             <span class="p-name">@item.PName</span>
                             <span class="p-description">@item.Description</span>
                             <div class="add-to-cart">
-                                @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.PID }, null)
+                                @Html.ActionLink("add to cart", "AddToCart", "Home", new { id = item.ProductId }, null)
                                 <span class="p-price">@String.Format("{0:c}", item.UnitPrice)</span>
                             </div>
                             <span class="p-unit">
@@ -161,7 +161,7 @@
                         </div>
                     }
                 }
-            </div>*@
+            </div>
     }
 
 </div>

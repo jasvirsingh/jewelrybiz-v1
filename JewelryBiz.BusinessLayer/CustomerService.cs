@@ -21,5 +21,9 @@ namespace JewelryBiz.BusinessLayer
             return new CustomerDAL().GetPurchaseHistory(email);
         }
 
+        public void SavePersonalInfo(Customer customer, string userSessionId)
+        {
+            new CustomerDAL().SavePersonalInfo(customer, userSessionId);
+        }
     }
 }

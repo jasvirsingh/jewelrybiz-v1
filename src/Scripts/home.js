@@ -10,7 +10,7 @@ function FillCategories() {
         contentType: "application/json",
         success: function (res) {
             $.each(res, function (data, value) {
-                $("#categories").append($("<option></option>").val(value.Value).html(value.Text));
+                $("#pCategory").append($("<option></option>").val(value.Value).html(value.Text));
             })
         }
 

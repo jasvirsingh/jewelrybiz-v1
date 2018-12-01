@@ -291,6 +291,8 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Customer\MyProfile.cshtml" />
     <Content Include="Views\Customer\PurchaseHistory.cshtml" />
+    <Content Include="Views\Account\PersonalInfo.cshtml" />
+    <Content Include="Views\Account\AccountConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

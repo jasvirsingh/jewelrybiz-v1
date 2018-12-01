@@ -19,8 +19,8 @@ namespace JewelryBiz.DataAccess
                                              select category;
                var categories = rows.Select(r => new Category
                 {
-                    CategoryId = Convert.ToInt32(r["CategoryId"]),
-                    ParentCategoryId = Convert.ToInt32(r["ParentCategoryId"]),
+                    CategoryId = Convert.ToInt32(r["PCategoryId"]),
+                    ParentCategoryId = 0,//Convert.ToInt32(r["ParentCategoryId"]),
                     CategoryName = r["CategoryName"].ToString()
                 });
 

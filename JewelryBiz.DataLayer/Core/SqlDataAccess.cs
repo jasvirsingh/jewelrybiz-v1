@@ -7,7 +7,7 @@ namespace JewelryBiz.DataAccess.Core
     public class SqlDataAccess
     {
         // Default connection string. a connection named MsSql should be defined in web.config file.
-        public const string CONNECTION_STRING_NAME = "JewelryBizCon";
+        public const string CONNECTION_STRING_NAME = "JewelryMgmtCon";
 
         //This returns the connection string  
         private static string _connectionString = string.Empty;

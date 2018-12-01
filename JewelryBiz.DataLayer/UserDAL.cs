@@ -32,8 +32,6 @@ namespace JewelryBiz.DataAccess
                 var row = result.Tables[0].Rows[0];
                 return new User
                 {
-                    FirstName = row["FName"].ToString(),
-                    LastName = row["LName"].ToString(),
                     Password = password,
                     Email = email,
                     RoleId = Convert.ToInt32(row["RoleId"])

@@ -12,18 +12,27 @@ namespace JewelryBiz.DataAccess
     {
         public Product GetById(int productId)
         {
-            var sqlDataAccess = new SqlDataAccess();
-            var result = sqlDataAccess.Execute("SELECT * FROM PRODUCTS WHERE PRODUCTID = "+ productId);
-            if (result != null && result.Rows.Count > 0)
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
             {
+                ParameterName = "@ProductId",
+                DbType = DbType.Int32,
+                Value = productId
+            });
+
+            var sqlDataAccess = new SqlDataAccess();
+            var result = sqlDataAccess.ExecuteStoredProcedure("procGetProductDetails", parameters.ToArray());
+            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                var p = result.Tables[0].Rows[0];
                 return new Product
                 {
-                    ProductId = productId,
-                    PName = result.Rows[0]["PName"].ToString(),
-                    Brand = result.Rows[0]["Brand"].ToString(),
-                    UnitPrice = Convert.ToDecimal(result.Rows[0]["UnitPrice"]),
-                    UnitsInStock = Convert.ToInt32(result.Rows[0]["UnitsInStock"]),
-                    Description = result.Rows[0]["Description"].ToString()
+                    ProductId = Convert.ToInt32(p["ProductId"]),
+                    PName = p["ProductName"].ToString(),
+                    Description = p["ProductDescription"].ToString(),
+                    UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
+                    UnitsInStock = Convert.ToInt32(p["OnHand"]),
+                    CategoryId = Convert.ToInt32(p["PCategoryId"])
                 };
             }
             return null;
@@ -40,11 +49,11 @@ namespace JewelryBiz.DataAccess
                 var items = products.Select(p => new Product
                 {
                     ProductId = Convert.ToInt32(p["ProductId"]),
-                    PName = p["PName"].ToString(),
-                    Description = p["Description"].ToString(),
+                    PName = p["ProductName"].ToString(),
+                    Description = p["ProductDescription"].ToString(),
                     UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
-                    UnitsInStock = Convert.ToInt32(p["UnitsInStock"]),
-                    Category = p["Category"].ToString()
+                    UnitsInStock = Convert.ToInt32(p["OnHand"]),
+                    CategoryId = Convert.ToInt32(p["PCategoryId"])
                 });
 
                 return items.ToList();
