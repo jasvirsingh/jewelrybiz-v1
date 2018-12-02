@@ -78,6 +78,12 @@ namespace JewelryBiz.UI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult CheckoutAsGuest()
+        {
+            return RedirectToAction("Purchase", "Checkout");
+        }
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -101,7 +107,7 @@ namespace JewelryBiz.UI.Controllers
                     Response.Cookies["User"]["Email"] = user.Email;
                     //Response.Cookies["User"]["FirstName"] = user.FirstName;
                     //Response.Cookies["User"]["LastName"] = user.LastName;
-                    Response.Cookies["User"]["Role"] = user.RoleId == 1 ?"Admin" : "Customer";
+                    Response.Cookies["User"]["Role"] = user.Role != "Admin" ? "Customer" : "Admin";
                     //Response.Cookies["User"].Expires = DateTime.Now.AddHours(1);
 
                     FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
@@ -110,7 +116,7 @@ namespace JewelryBiz.UI.Controllers
                         DateTime.Now,
                         DateTime.Now.AddMinutes(60),
                         true,
-                        user.RoleId.ToString(),
+                        user.Role.ToString(),
                         FormsAuthentication.FormsCookiePath);
                     string hash = FormsAuthentication.Encrypt(ticket);
                     HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hash);

@@ -222,6 +222,7 @@
     <Compile Include="Helpers\ApplicationUser.cs" />
     <Compile Include="Helpers\UserSecurityManager.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AddedItem.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
@@ -293,6 +294,7 @@
     <Content Include="Views\Customer\PurchaseHistory.cshtml" />
     <Content Include="Views\Account\PersonalInfo.cshtml" />
     <Content Include="Views\Account\AccountConfirmation.cshtml" />
+    <Content Include="Views\Home\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

@@ -1,0 +1,47 @@
+﻿@model JewelryBiz.DataLayer.Domain.SelectedItem
+
+@{
+    ViewBag.Title = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.ProductName</h2>
+
+@using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
+{
+    @Html.Hidden("ProductId", Model.ProductId)
+    <div class="row">
+        <div class="column"><img src="/Images/Products/@Model.Image" /></div>
+        <div class="column">
+            <h3>@Model.Description</h3>
+            <br />
+            <span class="price">@String.Format("{0:c}", Model.UnitPrice)</span>
+            <br /> <br />
+            Quantity : @Html.DropDownListFor(m => m.Quantity,
+       Enumerable.Range(1, Model.OnHand)
+       .Select(i => new SelectListItem
+       {
+           Text = i.ToString(),
+           Value = i.ToString()
+     }),
+       new { Class = "form-control" })
+            <span style="color:green"> (@Model.OnHand items available in stock)</span>
+            <br /> <br /> <br />
+            @*<table class="cart-page">
+                    <tr>
+                        <td colspan="2">
+                        <td>
+                            <a class="quantity" onclick="Change(this, 1, @Model.ProductId)">+</a>
+                            <span class="p-name">@Model.Quantity</span>
+                            <a class="quantity" onclick="Change(this, 0,  @Model.ProductId)">-</a>
+                            <a class="remove" onclick="Change(this, -1,  @Model.ProductId)">Remove</a>
+                        </td>
+                    </tr>
+                </table>*@
+            <div>
+                <input type="submit" value="ADD TO CART" class="btn btn-info" />
+                @*@Html.ActionLink("add to cart", "AddToCart", "Home", new { ProductId = Model.ProductId, Quantity = Model.Quantity }, null)*@
+            </div>
+        </div>
+    </div>
+}

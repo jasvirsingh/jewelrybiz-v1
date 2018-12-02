@@ -11,7 +11,7 @@ namespace JewelryBiz.BusinessLayer
             return new ProductDAL().GetById(productId);
         }
 
-        public IList<Product> GetAll()
+        public List<Product> GetAll()
         {
             return new ProductDAL().GetAll();
         }

@@ -129,6 +129,30 @@ namespace JewelryBiz.DataAccess
             new SqlDataAccess().ExecuteStoredProcedure("procIncreaseQuantity", parameters.ToArray());
         }
 
+        public void UpdateCartItemQuantity(string userSessionId, int productId, int quantity)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@UserSessionId",
+                DbType = DbType.String,
+                Value = userSessionId
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@ProductId",
+                DbType = DbType.Int32,
+                Value = productId
+            });
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Quantity",
+                DbType = DbType.Decimal,
+                Value = quantity
+            });
+            new SqlDataAccess().ExecuteStoredProcedure("procUpdateCartItemQuantity", parameters.ToArray());
+        }
+
         public void ExecuteChangeInQuantity(string userSessionId, int productId, string action)
         {
             var parameters = new List<SqlParameter>();

@@ -34,7 +34,7 @@ namespace JewelryBiz.DataAccess
                 {
                     Password = password,
                     Email = email,
-                    RoleId = Convert.ToInt32(row["RoleId"])
+                    Role = row["RoleName"].ToString()
                 };
             }
 

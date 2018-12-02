@@ -1,5 +1,7 @@
 ﻿using JewelryBiz.BusinessLayer;
 using JewelryBiz.DataAccess.Models;
+using JewelryBiz.DataLayer;
+using JewelryBiz.DataLayer.Domain;
 using JewelryBiz.UI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace JewelryBiz.UI.Controllers
             ShoppingBag();
 
             ViewBag.Products = new ProductService().GetAll();
+            ViewBag.Categories = GetAllCategories();
             return View();
         }
 
@@ -42,16 +45,22 @@ namespace JewelryBiz.UI.Controllers
            return Json(categories, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Category(int pCategory)
+        public ActionResult Category(int CategoryId)
         {
             IList<Product> products;
-            if (pCategory == 0)
+            if (CategoryId == -1)
             {
                 products = new ProductService().GetAll();
-            } else { 
-                products = new ProductService().GetAll().Where(p => p.CategoryId == pCategory).ToList<Product>();
             }
+            else
+            { 
+                products = new ProductService().GetAll()
+                    .Where(p => p.CategoryId == CategoryId)
+                    .ToList<Product>();
+            }
+
             ViewBag.Products = products;
+            ViewBag.Categories = GetAllCategories();
             return View("Index");
         }
 
@@ -64,22 +73,50 @@ namespace JewelryBiz.UI.Controllers
             }
             else
             {
-                products = new ProductService().GetAll().Where(p => p.Category == catName).ToList<Product>();
+                products = new ProductService().GetAll()
+                    .Where(p => p.Category == catName)
+                    .ToList<Product>();
             }
             ViewBag.Products = products;
             return View("Index");
         }
 
-        public ActionResult AddToCart(int id)
+        [HttpPost]
+        public ActionResult AddToCart(SelectedItem item)
         {
-            addToCart(id);
+            addToCart(item.ProductId, item.Quantity);
             return RedirectToAction("Index");
         }
 
-        private void addToCart(int pId)
+        public ActionResult ProductDetails(int id)
+        {
+            //addToCart(id);
+            var product = new ProductService().GetById(id);
+            var productItem = new SelectedItem
+            {
+                ProductId = id,
+                ProductName = product.PName,
+                Description = product.Description,
+                OnHand = product.UnitsInStock,
+                UnitPrice = product.UnitPrice,
+                Image = product.Image
+            };
+            var qtyRange = Enumerable.Range(1, product.UnitsInStock);
+            List<SelectListItem> quantityList = qtyRange.Select(q =>
+                       new SelectListItem
+                       {
+                           Value = q.ToString(),
+                           Text = q.ToString()
+                       }).ToList();
+
+            ViewBag.Quantity = quantityList;
+            return View(productItem);
+        }
+
+        private void addToCart(int pId, int qty)
         {
             // check if product is valid
-           JewelryBiz.DataAccess.Models.Product product = new ProductService().GetById(pId);
+           var product = new ProductService().GetById(pId);
             if (product != null && product.UnitsInStock > 0)
             {
                 // check if product already existed
@@ -87,7 +124,7 @@ namespace JewelryBiz.UI.Controllers
                 if (cart != null)
                 {
                     cart.Quantity++;
-                    new ShoppingCartDataService().IncreaseCartItemQuantity(Session.SessionID, product.ProductId);
+                    new ShoppingCartDataService().UpdateCartItemQuantity(Session.SessionID, product.ProductId, qty);
                 }
                 else
                 {
@@ -96,11 +133,12 @@ namespace JewelryBiz.UI.Controllers
                         PName = product.PName,
                         ProductId = product.ProductId,
                         UnitPrice = product.UnitPrice,
-                        Quantity = 1,
+                        Quantity = qty,
                         UserSessionId = Session.SessionID
                     };
                     new ShoppingCartDataService().AddCartItem(cartItem);
                 }
+
                 product.UnitsInStock--;
             }
         }
@@ -131,6 +169,28 @@ namespace JewelryBiz.UI.Controllers
                     ViewBag.CartUnits = currentUserCartItems.Count();
                 }
             }
+        }
+
+        private List<SelectListItem> GetAllCategories()
+        {
+            var model = new ProductCategoryModel();
+            var categoryService = new CategoryService();
+            List<SelectListItem> categories = categoryService.Get()
+                .Where(c => c.ParentCategoryId == 0)
+                        .Select(n =>
+                        new SelectListItem
+                        {
+                            Value = n.CategoryId.ToString(),
+                            Text = n.CategoryName
+                        }).ToList();
+
+            var defaultCategory = new SelectListItem()
+            {
+                Value = "-1",
+                Text = "--- All Products ---"
+            };
+            categories.Insert(0, defaultCategory);
+            return categories;
         }
     }
 }

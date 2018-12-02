@@ -124,6 +124,15 @@ namespace JewelryBiz.UI.Controllers
             return View(customer);
         }
 
+        public ActionResult GuestCheckout()
+        {
+            ShoppingBag();
+            ViewBag.States = states;
+            ViewBag.Cards = cards;
+
+            return View("Purchase");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Purchase(Customer customer)

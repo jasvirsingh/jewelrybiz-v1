@@ -21,6 +21,11 @@ namespace JewelryBiz.BusinessLayer
             new ShoppingCartDataDAL().IncreaseCartItemQuantity(userSessionId, productId);
         }
 
+        public void UpdateCartItemQuantity(string userSessionId, int productId, int quantity)
+        {
+            new ShoppingCartDataDAL().UpdateCartItemQuantity(userSessionId, productId, quantity);
+        }
+
         public void Clear(string userSessionId)
         {
             new ShoppingCartDataDAL().Clear(userSessionId);

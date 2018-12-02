@@ -32,13 +32,14 @@ namespace JewelryBiz.DataAccess
                     Description = p["ProductDescription"].ToString(),
                     UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
                     UnitsInStock = Convert.ToInt32(p["OnHand"]),
-                    CategoryId = Convert.ToInt32(p["PCategoryId"])
+                    CategoryId = Convert.ToInt32(p["PCategoryId"]),
+                    Image = p["Image"].ToString(),
                 };
             }
             return null;
         }
 
-        public IList<Product> GetAll()
+        public List<Product> GetAll()
         {
             var sqlDataAccess = new SqlDataAccess();
             var result = sqlDataAccess.ExecuteStoredProcedure("procGetAllProducts");
@@ -53,7 +54,8 @@ namespace JewelryBiz.DataAccess
                     Description = p["ProductDescription"].ToString(),
                     UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
                     UnitsInStock = Convert.ToInt32(p["OnHand"]),
-                    CategoryId = Convert.ToInt32(p["PCategoryId"])
+                    CategoryId = Convert.ToInt32(p["PCategoryId"]),
+                    Image = p["Image"].ToString()
                 });
 
                 return items.ToList();

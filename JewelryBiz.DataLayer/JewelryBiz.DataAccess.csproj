@@ -46,9 +46,8 @@
     <Compile Include="CategoriesDAL.cs" />
     <Compile Include="Core\SqlDataAccess.cs" />
     <Compile Include="CustomerDAL.cs" />
-    <Compile Include="Entities\Categories.cs" />
-    <Compile Include="Entities\Product.cs" />
-    <Compile Include="Entities\User.cs" />
+    <Compile Include="Domain\ProductMaterial.cs" />
+    <Compile Include="Domain\SelectedItem.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
