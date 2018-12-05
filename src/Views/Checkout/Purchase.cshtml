@@ -7,7 +7,7 @@
 
 <h2>Enter your shipping address</h2>
 
-@using (Html.BeginForm("Purchase","Checkout", new { customer = Model}))
+@using (Html.BeginForm("Purchase","Checkout"))
 {
     @Html.AntiForgeryToken()
     

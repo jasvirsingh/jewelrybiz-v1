@@ -193,10 +193,10 @@ namespace JewelryBiz.DataAccess
                                              select item;
                 var purchasedItems = items.Select(item => new PurchasedItem
                 {
-                    ProductName = item["PName"].ToString(),
+                    ProductName = item["ProductName"].ToString(),
                     OrderDate = Convert.ToDateTime(item["OrderDate"]),
-                    DeliveryDate = Convert.ToDateTime(item["DeliveryDate"]),
-                    OrderQuantity = Convert.ToInt32(item["Qty"]),
+                    DeliveryDate = Convert.ToDateTime(item["ExpectedDeliveryDate"]),
+                    OrderQuantity = Convert.ToInt32(item["Quantity"]),
                     TotalAmount = Convert.ToDecimal(item["TotalAmount"])
                 });
 
