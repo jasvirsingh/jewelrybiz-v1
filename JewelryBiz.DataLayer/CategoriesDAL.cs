@@ -21,8 +21,9 @@ namespace JewelryBiz.DataAccess
                 {
                     CategoryId = Convert.ToInt32(r["PCategoryId"]),
                     ParentCategoryId = 0,//Convert.ToInt32(r["ParentCategoryId"]),
-                    CategoryName = r["CategoryName"].ToString()
-                });
+                    CategoryName = r["CategoryName"].ToString(),
+                    CategoryDescription = r["CategoryDescription"].ToString()
+               });
 
                 return categories;
             }

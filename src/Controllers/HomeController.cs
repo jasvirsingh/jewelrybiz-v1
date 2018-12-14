@@ -181,7 +181,7 @@ namespace JewelryBiz.UI.Controllers
                         new SelectListItem
                         {
                             Value = n.CategoryId.ToString(),
-                            Text = n.CategoryName
+                            Text = n.CategoryDescription
                         }).ToList();
 
             var defaultCategory = new SelectListItem()
