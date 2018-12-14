@@ -8,6 +8,153 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+CREATE PROCEDURE [dbo].[procAddCartItem]
+	(
+	@UserSessionId varchar(100),
+	@ProductId int,
+	@PName varchar(50),
+	@UnitPrice money,
+	@Quantity int
+	)
+AS
+BEGIN
+
+	INSERT INTO [dbo].[ShoppingCart]
+           ([UserSessionId]
+           ,[ProductId]
+           ,[Quantity])
+     VALUES
+           (@UserSessionId
+           ,@ProductId
+           ,@Quantity)
+
+	UPDATE [dbo].[Product]
+	SET [OnHand] = [OnHand] - @Quantity
+	WHERE [ProductId] = @ProductId
+END
+GO
+
+CREATE PROCEDURE [dbo].[procAddCustomer]
+(
+ @FirstName varchar(50),
+ @LastName varchar(50),
+ @Phone varchar(50),
+ @Addresss1 varchar(50),
+ @Addresss2 varchar(50),
+ @PostCode char(5),
+ @State char(2),
+ --@CardType varchar(50),
+ --@CardNumber varchar(50),
+ --@ExpDate datetime,
+ @Email varchar(50)
+)
+AS
+BEGIN
+	IF NOT EXISTS (SELECT 1 FROM [dbo].[Customer] WHERE Email = @Email)
+		BEGIN
+				INSERT INTO [dbo].[Customer]
+					   ([FirstName]
+					   ,[LastName]
+					   ,[Phone]
+					   ,[Email]
+					   ,[CreatedDate])
+				 VALUES
+					   (@FirstName
+					   ,@LastName
+					   ,@Phone
+					   ,@Email
+					   , GETDATE())
+			
+			Declare @customerId int
+			Select @customerId = SCOPE_IDENTITY()
+
+			   INSERT INTO [dbo].[Address]
+					   ([CustomerId]
+					   ,[AddressType]
+					   ,[Address1]
+					   ,[Address2]
+					   ,[Postcode]
+					   ,[State]
+					   ,[IsActive]
+					   ,[CreatedDate]
+					   ,[CreatedBy]
+					   ,[LastUpdatedDate]
+					   ,[LastUpdatedBy])
+				 VALUES
+					   (@customerId
+					   ,1
+					   ,@Addresss1
+					   ,@Addresss2
+					   ,@PostCode
+					   ,@State
+					   ,1
+					   ,GETDATE()
+					   ,@Email
+					   ,NULL
+					   ,NULL)
+		END
+	ELSE
+		BEGIN
+		  UPDATE [dbo].[Customer]
+		  SET [FirstName] = @FirstName,
+		      [LastName] = @LastName,
+			  [Phone] = @Phone,
+			  [LastUpdatedDate] = GETDATE()
+		  WHERE Email = @Email
+
+		  UPDATE [dbo].[Address]
+		  SET [Address1] = @Addresss1,
+			  [Address2] = @Addresss2,
+			  [Postcode] = @PostCode,
+			  [State] = @State,
+			  [LastUpdatedDate] = GETDATE(),
+			  [LastUpdatedBy] = @Email
+		END
+END
+
+GO
+
+CREATE PROCEDURE [dbo].[procCheckUser]
+( 
+	@Email varchar(50),
+	@Password varchar(50)
+)
+AS
+BEGIN
+	
+	SELECT U.* , R.RoleName
+	FROM [dbo].[User] U
+	JOIN [dbo].[Role] R ON R.RoleId = U.RoleId 
+	WHERE U.Email = @Email
+	   AND U.Password =@Password
+	   AND U.IsActive = 1
+END
+
+
+GO
+
+CREATE PROCEDURE [dbo].[procClearCart]
+(
+	@UserSessionId varchar(100)
+)
+AS
+BEGIN
+
+	UPDATE P
+		SET P.[OnHand] = P.[OnHand] + C.[Quantity]
+	FROM [dbo].[Product] P
+		INNER JOIN [dbo].[ShoppingCart] C ON 
+			C.ProductId = P.ProductId
+		WHERE C.[UserSessionId] = @UserSessionId 
+
+	DELETE
+	FROM [dbo].[ShoppingCart]
+	WHERE [UserSessionId] = @UserSessionId
+
+
+END
+
+GO
 -- =============================================
 -- Author:		Jasvir Singh
 -- Create date: 11/21/2018
@@ -333,6 +480,3 @@ BEGIN
 END
 
 GO
-
-
-
