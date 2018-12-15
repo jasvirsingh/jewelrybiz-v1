@@ -1,7 +1,8 @@
-USE [JewelryMgmt]
+/****** Object:  StoredProcedure [dbo].[procAddCartItem]    Script Date: 12/15/2018 12:59:33 AM ******/
+DROP PROCEDURE [dbo].[procAddCartItem]
 GO
 
-/****** Object:  StoredProcedure [dbo].[procCreateAccount]    Script Date: 12/13/2018 9:03:08 PM ******/
+/****** Object:  StoredProcedure [dbo].[procAddCartItem]    Script Date: 12/15/2018 12:59:33 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -28,10 +29,24 @@ BEGIN
            ,@ProductId
            ,@Quantity)
 
-	UPDATE [dbo].[Product]
-	SET [OnHand] = [OnHand] - @Quantity
-	WHERE [ProductId] = @ProductId
+	--UPDATE [dbo].[Product]
+	--SET [OnHand] = [OnHand] - @Quantity
+	--WHERE [ProductId] = @ProductId
 END
+GO
+
+USE [JewelryMgmt]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procAddCustomer]    Script Date: 12/15/2018 1:00:03 AM ******/
+DROP PROCEDURE [dbo].[procAddCustomer]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procAddCustomer]    Script Date: 12/15/2018 1:00:03 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procAddCustomer]
@@ -114,6 +129,18 @@ END
 
 GO
 
+
+/****** Object:  StoredProcedure [dbo].[procCheckUser]    Script Date: 12/15/2018 1:00:23 AM ******/
+DROP PROCEDURE [dbo].[procCheckUser]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procCheckUser]    Script Date: 12/15/2018 1:00:23 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procCheckUser]
 ( 
 	@Email varchar(50),
@@ -131,6 +158,17 @@ BEGIN
 END
 
 
+GO
+
+/****** Object:  StoredProcedure [dbo].[procClearCart]    Script Date: 12/15/2018 1:00:46 AM ******/
+DROP PROCEDURE [dbo].[procClearCart]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procClearCart]    Script Date: 12/15/2018 1:00:46 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procClearCart]
@@ -155,6 +193,18 @@ BEGIN
 END
 
 GO
+
+/****** Object:  StoredProcedure [dbo].[procCreateAccount]    Script Date: 12/15/2018 1:01:02 AM ******/
+DROP PROCEDURE [dbo].[procCreateAccount]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procCreateAccount]    Script Date: 12/15/2018 1:01:02 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 -- =============================================
 -- Author:		Jasvir Singh
 -- Create date: 11/21/2018
@@ -194,6 +244,18 @@ END
 
 GO
 
+
+/****** Object:  StoredProcedure [dbo].[procCreateOrder]    Script Date: 12/15/2018 1:01:21 AM ******/
+DROP PROCEDURE [dbo].[procCreateOrder]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procCreateOrder]    Script Date: 12/15/2018 1:01:21 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procCreateOrder] 
 	(@SessionId varchar(100),
 	 @Email varchar(50)
@@ -226,6 +288,13 @@ BEGIN
 
 			SELECT @orderId = @@IDENTITY
 
+			UPDATE P
+		SET P.[OnHand] = P.[OnHand] - C.[Quantity]
+	FROM [dbo].[Product] P
+		INNER JOIN [dbo].[ShoppingCart] C ON 
+			C.ProductId = P.ProductId
+		WHERE C.[UserSessionId] = @SessionId 
+
 			INSERT INTO [OrderDetail](OrderNo, OrderLineNo, ProductId, Quantity, UOM, IsActive, CreatedDate, CreatedBy)
 			SELECT @orderId AS OrderID, 1, [ProductId], [Quantity], 'lbs', 1, GETDATE(), @Email
 			FROM [dbo].[ShoppingCart]
@@ -239,12 +308,42 @@ END
 GO
 
 
+/****** Object:  StoredProcedure [dbo].[procGetAllProducts]    Script Date: 12/15/2018 1:01:35 AM ******/
+DROP PROCEDURE [dbo].[procGetAllProducts]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetAllProducts]    Script Date: 12/15/2018 1:01:35 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procGetAllProducts]
 AS
 BEGIN
-	SELECT *
-	FROM [dbo].[Product]
+	SELECT P.ProductId
+		  , ProductName
+		  , ProductDescription
+		  , UnitPrice
+		  , (OnHand - ISNULL(C.Quantity, 0)) AS OnHand
+		  , PCategoryId
+		  , Image
+	FROM [dbo].[Product] P
+	LEFT JOIN [dbo].[ShoppingCart] C ON C.ProductId = P.ProductId
+
 END
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCartItem]    Script Date: 12/15/2018 1:01:53 AM ******/
+DROP PROCEDURE [dbo].[procGetCartItem]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCartItem]    Script Date: 12/15/2018 1:01:53 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procGetCartItem]
@@ -265,6 +364,18 @@ BEGIN
 END
 GO
 
+
+/****** Object:  StoredProcedure [dbo].[procGetCartItems]    Script Date: 12/15/2018 1:02:09 AM ******/
+DROP PROCEDURE [dbo].[procGetCartItems]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCartItems]    Script Date: 12/15/2018 1:02:09 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procGetCartItems]
 (
 	@UserSessionId varchar(100)
@@ -283,6 +394,18 @@ END
 
 GO
 
+
+/****** Object:  StoredProcedure [dbo].[procGetCategories]    Script Date: 12/15/2018 1:02:24 AM ******/
+DROP PROCEDURE [dbo].[procGetCategories]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCategories]    Script Date: 12/15/2018 1:02:24 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procGetCategories]
 AS
 BEGIN
@@ -291,6 +414,17 @@ BEGIN
 	ORDER BY PCategoryId
 END
 
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCustomerInfo]    Script Date: 12/15/2018 1:02:37 AM ******/
+DROP PROCEDURE [dbo].[procGetCustomerInfo]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetCustomerInfo]    Script Date: 12/15/2018 1:02:37 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procGetCustomerInfo]
@@ -314,6 +448,17 @@ END
 
 GO
 
+/****** Object:  StoredProcedure [dbo].[procGetProductDetails]    Script Date: 12/15/2018 1:02:52 AM ******/
+DROP PROCEDURE [dbo].[procGetProductDetails]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetProductDetails]    Script Date: 12/15/2018 1:02:52 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procGetProductDetails]
 (
 	@ProductId int
@@ -325,12 +470,26 @@ BEGIN
 			, ProductDescription
 			, OnHand
 			, UnitPrice
-			, PCategoryId
+			, P.PCategoryId
 			, Image
-	 FROM [dbo].Product
+			, C.CategoryName
+	 FROM [dbo].Product P
+	 JOIN [dbo].ProductCategory C ON C.PCategoryId = p.PCategoryId
 	 WHERE ProductId = @ProductId
 END
 
+GO
+
+
+/****** Object:  StoredProcedure [dbo].[procGetPurchaseHistory]    Script Date: 12/15/2018 1:03:07 AM ******/
+DROP PROCEDURE [dbo].[procGetPurchaseHistory]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procGetPurchaseHistory]    Script Date: 12/15/2018 1:03:07 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procGetPurchaseHistory]
@@ -359,6 +518,18 @@ END
 
 GO
 
+
+/****** Object:  StoredProcedure [dbo].[procIncreaseQuantity]    Script Date: 12/15/2018 1:03:27 AM ******/
+DROP PROCEDURE [dbo].[procIncreaseQuantity]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procIncreaseQuantity]    Script Date: 12/15/2018 1:03:27 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procIncreaseQuantity]
 (
 	@UserSessionId varchar(100),
@@ -375,6 +546,17 @@ BEGIN
     WHERE [ProductId] = @ProductId
 END
 
+GO
+
+/****** Object:  StoredProcedure [dbo].[procQuantityChange]    Script Date: 12/15/2018 1:03:40 AM ******/
+DROP PROCEDURE [dbo].[procQuantityChange]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procQuantityChange]    Script Date: 12/15/2018 1:03:40 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE PROCEDURE [dbo].[procQuantityChange]
@@ -437,6 +619,16 @@ END
 
 GO
 
+/****** Object:  StoredProcedure [dbo].[procSubscribe]    Script Date: 12/15/2018 1:03:59 AM ******/
+DROP PROCEDURE [dbo].[procSubscribe]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procSubscribe]    Script Date: 12/15/2018 1:03:59 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
 
 CREATE PROCEDURE [dbo].[procSubscribe]
 (
@@ -453,6 +645,17 @@ END
 
 GO
 
+/****** Object:  StoredProcedure [dbo].[procUpdateCartItemQuantity]    Script Date: 12/15/2018 1:04:14 AM ******/
+DROP PROCEDURE [dbo].[procUpdateCartItemQuantity]
+GO
+
+/****** Object:  StoredProcedure [dbo].[procUpdateCartItemQuantity]    Script Date: 12/15/2018 1:04:14 AM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
 CREATE PROCEDURE [dbo].[procUpdateCartItemQuantity]
 (
 	@UserSessionId varchar(100),
@@ -466,17 +669,19 @@ BEGIN
 	FROM [ShoppingCart]
 	WHERE [ProductId] = @ProductId AND [UserSessionId] = @UserSessionId
 
-	UPDATE [dbo].[Product]
-    SET [OnHand] = [OnHand] - @Qty
-    WHERE [ProductId] = @ProductId
+	--UPDATE [dbo].[Product]
+ --   SET [OnHand] = [OnHand] - @Qty
+ --   WHERE [ProductId] = @ProductId
 
 	UPDATE [dbo].[ShoppingCart]
 	SET [Quantity] = @Quantity
 	WHERE [ProductId] = @ProductId AND [UserSessionId] = @UserSessionId
 
-    UPDATE [dbo].[Product]
-    SET [OnHand] = [OnHand] - @Quantity
-    WHERE [ProductId] = @ProductId
+    --UPDATE [dbo].[Product]
+    --SET [OnHand] = [OnHand] - @Quantity
+    --WHERE [ProductId] = @ProductId
 END
 
 GO
+
+
