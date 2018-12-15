@@ -1,4 +1,4 @@
-﻿using JewelryBiz.DataAccess.Domain;
+﻿using JewelryBiz.DataAccess.Models;
 using System.Collections.Generic;
 
 namespace JewelryBiz.DataLayer.Domain
@@ -12,7 +12,8 @@ namespace JewelryBiz.DataLayer.Domain
         public int OnHand { get; set; }
         public int Quantity { get; set; }
         public string Image { get; set; }
+        public string PCategoryName { get; set; }
 
-        public ProductMaterial MaterialDetails { get; set; }
+        public IList<ProductMaterial> Materials { get; set; }
     }
 }

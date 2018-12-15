@@ -39,7 +39,7 @@ namespace JewelryBiz.UI.Controllers
             return View();
         }
         
-        public JsonResult QuanityChange(int type, int pId)
+        public ActionResult QuanityChange(int type, int pId)
         {
             var product = new ShoppingCartDataService().GetByProductId(Session.SessionID, pId);
             if (product == null)
@@ -72,18 +72,19 @@ namespace JewelryBiz.UI.Controllers
                     return Json(new { d = "0" });
             }
 
-            if (product.Quantity == 0)
-            {
-                quantity = 0;
-            }
-            else
-            {
-                quantity = product.Quantity;
-            }
+            return RedirectToAction("Index");
+            //if (product.Quantity == 0)
+            //{
+            //    quantity = 0;
+            //}
+            //else
+            //{
+            //    quantity = product.Quantity;
+            //}
 
-            return Json(new { d = quantity });
+            //return Json(new { d = quantity });
         }
-        
+
         [HttpGet]
         public JsonResult UpdateTotal()
         {

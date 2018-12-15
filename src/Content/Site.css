@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    overflow-y: auto;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -105,7 +106,7 @@ textarea {
     opacity: .8;
     transition: .3s;
     -webkit-transition: .3s;
-    background-color: #F4ECF7;
+    background-color:powderblue;
     padding: 20px;
     border: 1px solid #5DADE2;
 }
@@ -238,6 +239,7 @@ textarea {
     margin: 0px;
     height: auto;
     width: auto;
+
 }
 
     #container div {
@@ -257,6 +259,7 @@ textarea {
         -ms-flex-pack: center;
         -webkit-justify-content: center;
         justify-content: center;
+
     }
 
 #wrapper {
@@ -360,10 +363,20 @@ footer {
 
 .price{
     font-weight: bold;
-    font-size:large;
+    font-size:30px;
     color: green;
 }
 
+.total-price {
+    font-weight: bold;
+    font-size: 15px;
+    color: black;
+}
+.subtotal-price {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
 .add-to-cart-btn {
     border: 1px solid #5DADE2;
     padding: 10px;
@@ -376,4 +389,38 @@ footer {
     background-color:black;
     width:200px;
     text-align:center;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+.img-zoom-container {
+    position: relative;
+}
+
+.img-zoom-lens {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    /*set the size of the lens:*/
+    width: 40px;
+    height: 40px;
+}
+
+.img-zoom-result {
+    border: 1px solid #d4d4d4;
+    /*set the size of the result div:*/
+    width: 300px;
+    height: 300px;
+}
+
+.add-to-cart-btn {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    padding: 11px 20px;
+    font-size: 120%;
+    clear: both;
 }

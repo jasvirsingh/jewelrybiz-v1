@@ -54,11 +54,13 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductMaterial.cs" />
     <Compile Include="Models\PurchasedItem.cs" />
     <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="OrderDAL.cs" />
     <Compile Include="ProductDAL.cs" />
+    <Compile Include="ProductMaterialDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShoppingCartDataDAL.cs" />
     <Compile Include="SubscriptionDAL.cs" />

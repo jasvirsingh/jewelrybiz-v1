@@ -22,10 +22,12 @@ namespace JewelryBiz.DataAccess
 
             var sqlDataAccess = new SqlDataAccess();
             var result = sqlDataAccess.ExecuteStoredProcedure("procGetProductDetails", parameters.ToArray());
-            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            if (result != null
+                && result.Tables.Count > 0
+                && result.Tables[0].Rows.Count > 0)
             {
                 var p = result.Tables[0].Rows[0];
-                return new Product
+                var product = new Product
                 {
                     ProductId = Convert.ToInt32(p["ProductId"]),
                     PName = p["ProductName"].ToString(),
@@ -34,7 +36,13 @@ namespace JewelryBiz.DataAccess
                     UnitsInStock = Convert.ToInt32(p["OnHand"]),
                     CategoryId = Convert.ToInt32(p["PCategoryId"]),
                     Image = p["Image"].ToString(),
+                    PCategoryName = p["CategoryName"].ToString(),
+                    
                 };
+
+               var materials= new ProductMaterialDAL().Get(product.CategoryId);
+                product.Materials = materials.ToList();
+                return product;
             }
             return null;
         }

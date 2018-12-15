@@ -63,7 +63,8 @@ namespace JewelryBiz.DataAccess
                     ProductId = Convert.ToInt32(item["ProductId"]),
                     PName = item["ProductName"].ToString(),
                     UnitPrice = Convert.ToDecimal(item["UnitPrice"]),
-                    Quantity = Convert.ToInt32(item["Quantity"])
+                    Quantity = Convert.ToInt32(item["Quantity"]),
+                    Total = Convert.ToDecimal(item["UnitPrice"]) * Convert.ToInt32(item["Quantity"])
                 });
 
                 return cartItems.ToList();

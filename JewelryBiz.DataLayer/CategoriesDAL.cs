@@ -3,6 +3,7 @@ using JewelryBiz.DataAccess.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace JewelryBiz.DataAccess
@@ -22,7 +23,8 @@ namespace JewelryBiz.DataAccess
                     CategoryId = Convert.ToInt32(r["PCategoryId"]),
                     ParentCategoryId = 0,//Convert.ToInt32(r["ParentCategoryId"]),
                     CategoryName = r["CategoryName"].ToString(),
-                    CategoryDescription = r["CategoryDescription"].ToString()
+                    CategoryDescription = r["CategoryDescription"].ToString(),
+                    CategoryImage = r["CategoryImage"].ToString()
                });
 
                 return categories;

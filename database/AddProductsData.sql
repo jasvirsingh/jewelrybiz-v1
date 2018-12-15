@@ -1,3 +1,4 @@
+delete from [dbo].ShoppingCart
 delete from [dbo].Product
 
 alter table [dbo].[Product]
@@ -45,3 +46,46 @@ VALUES('ORIGINS BAR NECKLACE','Crafted in .925 sterling silver and symbolizing n
 INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
 VALUES('ALIGHT PENDANT','This single leaf element - a symbol of growth – is pavéd with Swarovski Pure Brilliance Zirconia and designed with our signature connections pattern. The pendant exquisitely hangs from a smooth, polished leaf-shaped bail. Light weight due to its open interior and pillowed shape, it is crafted in .925 sterling silver and is beautifully finished on the back with a gallery that includes our Hummingbird icon. 16“ (40,6 cm) adjustable to 18“ (45,7 cm)',
 115.00,170, @categoryId, 1, GETDATE(), 'admin','1225-0041.jpg')
+
+SELECT @categoryId = PCategoryId FROM [dbo].ProductCategory
+WHERE CategoryName ='BABY_BRACELET'
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES('Little Princess Crystal & Hematite Bracelet','Petite sterling silver letter blocks (4.5mm letters as opposed to 6mm letters on adult bracelets), dark grey metallic hematite, gold-filled, and your choice of lead free Czech glass crystals or freshwater pearls. Choose between a tiny Cross, Star of David or Heart dangle. Adjustable chain closure allows it to grow with her. Image has been enlarged to show detail. Be sure to see our coordinating items at the bottom of this page.',
+62.00,1170, @categoryId, 1, GETDATE(), 'admin','lilprincessii_large.jpeg')
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES('Little Princess Gemstones & Bali Bracelet','A colorful array of gemstones with petite sterling silver letter blocks (4.5mm letters as opposed to 6mm letters on adult bracelets), and sterling silver bali flower beads. Choose between a tiny Cross, Star of David or Heart dangle. Adjustable chain closure allows it to grow with her. Image has been enlarged to show detail.',
+64.00,1100, @categoryId, 1, GETDATE(), 'admin','pringbbig_large.jpeg')
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES('Little Princess Silver Bracelet','The classic name bracelet with petite sterling silver letter blocks (4.5mm letters as opposed to 6mm letters on adult bracelets). All smooth sterling silver beads in alternating 3mm and 4mm pattern. Choose between a tiny Cross, Star of David or Heart dangle. Adjustable chain closure allows it to grow with her. Image has been enlarged to show detail.',
+62.00,1100, @categoryId, 1, GETDATE(), 'admin','prinsilbig_large.jpeg')
+
+SELECT @categoryId = PCategoryId FROM [dbo].ProductCategory
+WHERE CategoryName ='EARRING'
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES(
+'Large Metal Hoop Earrings'
+,'Enliven your desk-to-dinner ensembles with these stunning earrings. Large hoops frame your face and accentuate your neckline for a polished, dramatic look.
+
+<li>Hoop earrings</li>
+<li>Push-through closure</li>
+<li>Base metal</li>
+<li>Lead and nickel free</li>
+<li>Imported</li>',
+7.45,190, @categoryId, 1, GETDATE(), 'admin','earring-1.jpg')
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES(
+'Cubic Zirconia Teardrop Earrings'
+,'Keep your style sparkling with these crystal-accented teardrop earrings.
+
+<li>Teardrop earrings</li>
+<li>Cubic zirconia accents</li>
+<li>Approx. 1" long</li>
+<li>Cubic zirconia/Brass</li>
+<li>Lead and nickel free</li>
+<li>Imported</li>',
+9.95,140, @categoryId, 1, GETDATE(), 'admin','earring-2.jpg')

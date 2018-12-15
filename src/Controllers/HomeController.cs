@@ -18,7 +18,8 @@ namespace JewelryBiz.UI.Controllers
 
             ViewBag.Products = new ProductService().GetAll();
             ViewBag.Categories = GetAllCategories();
-            return View();
+            var categories = new CategoryService().Get();
+            return View(categories);
         }
 
         public JsonResult GetCategories()
@@ -88,21 +89,21 @@ namespace JewelryBiz.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ProductDetails(int id)
+        public ActionResult ProductDetails(int pid)
         {
-            //addToCart(id);
-            var product = new ProductService().GetById(id);
+            var product = new ProductService().GetById(pid);
             var productItem = new SelectedItem
             {
-                ProductId = id,
+                ProductId = pid,
                 ProductName = product.PName,
                 Description = product.Description,
                 OnHand = product.UnitsInStock,
                 UnitPrice = product.UnitPrice,
-                Image = product.Image
+                Image = product.Image,
+                PCategoryName = product.PCategoryName
             };
             var qtyRange = Enumerable.Range(1, product.UnitsInStock);
-            List<SelectListItem> quantityList = qtyRange.Select(q =>
+            var quantityList = qtyRange.Select(q =>
                        new SelectListItem
                        {
                            Value = q.ToString(),
@@ -110,6 +111,17 @@ namespace JewelryBiz.UI.Controllers
                        }).ToList();
 
             ViewBag.Quantity = quantityList;
+
+            if (product.PCategoryName == "MOTHER_BRACELET")
+            {
+                return RedirectToAction("MomyBracelet", "Products", new { pid = pid });
+            }
+
+            if (product.PCategoryName == "BABY_BRACELET")
+            {
+                return RedirectToAction("BabyBracelet", "Products", new { pid = pid });
+            }
+
             return View(productItem);
         }
 
