@@ -22,11 +22,11 @@
 </head>
 <body>
 
-        @if (Session["MyMenu"] == null)
-        {
-            Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
-        }
-        @Session["MyMenu"]
+    @if (Session["MyMenu"] == null)
+    {
+        Session["MyMenu"] = Html.Partial("~/Views/Shared/_Menu.cshtml");
+    }
+    @Session["MyMenu"]
 
     <div class="container body-content">
         @if (ViewBag.Cart != null)
@@ -50,19 +50,19 @@
             <a class="basket">
                 <span>SHOPPING BAG: (0) </span>
             </a>
-         }
-                    @RenderBody()
-                    <br />
+        }
+        @RenderBody()
+        <br />
 
-                    <div class="navbar navbar-theme navbar-fixed-bottom">
-                        <table width="100%">
-                            <tr>
-                                <td width="100%" align="center"> <p> @Html.ActionLink("Sign Up For Emails", "EmailsSignup", "Account")</p></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <script src="~/Scripts/jewelrybix.ui.js"></script>
+        <div class="navbar navbar-theme navbar-fixed-bottom">
+            <table width="100%">
+                <tr>
+                    <td width="100%" align="center"> <p> @Html.ActionLink("Sign Up For Emails", "EmailsSignup", "Account")</p></td>
+                </tr>
+            </table>
         </div>
+        <script src="~/Scripts/jewelrybix.ui.js"></script>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 </body>

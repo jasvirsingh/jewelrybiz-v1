@@ -20,5 +20,10 @@ namespace JewelryBiz.BusinessLayer
         {
             new ProductDAL().DecreaseUnitInStockByOne(productId);
         }
+
+        public List<Product> Search(string searchStr)
+        {
+            return new ProductDAL().Search(searchStr);
+        }
     }
 }

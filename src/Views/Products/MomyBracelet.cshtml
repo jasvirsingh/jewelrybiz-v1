@@ -17,7 +17,7 @@
             <br />
             <span class="price">@String.Format("{0:c}", Model.UnitPrice)</span>
 
-            <br /><br />
+            <br />
             Strands: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "STRAND")
 .Select(i => new SelectListItem
 {
@@ -25,7 +25,7 @@ Text = i.MaterialDescription.ToString(),
 Value = i.MaterialName.ToString()
 }),
 new { Class = "form-control" })
-            <br /><br />
+            <br />
             Size: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "SIZE")
 .Select(i => new SelectListItem
 {
@@ -34,7 +34,7 @@ Value = i.MaterialName.ToString()
 }),
 new { Class = "form-control" })
 
-            <br /><br />
+            <br />
             Clasp: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "CLASP")
 .Select(i => new SelectListItem
 {
@@ -42,7 +42,7 @@ Text = i.MaterialDescription.ToString(),
 Value = i.MaterialName.ToString()
 }),
 new { Class = "form-control" })
-            <br /><br />
+            <br />
             Quantity : @Html.DropDownListFor(m => m.Quantity,
 Enumerable.Range(1, Model.OnHand)
 .Select(i => new SelectListItem

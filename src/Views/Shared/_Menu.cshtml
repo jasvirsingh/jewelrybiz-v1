@@ -7,6 +7,7 @@
 new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="All"  },
 new { LinkText="About", ActionName="About",ControllerName="Home",Roles="Anonymous"  },
 new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="Anonymous"  },
+new { LinkText="Search", ActionName="Search",ControllerName="Home",Roles="All"  },
 new { LinkText="Dashboard", ActionName="Index",ControllerName="Admin",Roles="Admin"  },
 new { LinkText="Report", ActionName="Index",ControllerName="Report",Roles="Admin"  },
 new { LinkText="My Profile", ActionName="MyProfile",ControllerName="Customer",Roles="Customer"  },
@@ -15,48 +16,48 @@ new { LinkText="Purchase History", ActionName="PurchaseHistory",ControllerName="
 };
 }
 
-<div class="navbar navbar-theme navbar-fixed-top">
-    <div class="container">
-        @*<div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-        </div>*@
-
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                @if (Request.Cookies["User"] != null && Request.Cookies["User"]["Role"]!=null)
-                {
-                    //if (System.Web.HttpContext.Current.User != null)
-                    //{
-                    //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
-                    string role = Request.Cookies["User"]["Role"];
-                    String roles = role;
-                    var links = from item in menus
-                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                .Any(x => roles.Contains(x) || x == "All")
-                                select item;
-                    foreach (var link in links)
+@using (Html.BeginForm("Search", "Products", FormMethod.Post))
+{
+<div style="margin-left:1100px; margin-top:3px;">
+    @Html.TextBox("searchStr")
+    @*<input type="text" width="200px;" />*@
+    <input type="submit" value="Search" />
+</div>
+}<br />
+    <div class="navbar navbar-theme navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Request.Cookies["User"] != null && Request.Cookies["User"]["Role"] != null)
                     {
+                        //if (System.Web.HttpContext.Current.User != null)
+                        //{
+                        //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
+                        string role = Request.Cookies["User"]["Role"];
+                        String roles = role;
+                        var links = from item in menus
+                                    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Any(x => roles.Contains(x) || x == "All")
+                                    select item;
+                        foreach (var link in links)
+                        {
                             @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        }
                     }
-                }
-                else
-                {
-                    var links = from item in menus
-                                where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
-                                .Any(x => new String[] { "All", "Anonymous" }.Contains(x))
-                                select item;
-                    foreach (var link in links)
+                    else
                     {
-                        @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        var links = from item in menus
+                                    where item.Roles.Split(new String[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Any(x => new String[] { "All", "Anonymous" }.Contains(x))
+                                    select item;
+                        foreach (var link in links)
+                        {
+                            @: <li> @Html.ActionLink(link.LinkText, link.ActionName, link.ControllerName)</li>
+                        }
                     }
-                }
-            </ul>
-            @Html.Partial("_LoginPartial")
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
     </div>
-</div>

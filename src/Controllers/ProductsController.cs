@@ -18,6 +18,12 @@ namespace JewelryBiz.UI.Controllers
             return View(products);
         }
 
+        public ActionResult Search(string searchStr)
+        {
+            var result = new ProductService().Search(searchStr);
+            return View("Index", result);
+        }
+
         public ActionResult ProductDetails(int pid)
         {
             var product = new ProductService().GetById(pid);

@@ -71,6 +71,38 @@ namespace JewelryBiz.DataAccess
             return null;
         }
 
+        public List<Product> Search(string searchStr)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@searchStr",
+                DbType = DbType.String,
+                Value = searchStr
+            });
+
+            var sqlDataAccess = new SqlDataAccess();
+            var result = sqlDataAccess.ExecuteStoredProcedure("procSearch", parameters.ToArray());
+            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                IEnumerable<DataRow> products = from p in result.Tables[0].AsEnumerable()
+                                                select p;
+                var items = products.Select(p => new Product
+                {
+                    ProductId = Convert.ToInt32(p["ProductId"]),
+                    PName = p["ProductName"].ToString(),
+                    Description = p["ProductDescription"].ToString(),
+                    UnitPrice = Convert.ToDecimal(p["UnitPrice"]),
+                    UnitsInStock = Convert.ToInt32(p["OnHand"]),
+                    CategoryId = Convert.ToInt32(p["PCategoryId"]),
+                    Image = p["Image"].ToString()
+                });
+
+                return items.ToList();
+            }
+            return null;
+        }
+
         public void DecreaseUnitInStockByOne(int productId)
         {
             var parameters = new List<SqlParameter>();
