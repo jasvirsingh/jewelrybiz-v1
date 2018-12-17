@@ -119,8 +119,8 @@ namespace JewelryBiz.UI.Controllers
             }
             var email = Request.Cookies["User"]["Email"];
             var customer = new CustomerService().GetByEmail(email);
-            ViewBag.States = states;
-            ViewBag.Cards = cards;
+            SetStates();
+            SetPaymentMethods();
 
             return View(customer);
         }
@@ -128,8 +128,8 @@ namespace JewelryBiz.UI.Controllers
         public ActionResult GuestCheckout()
         {
             ShoppingBag();
-            ViewBag.States = states;
-            ViewBag.Cards = cards;
+            SetStates();
+            SetPaymentMethods();
 
             return View("Purchase");
         }
@@ -148,7 +148,7 @@ namespace JewelryBiz.UI.Controllers
                     ModelState.AddModelError("", "Credit card has already expired");
                 }
 
-                if (customer.CardType == "AMEX")
+                if (customer.PaymentMethodCode == "AMEX")
                 {
                     if (customer.CardNo.Length != 15)
                     {
@@ -159,7 +159,7 @@ namespace JewelryBiz.UI.Controllers
                 {
                     if (customer.CardNo.Length != 16)
                     {
-                        ModelState.AddModelError("", customer.CardType + "must be 16 digits");
+                        ModelState.AddModelError("", customer.PaymentMethodCode + "must be 16 digits");
                     }
                 }
 
@@ -175,7 +175,7 @@ namespace JewelryBiz.UI.Controllers
                         Address2 = customer.Address2,
                         Postcode = customer.Postcode,
                         State = customer.State,
-                        CardType = customer.CardType,
+                        PaymentMethodCode = customer.PaymentMethodCode,
                         CardNo = customer.CardNo,
                         ExpDate = customer.ExpDate
                     };
@@ -186,6 +186,9 @@ namespace JewelryBiz.UI.Controllers
                     return RedirectToAction("PurchasedSuccess");
 
                 }
+
+                SetStates();
+                SetPaymentMethods();
             }
 
             List<ModelError> errors = new List<ModelError>();
@@ -216,6 +219,16 @@ namespace JewelryBiz.UI.Controllers
                     ViewBag.CartUnits = currentUserCartItems.Count();
                 }
             }
+        }
+
+        private void SetPaymentMethods()
+        {
+            ViewBag.Cards = new PaymentMethodsService().Get();
+        }
+
+        private void SetStates()
+        {
+            ViewBag.States = states;
         }
     }
 }

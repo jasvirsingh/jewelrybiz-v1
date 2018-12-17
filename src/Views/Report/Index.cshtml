@@ -1,23 +1,20 @@
-﻿
+﻿@model IEnumerable<JewelryBiz.DataAccess.Models.Report>
 @{
     ViewBag.Title = "Reports";
 }
 
 <h2>Reports</h2>
 
+@using (Html.BeginForm("Generate", "Report", Model, FormMethod.Post))
+{
 <div style="float:left; width:20%;">
-    @Html.RadioButton("Report", "Mothly") Monthly Sale
-    <br /><br />
-    @Html.RadioButton("Report", "Yearly")  Yearly Sale
-    <br /><br />
-    @Html.RadioButton("Report", "InvLevel")  Inventory Levels
-    <br /><br />
-    @Html.RadioButton("Report", "InvCost")  Inventory Costs
-    <br /><br />
-    @Html.RadioButton("Report", "Customer")  Customer Lists
-    <br /><br />
-    @Html.RadioButton("Report", "Mailing")  Mailing Labels
+    @foreach (var item in Model)
+    {
+        @Html.RadioButton("Report", item.ReportName) @item.Description
+        <br /><br />
+    }
 </div>
-<div style="float:right; width:80%;">
-    <input type="button" value="Generate" />
-</div>
+    <div style="float:right; width:80%;">
+        <input type="submit" value="Generate" />
+    </div>
+}

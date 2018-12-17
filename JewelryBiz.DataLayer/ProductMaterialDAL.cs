@@ -1,5 +1,6 @@
 ﻿using JewelryBiz.DataAccess.Core;
 using JewelryBiz.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -30,7 +31,8 @@ namespace JewelryBiz.DataAccess
                     CategoryName = r["CategoryName"].ToString(),
                     CategoryDescription = r["CategoryDescription"].ToString(),
                     MaterialName = r["MaterialName"].ToString(),
-                    MaterialDescription = r["MaterialDescription"].ToString()
+                    MaterialDescription = r["MaterialDescription"].ToString(),
+                    MaterialId = Convert.ToInt32(r["MaterialId"])
                 });
 
                 return material;

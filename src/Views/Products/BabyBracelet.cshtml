@@ -19,42 +19,41 @@
 
             <br />
             Size: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "SIZE")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+                        .Select(i => new SelectListItem
+                        {
+                        Text = i.MaterialDescription.ToString(),
+                        Value = i.MaterialId.ToString()
+                        }),
+                        new { Class = "form-control"  })
             <br />
             Dangle: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "DANGLE")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+                        .Select(i => new SelectListItem
+                        {
+                        Text = i.MaterialDescription.ToString(),
+                        Value = i.MaterialId.ToString()
+                        }),
+                        new { Class = "form-control" })
             <br />
             Crystal: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "CRYSTAL")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+                        .Select(i => new SelectListItem
+                        {
+                        Text = i.MaterialDescription.ToString(),
+                        Value = i.MaterialId.ToString()
+                        }),
+                        new { Class = "form-control" })
 
             <br />
             Quantity : @Html.DropDownListFor(m => m.Quantity,
-Enumerable.Range(1, Model.OnHand)
-.Select(i => new SelectListItem
-{
-Text = i.ToString(),
-Value = i.ToString()
-}),
-new { Class = "form-control" })
+                            Enumerable.Range(1, Model.OnHand)
+                            .Select(i => new SelectListItem
+                            {
+                            Text = i.ToString(),
+                            Value = i.ToString()
+                            }),
+                            new { Class = "form-control" })
             <span style="color:green"> (@Model.OnHand items available in stock)</span>
             <div>
                 <input type="submit" value="ADD TO CART" class="btn btn-info" />
-                @*@Html.ActionLink("add to cart", "AddToCart", "Home", new { ProductId = Model.ProductId, Quantity = Model.Quantity }, null)*@
             </div>
         </div>
     </div>

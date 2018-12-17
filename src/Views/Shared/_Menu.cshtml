@@ -1,13 +1,11 @@
 ﻿@using JewelryBiz.UI.Helpers
 @{
-    /**/
 
     var menus = new[]
                 {
 new { LinkText="Home", ActionName="Index",ControllerName="Home",Roles="All"  },
 new { LinkText="About", ActionName="About",ControllerName="Home",Roles="Anonymous"  },
 new { LinkText="Contact", ActionName="Contact",ControllerName="Home",Roles="Anonymous"  },
-new { LinkText="Search", ActionName="Search",ControllerName="Home",Roles="All"  },
 new { LinkText="Dashboard", ActionName="Index",ControllerName="Admin",Roles="Admin"  },
 new { LinkText="Report", ActionName="Index",ControllerName="Report",Roles="Admin"  },
 new { LinkText="My Profile", ActionName="MyProfile",ControllerName="Customer",Roles="Customer"  },
@@ -20,7 +18,6 @@ new { LinkText="Purchase History", ActionName="PurchaseHistory",ControllerName="
 {
 <div style="margin-left:1100px; margin-top:3px;">
     @Html.TextBox("searchStr")
-    @*<input type="text" width="200px;" />*@
     <input type="submit" value="Search" />
 </div>
 }<br />
@@ -30,9 +27,6 @@ new { LinkText="Purchase History", ActionName="PurchaseHistory",ControllerName="
                 <ul class="nav navbar-nav">
                     @if (Request.Cookies["User"] != null && Request.Cookies["User"]["Role"] != null)
                     {
-                        //if (System.Web.HttpContext.Current.User != null)
-                        //{
-                        //ApplicationUser user = (ApplicationUser)System.Web.HttpContext.Current.User.Identity;
                         string role = Request.Cookies["User"]["Role"];
                         String roles = role;
                         var links = from item in menus

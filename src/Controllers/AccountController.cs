@@ -227,7 +227,7 @@ namespace JewelryBiz.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SavePersonalInfo(Customer customer)
         {
-            customer.CardType = "X";
+            customer.PaymentMethodCode = "X";
             customer.CardNo = "X";
             customer.ExpDate = DateTime.Now.AddMonths(12);
             SetStates();

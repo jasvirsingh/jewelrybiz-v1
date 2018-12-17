@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using JewelryBiz.BusinessLayer;
+using JewelryBiz.DataAccess.Models;
 using System.Web.Mvc;
 
 namespace JewelryBiz.UI.Controllers
@@ -11,7 +9,24 @@ namespace JewelryBiz.UI.Controllers
         // GET: Report
         public ActionResult Index()
         {
-            return View();
+            var result = new ReportsService().GetReports();
+            return View(result);
+        }
+
+        [HttpPost]
+        public void Generate()
+        {
+            var selectedReport = ((System.Web.HttpRequestWrapper)Request).Form["Report"];
+
+            switch (selectedReport)
+            {
+                case "CUSTOMER_LIST":
+                        new ReportsService().GenerateCustomersReport();
+                    break;
+                default:
+                    break;
+        }
+            
         }
     }
 }

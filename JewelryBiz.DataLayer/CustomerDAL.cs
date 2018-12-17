@@ -121,13 +121,13 @@ namespace JewelryBiz.DataAccess
             });
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@Addresss1",
+                ParameterName = "@Address1",
                 DbType = DbType.String,
                 Value = customer.Address1
             });
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@Addresss2",
+                ParameterName = "@Address2",
                 DbType = DbType.String,
                 Value = customer.Address2
             });
@@ -143,24 +143,7 @@ namespace JewelryBiz.DataAccess
                 DbType = DbType.String,
                 Value = customer.State
             });
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@CardType",
-            //    DbType = DbType.String,
-            //    Value = customer.CardType
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@CardNumber",
-            //    DbType = DbType.String,
-            //    Value = customer.CardNo
-            //});
-            //parameters.Add(new SqlParameter
-            //{
-            //    ParameterName = "@ExpDate",
-            //    DbType = DbType.String,
-            //    Value = customer.ExpDate
-            //});
+            
             parameters.Add(new SqlParameter
             {
                 ParameterName = "@Email",
@@ -169,6 +152,35 @@ namespace JewelryBiz.DataAccess
             });
             var sqlDataAccess = new SqlDataAccess();
             sqlDataAccess.ExecuteStoredProcedure("procAddCustomer", parameters.ToArray());
+
+            var paymentParameters = new List<SqlParameter>();
+            paymentParameters.Add(new SqlParameter
+            {
+                ParameterName = "@Email",
+                DbType = DbType.String,
+                Value = customer.Email
+            });
+            paymentParameters.Add(new SqlParameter
+            {
+                ParameterName = "@PaymentMethodCode",
+                DbType = DbType.String,
+                Value = customer.PaymentMethodCode
+            });
+            paymentParameters.Add(new SqlParameter
+            {
+                ParameterName = "@AccountNo",
+                DbType = DbType.String,
+                Value = customer.CardNo
+            });
+            paymentParameters.Add(new SqlParameter
+            {
+                ParameterName = "@ExpirationDate",
+                DbType = DbType.Date,
+                Value = customer.ExpDate
+            });
+
+            var sqlDataAccess2 = new SqlDataAccess();
+            sqlDataAccess2.ExecuteNonQuery("procAddCustomerPaymentMethod", paymentParameters.ToArray());
 
             var orderDAL = new OrderDAL();
             orderDAL.CreateOrder(userSessionId, customer.Email);

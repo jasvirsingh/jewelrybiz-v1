@@ -7,9 +7,11 @@
 
 <h2>@Model.ProductName</h2>
 
+
 @using (Html.BeginForm("AddToCart", "Home", FormMethod.Post))
 {
     @Html.Hidden("ProductId", Model.ProductId)
+    @Html.Hidden("PCategoryName", Model.PCategoryName)
     <div class="row">
         <div class="column"><img src="/Images/Products/@Model.Image" /></div>
         <div class="column">
@@ -18,43 +20,48 @@
             <span class="price">@String.Format("{0:c}", Model.UnitPrice)</span>
 
             <br />
-            Strands: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "STRAND")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+            Strands: @Html.DropDownListFor(m => m.MotherBraceletMaterial.StrandMaterialId, Model.Materials.Where(s => s.CategoryName == "STRAND")
+               .Select(i => new SelectListItem
+               {
+                   Text = i.MaterialDescription.ToString(),
+                   Value = i.MaterialId.ToString()
+               }),
+               new { Class = "form-control", @onchange = "addStrands(this.value)" })
             <br />
-            Size: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "SIZE")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+            <div id="strands">
+
+            </div>
+            <br />
+
+            Size: @Html.DropDownListFor(m => m.MotherBraceletMaterial.SizeMaterialId, Model.Materials.Where(s => s.CategoryName == "SIZE")
+                  .Select(i => new SelectListItem
+                  {
+                  Text = i.MaterialDescription.ToString(),
+                  Value = i.MaterialId.ToString()
+                  }),
+                  new { Class = "form-control" })
 
             <br />
-            Clasp: @Html.DropDownListFor(m => m.Materials, Model.Materials.Where(s => s.CategoryName == "CLASP")
-.Select(i => new SelectListItem
-{
-Text = i.MaterialDescription.ToString(),
-Value = i.MaterialName.ToString()
-}),
-new { Class = "form-control" })
+            Clasp: @Html.DropDownListFor(m => m.MotherBraceletMaterial.ClaspMaterialId, Model.Materials.Where(s => s.CategoryName == "CLASP")
+                 .Select(i => new SelectListItem
+                 {
+                 Text = i.MaterialDescription.ToString(),
+                 Value = i.MaterialId.ToString()
+                 }),
+                 new { Class = "form-control" })
             <br />
+
             Quantity : @Html.DropDownListFor(m => m.Quantity,
-Enumerable.Range(1, Model.OnHand)
-.Select(i => new SelectListItem
-{
-Text = i.ToString(),
-Value = i.ToString()
-}),
-new { Class = "form-control" })
-            <span style="color:green"> (@Model.OnHand items available in stock)</span>  
+                 Enumerable.Range(1, Model.OnHand)
+                 .Select(i => new SelectListItem
+                 {
+                 Text = i.ToString(),
+                 Value = i.ToString()
+                 }),
+                 new { Class = "form-control" })
+            <span style="color:green"> (@Model.OnHand items available in stock)</span>
             <div>
                 <input type="submit" value="ADD TO CART" class="btn btn-info" />
-                @*@Html.ActionLink("add to cart", "AddToCart", "Home", new { ProductId = Model.ProductId, Quantity = Model.Quantity }, null)*@
             </div>
         </div>
     </div>

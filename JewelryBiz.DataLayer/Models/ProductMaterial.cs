@@ -9,5 +9,7 @@
         public string MaterialName { get; set; }
 
         public string MaterialDescription { get; set; }
+
+        public int MaterialId { get; set; }
     }
 }

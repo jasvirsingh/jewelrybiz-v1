@@ -36,8 +36,8 @@ namespace JewelryBiz.DataAccess.Models
         public string State { get; set; }
 
         //[Required(ErrorMessage = "Card type is required")]
-        [Display(Name = "Card Type")]
-        public string CardType { get; set; }
+        [Display(Name = "Payment Method")]
+        public string PaymentMethodCode { get; set; }
 
         //[Required(ErrorMessage = "Card number is required")]
         [Display(Name = "Card Number")]
