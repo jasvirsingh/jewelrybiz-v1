@@ -89,3 +89,33 @@ VALUES(
 <li>Lead and nickel free</li>
 <li>Imported</li>',
 9.95,140, @categoryId, 1, GETDATE(), 'admin','earring-2.jpg')
+
+SELECT @categoryId = PCategoryId FROM [dbo].ProductCategory
+WHERE CategoryName ='SET'
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES('Glitter Initial Jewelry Gift Set - C'
+,'You shine bright, so you deserve a jewelry set as unique as yourself! This C initial jewelry set includes silver-tone stud earrings, a glitter heart locket, and a charm bracelet with initial, unicorn, and star charms.
+
+<li>Finish: Silver-tone</li>
+<li>Necklace Length: 16"</li>
+<li>Bracelet Length: 6"</li>
+<li>Necklace Closure: Lobster clasp</li>
+<li>Bracelet Closure: Lobster clasp</li>
+<li>Pack Size: 3</li>
+<li>Material: Metal</li>
+<li>Style Number: 99762</li>'
+,14.99,160, @categoryId, 1, GETDATE(), 'admin','99762_1.jpg')
+
+INSERT INTO [dbo].Product(ProductName, ProductDescription, UnitPrice, OnHand, PCategoryId, IsActive, CreatedDate, CreatedBy, Image)
+VALUES('Ladybug Jewelry Set - 3 Pack'
+,'Give your little one the cutest critter jewelry set to wear with all of her outfits! This set includes a red ladybug charm on a ring, a bracelet, and a necklace.
+
+<li>Finish: Silver-tone</li>
+<li>Necklace Length: 12"</li>
+<li>Closure: Lobster clasp</li>
+<li>Pack Size: 3</li>
+<li>Material: Metal</li>
+<li>Suitable for Ages 3+</li>
+<li>Style Number: 14166</li>'
+,9.99,1460, @categoryId, 1, GETDATE(), 'admin','14166_2.jpg')

@@ -217,5 +217,40 @@ namespace JewelryBiz.DataAccess
 
             return null;
         }
+
+        public CustomerProfile GetCustomerProfile(string email)
+        {
+            var parameters = new List<SqlParameter>();
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@Email",
+                DbType = DbType.String,
+                Value = email
+            });
+
+            var sqlDataAccess = new SqlDataAccess();
+            var result = sqlDataAccess.ExecuteStoredProcedure("procGetCustomerProfile", parameters.ToArray());
+
+            if (result != null && result.Tables.Count > 0 && result.Tables[0].Rows.Count > 0)
+            {
+                var row = result.Tables[0].Rows[0];
+                return new CustomerProfile
+                {
+                    FName = row["FirstName"].ToString(),
+                    LName = row["LastName"].ToString(),
+                    Phone = row["Phone"].ToString(),
+                    Address1 = row["Address1"].ToString(),
+                    Address2 = row["Address2"].ToString(),
+                    Postcode = row["PostCode"].ToString(),
+                    State = row["State"].ToString(),
+                    Email = row["Email"].ToString(),
+                    PaymentMethod = row["MethodName"].ToString(),
+                    CardNo = row["AccountNo"].ToString(),
+                    ExpDate = Convert.ToDateTime(row["ExpirationDate"])
+                };
+            }
+
+            return null;
+        }
     }
 }

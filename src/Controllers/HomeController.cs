@@ -85,8 +85,16 @@ namespace JewelryBiz.UI.Controllers
         [HttpPost]
         public ActionResult AddToCart(SelectedItem item)
         {
-            addToCart(item.ProductId, item.Quantity);
-            return RedirectToAction("Index");
+            if (item.NoOfStrandsSelected == 1)
+            {
+                if (string.IsNullOrEmpty(item.Strand1))
+                {
+                    ModelState.AddModelError("Strand1", "Please enter name for first strand.");
+                }
+            }
+
+                addToCart(item);
+                return RedirectToAction("Index");
         }
 
         public ActionResult ProductDetails(int pid)
@@ -125,18 +133,18 @@ namespace JewelryBiz.UI.Controllers
             return View(productItem);
         }
 
-        private void addToCart(int pId, int qty)
+        private void addToCart(SelectedItem item)
         {
             // check if product is valid
-           var product = new ProductService().GetById(pId);
+           var product = new ProductService().GetById(item.ProductId);
             if (product != null && product.UnitsInStock > 0)
             {
                 // check if product already existed
-                CartItem cart = new ShoppingCartDataService().GetByProductId(Session.SessionID, pId);
+                CartItem cart = new ShoppingCartDataService().GetByProductId(Session.SessionID, item.ProductId);
                 if (cart != null)
                 {
                     cart.Quantity++;
-                    new ShoppingCartDataService().UpdateCartItemQuantity(Session.SessionID, product.ProductId, qty);
+                    new ShoppingCartDataService().UpdateCartItemQuantity(Session.SessionID, product.ProductId, item.Quantity);
                 }
                 else
                 {
@@ -145,7 +153,7 @@ namespace JewelryBiz.UI.Controllers
                         PName = product.PName,
                         ProductId = product.ProductId,
                         UnitPrice = product.UnitPrice,
-                        Quantity = qty,
+                        Quantity = item.Quantity,
                         UserSessionId = Session.SessionID
                     };
                     new ShoppingCartDataService().AddCartItem(cartItem);

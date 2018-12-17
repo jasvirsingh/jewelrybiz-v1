@@ -35,17 +35,18 @@ namespace JewelryBiz.DataAccess.Models
         [Required(ErrorMessage = "State is required")]
         public string State { get; set; }
 
-        //[Required(ErrorMessage = "Card type is required")]
+        [Required(ErrorMessage = "Payment method is required")]
         [Display(Name = "Payment Method")]
         public string PaymentMethodCode { get; set; }
 
         //[Required(ErrorMessage = "Card number is required")]
         [Display(Name = "Card Number")]
+        [Required(ErrorMessage = "Card number is required")]
         [StringLength(16, ErrorMessage = "Invalid card numbers entered", MinimumLength = 15)]
         public string CardNo { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        //[Required(ErrorMessage = "Card expiration is required")]
+        [Required(ErrorMessage = "Card expiration is required")]
         [Display(Name = "Expiration")]
         public DateTime ExpDate { get; set; }
 

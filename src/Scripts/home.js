@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    FillCategories();
+   
 });
 
 function FillCategories() {
@@ -33,19 +33,3 @@ function getdetails(sel) {
     }
 }
 
-function addStrands(value) {
-    $("#strands").html('');
-    var text = $("#MotherBraceletMaterial_StrandMaterialId option:selected").text()
-    if (text == "One Strand") {
-        $("#strands").append("Name1: <input type='text' id='Strand1' name ='Strand1'/>");
-    }
-    else if (text == "Two Strand") {
-        $("#strands").append("Name 1:  <input type='text' id='Strand1' name ='Strand1'/>&nbsp;&nbsp;Name2: <input type='text' id='Strand2' name ='Strand2'/>");
-    }
-    else if (text == "Three Strand") {
-        $("#strands").append("Name1:<input type='text' id='Strand1' name ='Strand1'/>&nbsp;&nbsp;Name2:<input type='text' id='Strand2' name ='Strand2'/><br/><br/>Name3:<input type='text' id='Strand3' name ='Strand3'/>");
-    }
-    else if (text == "Four Strand") {
-        $("#strands").append("Name1:<input type='text' id='Strand1' name ='Strand1'/>&nbsp;&nbsp;Name2:<input type='text' id='Strand2' name ='Strand2'/><br/><br/>Name3:<input type='text' id='Strand3' name ='Strand3'/>&nbsp;&nbsp;Name4:<input type='text' id='Strand4' name ='Strand4'/>");
-    }
-}

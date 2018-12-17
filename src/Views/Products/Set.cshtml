@@ -16,41 +16,9 @@
     <div class="row">
         <div class="column"><img src="/Images/Products/@Model.Image" /></div>
         <div class="column">
-            <span style="font-size:15px;">@Model.Description</span>
+            <span style="font-size:15px;">@Html.Raw(Model.Description)</span>
             <br />
             <span class="price">@String.Format("{0:c}", Model.UnitPrice)</span>
-
-            <br />
-            Strands: @Html.DropDownListFor(m => m.MotherBraceletMaterial.StrandMaterialId, Model.Materials.Where(s => s.CategoryName == "STRAND")
-.Select(i => new SelectListItem
-{
- Text = i.MaterialDescription.ToString(),
- Value = i.MaterialId.ToString()
-}),
-new { Class = "form-control", @onchange = "addStrands(this.value)" })
-            <br />
-            <div id="strands">
-
-            </div>
-            <br />
-
-            Size: @Html.DropDownListFor(m => m.MotherBraceletMaterial.SizeMaterialId, Model.Materials.Where(s => s.CategoryName == "SIZE")
-      .Select(i => new SelectListItem
-      {
-      Text = i.MaterialDescription.ToString(),
-      Value = i.MaterialId.ToString()
-      }),
-      new { Class = "form-control" })
-
-            <br />
-            Clasp: @Html.DropDownListFor(m => m.MotherBraceletMaterial.ClaspMaterialId, Model.Materials.Where(s => s.CategoryName == "CLASP")
-   .Select(i => new SelectListItem
-   {
-   Text = i.MaterialDescription.ToString(),
-   Value = i.MaterialId.ToString()
-   }),
-   new { Class = "form-control" })
-            <br />
 
             Quantity : @Html.DropDownListFor(m => m.Quantity,
 Enumerable.Range(1, Model.OnHand)
@@ -67,4 +35,3 @@ new { Class = "form-control" })
         </div>
     </div>
 }
-

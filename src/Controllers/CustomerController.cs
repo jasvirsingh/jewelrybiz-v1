@@ -8,7 +8,7 @@ namespace JewelryBiz.UI.Controllers
         public ActionResult MyProfile()
         {
             var email = System.Web.HttpContext.Current.User.Identity.Name;
-            var info = new CustomerService().GetByEmail(email);
+            var info = new CustomerService().GetCustomerProfile(email);
             return View(info);
         }
 

@@ -14,6 +14,7 @@ namespace JewelryBiz.DataLayer.Domain
         public int Quantity { get; set; }
         public string Image { get; set; }
         public string PCategoryName { get; set; }
+        public int NoOfStrandsSelected { get; set; }
         //public int SizeMaterialId { get; set; }
         //public int ClaspMaterialId { get; set; }
         //public int StrandMaterialId { get; set; }

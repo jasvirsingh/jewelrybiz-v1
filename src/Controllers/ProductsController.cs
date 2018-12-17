@@ -62,6 +62,11 @@ namespace JewelryBiz.UI.Controllers
                 return RedirectToAction("Earring", new { pid = pid });
             }
 
+            if (product.PCategoryName == "SET")
+            {
+                return RedirectToAction("Set", new { pid = pid });
+            }
+
             ShoppingBag();
 
             return View(productItem);
@@ -82,6 +87,13 @@ namespace JewelryBiz.UI.Controllers
         }
 
         public ActionResult Earring(int pid)
+        {
+            var model = GetDetails(pid);
+            ShoppingBag();
+            return View(model);
+        }
+
+        public ActionResult Set(int pid)
         {
             var model = GetDetails(pid);
             ShoppingBag();

@@ -3,39 +3,63 @@
     ViewBag.Title = "Profile";
 }
 
-@model JewelryBiz.DataAccess.Models.Customer
+@model JewelryBiz.DataAccess.Models.CustomerProfile
 
-@{
-    ViewBag.Title = "Profile";
-}
+<style>
+    #div1 {
+        width: 100%;
+        border: solid 1px #000000;
+        background-color: lightsteelblue;
+    }
 
-<h2>My Profile</h2>
+    #div2 {
+        width: 100%;
+        border: solid 1px #000000;
 
-<div class="form-horizontal">
-    <hr />
-    <div class="form-group">
-        @Html.LabelFor(model => model.FName, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.FName
+    }
+</style>
+<div>
+    <div id="div1">
+        <h2>My Account</h2>
+        <div class="form-group">
+            @Html.LabelFor(model => model.FName, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.FName
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.LName, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.LName
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Phone
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Address1
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Address2
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.State
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Postcode, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Postcode
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Email
+        </div>
+
+        <h2>Payment Info</h2>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentMethod, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.PaymentMethod
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CardNo, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.CardNo
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExpDate, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.ExpDate.ToShortDateString()
+        </div>
     </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.LName, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.LName
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Phone
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Address1, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Address1
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Address2, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Address2
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.State, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.State
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Postcode, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Postcode
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.Email
+
+    <div id="div2">
+        
     </div>
 </div>
-

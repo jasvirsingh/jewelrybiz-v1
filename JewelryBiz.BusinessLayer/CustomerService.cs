@@ -25,5 +25,10 @@ namespace JewelryBiz.BusinessLayer
         {
             new CustomerDAL().SavePersonalInfo(customer, userSessionId);
         }
+
+        public CustomerProfile GetCustomerProfile(string email)
+        {
+            return new CustomerDAL().GetCustomerProfile(email);
+        }
     }
 }

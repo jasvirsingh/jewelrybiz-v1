@@ -15,13 +15,6 @@ namespace JewelryBiz.UI.Controllers
         public CheckoutController()
         {
             states = StatesService.GetStates();
-
-            cards = new List<object> {
-                new { Type = "VISA" },
-                new { Type = "Master Card" },
-                new { Type = "AMEX" }
-            };
-
         }
         
         // GET: Checkout
