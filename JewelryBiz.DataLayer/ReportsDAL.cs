@@ -66,5 +66,129 @@ namespace JewelryBiz.DataAccess
                 HttpContext.Current.Response.End();        
             }
         }
+
+        public void GenerateFinishedGoodsInventoryReport()
+        {
+            var sqlDAL = new SqlDataAccess();
+            var result = sqlDAL.ExecuteStoredProcedure("GetFinishedGoodsInvLvls", null);
+            if (result != null)
+            {
+                //Create a dummy GridView
+                GridView GridView1 = new GridView();
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = result;
+                GridView1.DataBind();
+
+                HttpContext.Current.Response.ContentType = "application/pdf";
+                HttpContext.Current.Response.AddHeader("content-disposition",
+                    "attachment;filename=FinishedGoodsInventoryLevelsReport.pdf");
+                HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                GridView1.RenderControl(hw);
+                StringReader sr = new StringReader(sw.ToString());
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+                pdfDoc.Open();
+                htmlparser.Parse(sr);
+                pdfDoc.Close();
+                HttpContext.Current.Response.Write(pdfDoc);
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        public void GenerateMonthlySalesReport()
+        {
+            var sqlDAL = new SqlDataAccess();
+            var result = sqlDAL.ExecuteStoredProcedure("GetMonthlySales", null);
+            if (result != null)
+            {
+                //Create a dummy GridView
+                GridView GridView1 = new GridView();
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = result;
+                GridView1.DataBind();
+
+                HttpContext.Current.Response.ContentType = "application/pdf";
+                HttpContext.Current.Response.AddHeader("content-disposition",
+                    "attachment;filename=MonthlySalesReport.pdf");
+                HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                GridView1.RenderControl(hw);
+                StringReader sr = new StringReader(sw.ToString());
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+                pdfDoc.Open();
+                htmlparser.Parse(sr);
+                pdfDoc.Close();
+                HttpContext.Current.Response.Write(pdfDoc);
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        public void GenerateYearlySalesReport()
+        {
+            var sqlDAL = new SqlDataAccess();
+            var result = sqlDAL.ExecuteStoredProcedure("GetYearlySales", null);
+            if (result != null)
+            {
+                //Create a dummy GridView
+                GridView GridView1 = new GridView();
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = result;
+                GridView1.DataBind();
+
+                HttpContext.Current.Response.ContentType = "application/pdf";
+                HttpContext.Current.Response.AddHeader("content-disposition",
+                    "attachment;filename=YearlySalesReport.pdf");
+                HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                GridView1.RenderControl(hw);
+                StringReader sr = new StringReader(sw.ToString());
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+                pdfDoc.Open();
+                htmlparser.Parse(sr);
+                pdfDoc.Close();
+                HttpContext.Current.Response.Write(pdfDoc);
+                HttpContext.Current.Response.End();
+            }
+        }
+
+        public void GenerateRawMaterialInventoryReport()
+        {
+            var sqlDAL = new SqlDataAccess();
+            var result = sqlDAL.ExecuteStoredProcedure("GetRawMaterialInvLvls", null);
+            if (result != null)
+            {
+                //Create a dummy GridView
+                GridView GridView1 = new GridView();
+                GridView1.AllowPaging = false;
+                GridView1.DataSource = result;
+                GridView1.DataBind();
+
+                HttpContext.Current.Response.ContentType = "application/pdf";
+                HttpContext.Current.Response.AddHeader("content-disposition",
+                    "attachment;filename=RawMaterialsInvReport.pdf");
+                HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                StringWriter sw = new StringWriter();
+                HtmlTextWriter hw = new HtmlTextWriter(sw);
+                GridView1.RenderControl(hw);
+                StringReader sr = new StringReader(sw.ToString());
+                Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
+                HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+                PdfWriter.GetInstance(pdfDoc, HttpContext.Current.Response.OutputStream);
+                pdfDoc.Open();
+                htmlparser.Parse(sr);
+                pdfDoc.Close();
+                HttpContext.Current.Response.Write(pdfDoc);
+                HttpContext.Current.Response.End();
+            }
+        }
     }
 }

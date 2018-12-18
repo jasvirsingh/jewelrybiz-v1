@@ -23,6 +23,18 @@ namespace JewelryBiz.UI.Controllers
                 case "CUSTOMER_LIST":
                         new ReportsService().GenerateCustomersReport();
                     break;
+                case "INVENTORY_LEVELS":
+                    new ReportsService().GenerateFinishedGoodsInventoryReport();
+                    break;
+                case "MONTHLY_SALE":
+                    new ReportsService().GenerateMonthlySalesReport();
+                    break;
+                case "YEARLY_SALE":
+                    new ReportsService().GenerateYearlySalesReport();
+                    break;
+                case "INVENTORY_COSTS":
+                    new ReportsService().GenerateRawMaterialInvReport();
+                    break;
                 default:
                     break;
         }
