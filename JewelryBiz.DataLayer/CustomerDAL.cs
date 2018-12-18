@@ -65,13 +65,13 @@ namespace JewelryBiz.DataAccess
             });
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@Addresss1",
+                ParameterName = "@Address1",
                 DbType = DbType.String,
                 Value = customer.Address1
             });
             parameters.Add(new SqlParameter
             {
-                ParameterName = "@Addresss2",
+                ParameterName = "@Address2",
                 DbType = DbType.String,
                 Value = customer.Address2
             });
@@ -244,9 +244,9 @@ namespace JewelryBiz.DataAccess
                     Postcode = row["PostCode"].ToString(),
                     State = row["State"].ToString(),
                     Email = row["Email"].ToString(),
-                    PaymentMethod = row["MethodName"].ToString(),
+                    PaymentMethod =row["MethodName"].ToString(),
                     CardNo = row["AccountNo"].ToString(),
-                    ExpDate = Convert.ToDateTime(row["ExpirationDate"])
+                    ExpDate =  Convert.ToDateTime(row["ExpirationDate"])
                 };
             }
 

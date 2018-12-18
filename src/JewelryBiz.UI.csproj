@@ -302,6 +302,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\Earring.cshtml" />
     <Content Include="Views\Products\Set.cshtml" />
+    <Content Include="Views\Products\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Base\" />

@@ -15,7 +15,6 @@
     #div2 {
         width: 100%;
         border: solid 1px #000000;
-
     }
 </style>
 <div>
@@ -54,12 +53,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CardNo, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.CardNo
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExpDate, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.ExpDate.ToShortDateString()
-        </div>
-    </div>
-
-    <div id="div2">
-        
+        @if (!string.IsNullOrEmpty(Model.CardNo))
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpDate, htmlAttributes: new { @class = "control-label col-md-2" }) :   @Model.ExpDate.ToShortDateString()
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpDate, htmlAttributes: new { @class = "control-label col-md-2" }) :
+            </div>
+        }
     </div>
 </div>

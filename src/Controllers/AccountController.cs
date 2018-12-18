@@ -242,11 +242,11 @@ namespace JewelryBiz.UI.Controllers
                         Address1 = customer.Address1,
                         Address2 = customer.Address2,
                         Postcode = customer.Postcode,
-                        State = customer.State
-                        //CardType = customer.CardType,
-                        //CardNo = customer.CardNo,
-                        //ExpDate = customer.ExpDate
-                    };
+                        State = customer.State,
+                        PaymentMethodCode = "x",
+                      CardNo = "xxxxxxxxxxxxxxxx",
+                      ExpDate = customer.ExpDate
+                  };
 
                     var customerService = new CustomerService();
                     customerService.SavePersonalInfo(c, Session.SessionID);

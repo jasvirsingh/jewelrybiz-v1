@@ -2,6 +2,7 @@
 using JewelryBiz.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -10,7 +11,6 @@ namespace JewelryBiz.UI.Controllers
     public class CheckoutController : BaseController
     {
         private List<object> states;
-        private List<object> cards;
 
         public CheckoutController()
         {
@@ -47,8 +47,6 @@ namespace JewelryBiz.UI.Controllers
 
             var actualProduct = new ProductService().GetById(pId);
             int quantity;
-            // if type 0, decrease quantity
-            // if type 1, increase quanity
             switch (type)
             {
                 case 0:
@@ -71,23 +69,12 @@ namespace JewelryBiz.UI.Controllers
             }
 
             return RedirectToAction("Index");
-            //if (product.Quantity == 0)
-            //{
-            //    quantity = 0;
-            //}
-            //else
-            //{
-            //    quantity = product.Quantity;
-            //}
-
-            //return Json(new { d = quantity });
         }
 
         public ActionResult Shipping()
         {
             ShoppingBag();
             ViewBag.States = states;
-            ViewBag.Cards = cards;
             return View();
         }
 
@@ -95,9 +82,6 @@ namespace JewelryBiz.UI.Controllers
         public void AddExpressShippingCost()
         {
             Session["ExpressShip"] = true;
-            //  return RedirectToAction("Index");
-
-
         }
 
         [HttpGet]
@@ -153,9 +137,6 @@ namespace JewelryBiz.UI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Purchase(Customer customer)
         {
-            ViewBag.States = states;
-            ViewBag.Cards = cards;
-
             if (ModelState.IsValid)
             {
                 if (customer.ExpDate <= DateTime.Now)
@@ -226,13 +207,15 @@ namespace JewelryBiz.UI.Controllers
         public void SubtractExpressShippingCost()
         {
             Session["ExpressShip"] = false;
-            // return RedirectToAction("Index");
         }
 
         private void ShoppingBag()
         {
             if (Session != null)
             {
+                var shippingCost = Convert.ToDecimal(ConfigurationManager.AppSettings["shippingcost"]);
+                var expressshippingCost = Convert.ToDecimal(ConfigurationManager.AppSettings["expressshippingcost"]);
+                var shippingOnPrice = Convert.ToDecimal(ConfigurationManager.AppSettings["shippingOnPrice"]);
                 var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
                 if (currentUserCartItems != null)
                 {
@@ -240,19 +223,18 @@ namespace JewelryBiz.UI.Controllers
 
                     if (Session["ExpressShip"] != null && Session["ExpressShip"].Equals(true))
                     {
-                        Session["ShippingCost"] = totalPrice < 125 ? 60 : 30;
+                        Session["ShippingCost"] = totalPrice < shippingOnPrice ? expressshippingCost : shippingCost;
                     }
                     else if (Session["ExpressShip"] != null && Session["ExpressShip"].Equals(false))
                     {
-                        Session["ShippingCost"] = totalPrice < 125 ? 30 : 0;
+                        Session["ShippingCost"] = totalPrice < shippingOnPrice ? shippingCost : 0;
                     }
                     else
                     {
-                        Session["ShippingCost"] = Session["ShippingCost"] != null ? 30 : 0;
+                        Session["ShippingCost"] = Session["ShippingCost"] != null ? shippingCost : 0;
                     }
 
                     ViewBag.CartTotalPrice = totalPrice;
-                    //; + Convert.ToInt32(Session["ShippingCost"]);
                     ViewBag.Cart = currentUserCartItems; ViewBag.CartUnits = currentUserCartItems.Count();
                 }
             }
