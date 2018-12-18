@@ -20,6 +20,11 @@ namespace JewelryBiz.UI.Controllers
         // GET: Checkout
         public ActionResult Index()
         {
+            if (Session["ExpressShip"] == null)
+            {
+                Session["ExpressShip"] = false;
+            }
+
             ShoppingBag();
             var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
             ViewBag.Cart = currentUserCartItems;
@@ -76,6 +81,23 @@ namespace JewelryBiz.UI.Controllers
             //}
 
             //return Json(new { d = quantity });
+        }
+
+        public ActionResult Shipping()
+        {
+            ShoppingBag();
+            ViewBag.States = states;
+            ViewBag.Cards = cards;
+            return View();
+        }
+
+        [HttpGet]
+        public void AddExpressShippingCost()
+        {
+            Session["ExpressShip"] = true;
+            //  return RedirectToAction("Index");
+
+
         }
 
         [HttpGet]
@@ -174,7 +196,7 @@ namespace JewelryBiz.UI.Controllers
                     };
 
                     var customerService = new CustomerService();
-                    customerService.CreateCustomerOrder(c, Session.SessionID);
+                    customerService.CreateCustomerOrder(c, Session.SessionID, Convert.ToInt32(Session["ShippingCost"]));
                  
                     return RedirectToAction("PurchasedSuccess");
 
@@ -200,6 +222,13 @@ namespace JewelryBiz.UI.Controllers
             return View();
         }
 
+        [HttpGet]
+        public void SubtractExpressShippingCost()
+        {
+            Session["ExpressShip"] = false;
+            // return RedirectToAction("Index");
+        }
+
         private void ShoppingBag()
         {
             if (Session != null)
@@ -207,9 +236,24 @@ namespace JewelryBiz.UI.Controllers
                 var currentUserCartItems = new ShoppingCartDataService().GetCurrentUserCartItems(Session.SessionID);
                 if (currentUserCartItems != null)
                 {
-                    ViewBag.CartTotalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
-                    ViewBag.Cart = currentUserCartItems;
-                    ViewBag.CartUnits = currentUserCartItems.Count();
+                    var totalPrice = currentUserCartItems.Sum(c => c.Quantity * c.UnitPrice);
+
+                    if (Session["ExpressShip"] != null && Session["ExpressShip"].Equals(true))
+                    {
+                        Session["ShippingCost"] = totalPrice < 125 ? 60 : 30;
+                    }
+                    else if (Session["ExpressShip"] != null && Session["ExpressShip"].Equals(false))
+                    {
+                        Session["ShippingCost"] = totalPrice < 125 ? 30 : 0;
+                    }
+                    else
+                    {
+                        Session["ShippingCost"] = Session["ShippingCost"] != null ? 30 : 0;
+                    }
+
+                    ViewBag.CartTotalPrice = totalPrice;
+                    //; + Convert.ToInt32(Session["ShippingCost"]);
+                    ViewBag.Cart = currentUserCartItems; ViewBag.CartUnits = currentUserCartItems.Count();
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace JewelryBiz.DataAccess
 {
     public class OrderDAL
     {
-        public int CreateOrder(string userSessionId, string email)
+        public int CreateOrder(string userSessionId, string email, int shippingCost)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter
@@ -21,6 +21,13 @@ namespace JewelryBiz.DataAccess
                 ParameterName = "@Email",
                 DbType = DbType.String,
                 Value = email
+            });
+
+            parameters.Add(new SqlParameter
+            {
+                ParameterName = "@ShippingCost",
+                DbType = DbType.Int64,
+                Value = shippingCost
             });
 
             var sqlDataAccess = new SqlDataAccess();

@@ -7,6 +7,39 @@
 
 @section scripts {
     <script>
+        function AddExpressShippingCost() {
+
+            var element = $("#expressShip")[0];
+            if (element.checked) {
+
+                $.ajax({
+                    type: 'GET',
+                    url: "Checkout/AddExpressShippingCost",
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function () {
+
+                        location.reload();
+                        return;
+                    }
+                })
+            }
+            else {
+
+
+                $.ajax({
+                    type: 'GET',
+                    url: "Checkout/SubtractExpressShippingCost",
+                    contentType: "application/json; charset=utf-8",
+                    success: function () {
+
+                        location.reload();
+                        return;
+                    }
+                })
+            }
+        }
+
         function UpdateTotalPrice() {
             $.ajax({
                 type: 'GET',
@@ -82,7 +115,57 @@ else
                 <td class="total-price">@item.Total</td>
             </tr>
         }
-        <tr style="background-color:azure;"><td style="font-weight:bolder; color:black;">Sub Total: </td><td id="totalPrice" colspan="2" class="subtotal-price">@String.Format("{0:c}", ViewBag.CartTotalPrice)</td></tr>
+        @if (Session["ShippingCost"] != null)
+        {
+            <tr>
+                <td>
+                    Shipping Cost <br />
+
+                    <input type="checkbox" id="expressShip" onchange="AddExpressShippingCost()" checked="@Session["ExpressShip"]" /> One Day Shipping
+
+                </td>
+
+                @if (Convert.ToInt32(Session["ShippingCost"]) > 0 && Session["ExpressShip"] != null && Session["ExpressShip"].Equals(false))
+                {
+                    <td>
+                        $@Session["ShippingCost"]
+                    </td>
+                    <td class="color-green">Qualify for free standard shipping for total purchase above $125</td>
+                }
+                else if (Convert.ToInt32(Session["ShippingCost"]) > 0 && Session["ExpressShip"] != null && Session["ExpressShip"].Equals(true))
+                {
+                    <td>
+                        $@Session["ShippingCost"]
+                    </td>
+                    <td></td>
+                    @*<td class="color-green">Qualify for free shipping for total purchase above $125</td>*@
+                }
+                else if (@ViewBag.CartTotalPrice >= 125 && Session["ExpressShip"] != null && Session["ExpressShip"].Equals(false))
+                {
+                    <td>
+                        $0
+                    </td>
+
+                    <td class="color-green"> You have qualified for free shipping!!</td>
+                }
+                else
+                {
+                    <td></td>
+                    <td> </td>
+                }
+
+
+            </tr>
+        }
+
+        @if (Convert.ToInt32(Session["ShippingCost"]) > 0)
+        {
+            <tr style="background-color:azure;"><td style="font-weight:bolder; color:black;">Sub Total: </td><td id="totalPrice" colspan="2" class="subtotal-price">@String.Format("{0:c}", ViewBag.CartTotalPrice + Convert.ToInt32(Session["ShippingCost"]))</td></tr>}
+        else
+        {
+            <tr style="background-color:azure;"><td style="font-weight:bolder; color:black;">Sub Total: </td><td id="totalPrice" colspan="2" class="subtotal-price">@String.Format("{0:c}", ViewBag.CartTotalPrice)</td></tr>
+        }
+        @*<tr style="background-color:azure;"><td style="font-weight:bolder; color:black;">Sub Total: </td><td id="totalPrice" colspan="2" class="subtotal-price">@String.Format("{0:c}", ViewBag.CartTotalPrice)</td></tr>*@
     </table>
     <div class="button">
         @Html.ActionLink("CLEAR CART", "Clear", "Checkout", null, new { @class = "btn btn-default" })

@@ -98,7 +98,7 @@ namespace JewelryBiz.DataAccess
             sqlDataAccess.ExecuteStoredProcedure("procAddCustomer", parameters.ToArray());
         }
 
-        public void CreateCustomerOrder(Customer customer, string userSessionId)
+        public void CreateCustomerOrder(Customer customer, string userSessionId, int shippingCost)
         {
             var parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter
@@ -183,7 +183,7 @@ namespace JewelryBiz.DataAccess
             sqlDataAccess2.ExecuteNonQuery("procAddCustomerPaymentMethod", paymentParameters.ToArray());
 
             var orderDAL = new OrderDAL();
-            orderDAL.CreateOrder(userSessionId, customer.Email);
+            orderDAL.CreateOrder(userSessionId, customer.Email, shippingCost);
         }
 
         public IList<PurchasedItem> GetPurchaseHistory(string email)

@@ -11,9 +11,9 @@ namespace JewelryBiz.BusinessLayer
             return new CustomerDAL().GetByEmail(email);
         }
 
-        public void CreateCustomerOrder(Customer customer, string userSessionId)
+        public void CreateCustomerOrder(Customer customer, string userSessionId, int shippingCost)
         {
-            new CustomerDAL().CreateCustomerOrder(customer, userSessionId);
+            new CustomerDAL().CreateCustomerOrder(customer, userSessionId, shippingCost);
         }
 
         public IList<PurchasedItem> GetPurchaseHistory(string email)
